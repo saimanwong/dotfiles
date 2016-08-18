@@ -1,0 +1,72 @@
+#!/bin/bash
+
+PS3='Setup: '
+option=(
+'Symbolic link of .virmrc, .tmux.conf and colors'
+'Symbolic link of .zshrc'
+'Symbolic link of private.xml (Karabiner + Seil)'
+'Oh My ZSH!'
+'Tmux Plugin Manager'
+'Homebrew'
+'Vundle'
+'Powerline fonts'
+'BetterSnapTool info'
+'Quit'
+)
+select opt in "${option[@]}"
+do
+    case $opt in
+        'Symbolic link of .virmrc, .tmux.conf and colors')
+            ln -s ~/.dotfiles/.vimrc ~/.vimrc
+            ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+            mkdir ~/.vim 
+            rm -rf ~/.vim/colors
+            ln -s ~/.dotfiles/colors ~/.vim/colors
+            echo 'Done!'
+            ;;
+        'Symbolic link of .zshrc')
+            ln -s ~/.dotfiles/.zshrc ~/.zshrc
+            echo 'Done!'
+            ;;
+        'Symbolic link of private.xml (Karabiner + Seil)')
+            ln -s ~/.dotfiles/private.xml ~/Library/Application\ Support/Karabiner/private.xml
+            echo '----- Karabiner -----'
+            echo 'Fn to Control_L'
+            echo 'Control_L to Fn'
+            echo 'RELOAD XML'
+            echo '----- Seil -----'
+            echo 'Change the caps lock key (keycode 110)'
+            ;;
+        'Oh My ZSH!')
+            sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+            ;;
+        'Tmux Plugin Manager')
+            git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+            echo 'tmux, CTRL + B, I'
+            ;;
+        'Homebrew')
+            /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+            ;;
+        'Vundle')
+            git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+            vim +PluginInstall +qall
+            ;;
+        'Powerline fonts')
+            git clone https://github.com/powerline/fonts.git ~/.powerline
+            ~/.powerline/install.sh
+            rm -rf ~/.powerline
+            echo 'Done!'
+            ;;
+        'BetterSnapTool info')
+            echo 'Maximize: Command + Up'
+            echo 'Left half: Command + Left'
+            echo 'Right half: Command + Right'
+            ;;
+        'Quit')
+            break
+            ;;
+        *)
+            echo 'Invalid option'
+            ;;
+    esac
+done
