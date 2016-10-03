@@ -16,5 +16,6 @@ plugins=(git)
 
 # Aliases (macOS)
 alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+alias macchanger="$HOME/.macchanger/bin/macchanger"
 
 source $ZSH/oh-my-zsh.sh

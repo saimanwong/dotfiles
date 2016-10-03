@@ -4,7 +4,6 @@ PS3='Setup: '
 option=(
 'Symbolic link of .virmrc, .tmux.conf and colors'
 'Symbolic link of .zshrc'
-'Symbolic link of private.xml (Karabiner + Seil)'
 'Oh My ZSH!'
 'Tmux Plugin Manager'
 'Homebrew'
@@ -27,15 +26,6 @@ do
         'Symbolic link of .zshrc')
             ln -s ~/.dotfiles/.zshrc ~/.zshrc
             echo 'Done!'
-            ;;
-        'Symbolic link of private.xml (Karabiner + Seil)')
-            ln -s ~/.dotfiles/private.xml ~/Library/Application\ Support/Karabiner/private.xml
-            echo '----- Karabiner -----'
-            echo 'Fn to Control_L'
-            echo 'Control_L to Fn'
-            echo 'RELOAD XML'
-            echo '----- Seil -----'
-            echo 'Change the caps lock key (keycode 110)'
             ;;
         'Oh My ZSH!')
             sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
