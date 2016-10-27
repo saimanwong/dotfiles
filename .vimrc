@@ -78,7 +78,7 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='distinguished'
 set background=dark
-color solarized
+color grb256
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
