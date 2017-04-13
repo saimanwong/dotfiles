@@ -15,7 +15,7 @@ ZSH_THEME="bureau"
 plugins=(git)
 
 # Aliases (macOS)
-alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
-alias macchanger="$HOME/.macchanger/bin/macchanger"
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+alias qsocat='socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"'
 
 source $ZSH/oh-my-zsh.sh

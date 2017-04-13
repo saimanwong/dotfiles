@@ -1,7 +1,7 @@
 "   Cheat Sheet
 "   Ctrl+w, =       equal sized splits
-"   Ctrl+w, +/-     height resize    
-"   Ctrl+, </>      width resize    
+"   Ctrl+w, +/-     height resize
+"   Ctrl+, </>      width resize
 "   "=y             yank to buffer
 "   :tabm +i        move tab
 let mapleader = ","
@@ -10,6 +10,12 @@ nnoremap <leader>vi :tabnew ~/.vimrc<CR>
 nnoremap <leader>zs :tabnew ~/.zshrc<CR>
 nnoremap <leader>ba :tabnew ~/.bashrc<CR>
 nnoremap <leader>tm :tabnew ~/.tmux.conf<CR>
+nnoremap <leader>xc :tabnew ~/.xvimrc<CR>
+nnoremap <leader>us :setlocal spell spelllang=en_us<CR>
+nnoremap <leader>no :setlocal nospell<CR>
+nnoremap <leader>to :VimtexTocToggle<CR>
+nnoremap <leader>tr :%s/\s\+$//<CR>
+nnoremap <leader>ne :NERDTree<CR>
 
 nnoremap <tab> :tabn<CR>
 nnoremap <S-tab> :tabp<CR>
@@ -17,7 +23,7 @@ nnoremap <c-s> :wa<CR>
 inoremap <c-s> <Esc>:wa<CR>
 
 set nocompatible                " be iMproved, required
-filetype off                    " required
+filetype plugin on               " required
 
 syntax on
 
@@ -67,6 +73,9 @@ Plugin 'lervag/vimtex'
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 let g:vimtex_view_general_options_latexmk = '-r 1'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
 
 "---------- Look ----------
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -75,10 +84,18 @@ Plugin 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_powerline_fonts = 1
-let g:airline_theme='distinguished'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_theme = 'bubblegum'
+
 set background=dark
-color grb256
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+color hybrid
+" color solarized
+" color nofrils-dark
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
