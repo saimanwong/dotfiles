@@ -16,14 +16,16 @@ nnoremap <leader>no :setlocal nospell<CR>
 nnoremap <leader>to :VimtexTocToggle<CR>
 nnoremap <leader>tr :%s/\s\+$//<CR>
 nnoremap <leader>ne :NERDTree<CR>
+nnoremap <leader>nw :NextWordy<CR>
+nnoremap <leader>pw :PrevWordy<CR>
 
 nnoremap <tab> :tabn<CR>
 nnoremap <S-tab> :tabp<CR>
 nnoremap <c-s> :wa<CR>
 inoremap <c-s> <Esc>:wa<CR>
 
-set nocompatible                " be iMproved, required
-filetype plugin on               " required
+set nocompatible " be iMproved, required
+filetype plugin on " required
 
 syntax on
 
@@ -73,12 +75,28 @@ Plugin 'lervag/vimtex'
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 let g:vimtex_view_general_options_latexmk = '-r 1'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
 let g:jsx_ext_required = 0
+Plugin 'reedes/vim-wordy'
+Plugin 'rhysd/vim-grammarous'
+let g:wordy#ring = [
+  \ 'weak',
+  \ ['being', 'passive-voice', ],
+  \ 'business-jargon',
+  \ 'weasel',
+  \ 'puffery',
+  \ ['problematic', 'redundant', ],
+  \ ['colloquial', 'idiomatic', 'similies', ],
+  \ 'art-jargon',
+  \ ['contractions', 'opinion', 'vague-time', 'said-synonyms', ],
+  \ 'adjectives',
+  \ 'adverbs',
+  \ ]
+let g:grammarous#disabled_rules = {
+            \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+            \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+            \ }
 
 "---------- Look ----------
-Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
@@ -94,7 +112,6 @@ set background=dark
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 color hybrid
-" color solarized
 " color nofrils-dark
 
 " All of your Plugins must be added before the following line
