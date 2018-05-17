@@ -16,8 +16,6 @@ nnoremap <leader>no :setlocal nospell<CR>
 nnoremap <leader>to :VimtexTocToggle<CR>
 nnoremap <leader>tr :%s/\s\+$//<CR>
 nnoremap <leader>ne :NERDTree<CR>
-nnoremap <leader>nw :NextWordy<CR>
-nnoremap <leader>pw :PrevWordy<CR>
 
 nnoremap <tab> :tabn<CR>
 nnoremap <S-tab> :tabp<CR>
@@ -34,10 +32,10 @@ set relativenumber
 set number
 
 " size of a hard tab stop
-set tabstop=4
+set tabstop=2
 
 " size of an indent
-set shiftwidth=4
+set shiftwidth=2
 
 " make "tab" insert indents instead of tabs at the beginning of a line
 set smarttab
@@ -69,6 +67,8 @@ Plugin 'christoomey/vim-tmux-navigator'
 
 "---------- Peripheral ----------
 Plugin 'scrooloose/nerdtree'
+let NERDTreeShowLineNumbers=1
+autocmd FileType nerdtree setlocal relativenumber
 Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-obsession'
 Plugin 'lervag/vimtex'
@@ -76,25 +76,10 @@ let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSuppor
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 let g:vimtex_view_general_options_latexmk = '-r 1'
 let g:jsx_ext_required = 0
-Plugin 'reedes/vim-wordy'
-Plugin 'rhysd/vim-grammarous'
-let g:wordy#ring = [
-  \ 'weak',
-  \ ['being', 'passive-voice', ],
-  \ 'business-jargon',
-  \ 'weasel',
-  \ 'puffery',
-  \ ['problematic', 'redundant', ],
-  \ ['colloquial', 'idiomatic', 'similies', ],
-  \ 'art-jargon',
-  \ ['contractions', 'opinion', 'vague-time', 'said-synonyms', ],
-  \ 'adjectives',
-  \ 'adverbs',
-  \ ]
-let g:grammarous#disabled_rules = {
-            \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-            \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-            \ }
+
+Plugin 'posva/vim-vue'
+" Vue syntax highligting
+autocmd BufNewFile,BufRead *.vue set ft=vue
 
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'
