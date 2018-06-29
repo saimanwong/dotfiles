@@ -25,6 +25,9 @@ inoremap <c-s> <Esc>:wa<CR>
 set nocompatible " be iMproved, required
 filetype plugin on " required
 
+" Match tags %
+runtime macros/matchit.vim
+
 syntax on
 
 " Line nr
@@ -80,6 +83,9 @@ let g:jsx_ext_required = 0
 Plugin 'posva/vim-vue'
 " Vue syntax highligting
 autocmd BufNewFile,BufRead *.vue set ft=vue
+
+Plugin 'leafgarland/typescript-vim'
+autocmd BufNewFile,BufRead *.ts set ft=typescript
 
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'
