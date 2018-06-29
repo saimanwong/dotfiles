@@ -1,6 +1,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# Do not send stats
+export COCOAPODS_DISABLE_STATS=1
+
 # Deactivate CTRL+S
 stty -ixon
 
