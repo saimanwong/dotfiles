@@ -23,12 +23,10 @@ nnoremap <c-s> :wa<CR>
 inoremap <c-s> <Esc>:wa<CR>
 
 set nocompatible " be iMproved, required
-filetype plugin on " required
+filetype off " required
 
 " Match tags %
 runtime macros/matchit.vim
-
-syntax on
 
 " Line nr
 set relativenumber
@@ -78,7 +76,13 @@ Plugin 'lervag/vimtex'
 let g:vimtex_view_general_viewer = '/Applications/Skim.app/Contents/SharedSupport/displayline'
 let g:vimtex_view_general_options = '-r @line @pdf @tex'
 let g:vimtex_view_general_options_latexmk = '-r 1'
-let g:jsx_ext_required = 0
+let g:vimtex_compiler_latexmk = {'callback' : 0}
+
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+" let g:xml_syntax_folding = 1
+" let g:jsx_ext_required = 0
+" let g:jsx_pragma_required = 1
 
 Plugin 'posva/vim-vue'
 " Vue syntax highligting
@@ -108,6 +112,7 @@ color hybrid
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+syntax enable
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
