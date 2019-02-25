@@ -16,15 +16,15 @@ select opt in "${option[@]}"
 do
     case $opt in
         'Symbolic link of .virmrc, .tmux.conf and colors')
-            ln -s ~/.dotfiles/.vimrc ~/.vimrc
-            ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+            ln -sf ~/.dotfiles/.vimrc ~/.vimrc
+            ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
             mkdir ~/.vim 
             rm -rf ~/.vim/colors
-            ln -s ~/.dotfiles/colors ~/.vim/colors
+            ln -sf ~/.dotfiles/colors ~/.vim/colors
             echo 'Done!'
             ;;
         'Symbolic link of .zshrc')
-            ln -s ~/.dotfiles/.zshrc ~/.zshrc
+            ln -sf ~/.dotfiles/.zshrc ~/.zshrc
             echo 'Done!'
             ;;
         'Oh My ZSH!')
