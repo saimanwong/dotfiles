@@ -91,6 +91,8 @@ autocmd BufNewFile,BufRead *.vue set ft=vue
 Plugin 'leafgarland/typescript-vim'
 autocmd BufNewFile,BufRead *.ts set ft=typescript
 
+Plugin 'hashivim/vim-terraform'
+
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
