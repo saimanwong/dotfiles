@@ -23,7 +23,7 @@ nnoremap <c-s> :wa<CR>
 inoremap <c-s> <Esc>:wa<CR>
 
 set nocompatible " be iMproved, required
-filetype off " required
+" filetype off " required
 
 " Match tags %
 runtime macros/matchit.vim
@@ -43,11 +43,11 @@ set smarttab
 
 " always uses spaces instead of tab characters
 set expandtab
+au BufNewFile,BufRead *.go setlocal noet ts=8 sw=8 sts=8
 
 " Nautral splitopening
 set splitbelow
 set splitright
-
 " Always show status line
 set laststatus=2
 
@@ -92,6 +92,8 @@ Plugin 'leafgarland/typescript-vim'
 autocmd BufNewFile,BufRead *.ts set ft=typescript
 
 Plugin 'hashivim/vim-terraform'
+Plugin 'fatih/vim-go'
+let g:go_autodetect_gopath = 1
 
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'

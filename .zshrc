@@ -1,5 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 
 # Do not send stats
 export COCOAPODS_DISABLE_STATS=1
