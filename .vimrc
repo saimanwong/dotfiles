@@ -95,6 +95,11 @@ Plugin 'hashivim/vim-terraform'
 Plugin 'fatih/vim-go'
 let g:go_autodetect_gopath = 1
 
+Plugin 'rodjek/vim-puppet'
+Plugin 'hashivim/vim-hashicorp-tools'
+
+Plugin 'python-mode/python-mode'
+
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
