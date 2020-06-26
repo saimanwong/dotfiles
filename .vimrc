@@ -100,6 +100,8 @@ Plugin 'hashivim/vim-hashicorp-tools'
 
 Plugin 'python-mode/python-mode'
 
+Plugin 'cespare/vim-toml.git'
+
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
