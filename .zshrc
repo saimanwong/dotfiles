@@ -26,6 +26,8 @@ plugins=(
   svn
 )
 
+source <(kubectl completion zsh)
+
 # Aliases (macOS)
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias kc='kubectl'
