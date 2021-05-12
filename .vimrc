@@ -5,6 +5,7 @@
 "   "=y             yank to buffer
 "   :tabm +i        move tab
 let mapleader = ","
+set backspace=indent,eol,start
 
 nnoremap <leader>vi :tabnew ~/.vimrc<CR>
 nnoremap <leader>zs :tabnew ~/.zshrc<CR>
@@ -21,6 +22,26 @@ nnoremap <tab> :tabn<CR>
 nnoremap <S-tab> :tabp<CR>
 nnoremap <c-s> :wa<CR>
 inoremap <c-s> <Esc>:wa<CR>
+
+" Jupyter
+" Run current file
+nnoremap <leader>jr :JupyterRunFile<CR>
+nnoremap <leader>ji :PythonImportThisFile<CR>
+
+" Change to directory of current file
+nnoremap <leader>jd :JupyterCd %:p:h<CR>
+
+" Send a selection of lines
+nnoremap <leader>jX :JupyterSendCell<CR>
+nnoremap <leader>jE :JupyterSendRange<CR>
+nmap     <leader>je <Plug>JupyterRunTextObj
+vmap     <leader>je <Plug>JupyterRunVisual
+
+nnoremap <leader>jU :JupyterUpdateShell<CR>
+
+" Debugging maps
+nnoremap <leader>jb :PythonSetBreak<CR>
+
 
 set nocompatible " be iMproved, required
 " filetype off " required
@@ -78,11 +99,7 @@ let g:vimtex_view_general_options = '-r @line @pdf @tex'
 let g:vimtex_view_general_options_latexmk = '-r 1'
 let g:vimtex_compiler_latexmk = {'callback' : 0}
 
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-" let g:xml_syntax_folding = 1
-" let g:jsx_ext_required = 0
-" let g:jsx_pragma_required = 1
+Plugin 'maxmellon/vim-jsx-pretty'
 
 Plugin 'posva/vim-vue'
 " Vue syntax highligting
@@ -101,6 +118,8 @@ Plugin 'hashivim/vim-hashicorp-tools'
 Plugin 'python-mode/python-mode'
 
 Plugin 'cespare/vim-toml.git'
+
+Plugin 'jupyter-vim/jupyter-vim'
 
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'
