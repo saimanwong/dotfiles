@@ -31,7 +31,7 @@ plugins=(
 source <(kubectl completion zsh)
 
 # Aliases (macOS)
-alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
+# alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 alias kc='kubectl'
 alias gll='git log --decorate --graph --date=short --format="%C(auto)%h%C(reset) %C(green)%ar%C(reset) %C(blue)(%an)%C(reset) %C(auto)%d%C(reset) - %s"'
 
