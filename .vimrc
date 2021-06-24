@@ -17,6 +17,7 @@ nnoremap <leader>no :setlocal nospell<CR>
 nnoremap <leader>to :VimtexTocToggle<CR>
 nnoremap <leader>tr :%s/\s\+$//<CR>
 nnoremap <leader>ne :NERDTree<CR>
+nnoremap <leader>fz :FZF<CR>
 
 nnoremap <tab> :tabn<CR>
 nnoremap <S-tab> :tabp<CR>
@@ -120,6 +121,8 @@ Plugin 'python-mode/python-mode'
 Plugin 'cespare/vim-toml.git'
 
 Plugin 'jupyter-vim/jupyter-vim'
+
+Plugin 'junegunn/fzf'
 
 "---------- Look ----------
 Plugin 'vim-airline/vim-airline'
