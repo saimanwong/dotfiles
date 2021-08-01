@@ -1,0 +1,8 @@
+---
+
+- name: Reload xmodmap conf
+  ansible.builtin.shell:
+    cmd: >
+      setxkbmap -option ctrl:nocaps &&
+      xcape -e 'Control_L=Escape'
+  listen: reload xprofile conf

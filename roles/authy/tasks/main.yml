@@ -1,0 +1,17 @@
+---
+
+- name: Arch Linux Installation
+  block:
+    - name: Install Authy on Archlinux
+      ansible.builtin.include_role:
+        name: aur_install
+      vars:
+        aur_install_pkg: authy
+  when: ansible_os_family == 'Archlinux'
+
+- name: TODO
+  block:
+    - name: TODO
+      ansible.builtin.debug:
+        msg: "TODO"
+  when: ansible_os_family != 'Archlinux'

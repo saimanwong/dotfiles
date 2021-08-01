@@ -1,0 +1,7 @@
+---
+
+- name: Install Go
+  ansible.builtin.package:
+    name: go
+    state: present
+  become: true

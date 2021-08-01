@@ -1,0 +1,25 @@
+---
+
+- name: Install xcape
+  ansible.builtin.package:
+    name: xcape
+    state: present
+
+- name: Soft link xfce4-keyboard-shortcuts.xml
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/xfce4-keyboard-shortcuts.xml"
+    dest: "{{ ansible_env.HOME }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+    force: true
+    state: link
+
+- name: Soft link .xprofile
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/.xprofile"
+    dest: "{{ ansible_env.HOME }}/.xprofile"
+    force: true
+    state: link
+  notify: reload xprofile conf
+
+# TODO: Toggle fullscreen => Ctrl+Alt+k
+# TODO: Tile window left, right => Ctrl+Alt+(hl)
+# TODO: Move window to upper workspace (vim-like) => Shift+Ctrl+Alt+(hjkl)

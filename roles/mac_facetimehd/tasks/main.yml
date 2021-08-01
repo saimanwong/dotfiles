@@ -1,0 +1,13 @@
+---
+
+- name: Install dkms
+  ansible.builtin.package:
+    name: dkms
+    state: present
+  become: true
+
+- name: Install bcwc-pcie-git on Archlinux
+  ansible.builtin.include_role:
+    name: aur_install
+  vars:
+    aur_install_pkg: bcwc-pcie-git

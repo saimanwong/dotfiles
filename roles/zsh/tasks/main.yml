@@ -1,0 +1,11 @@
+---
+
+- name: Soft link shell
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/{{ item }}"
+    force: true
+    state: link
+  loop:
+    - .zshrc
+    - .dir_colors

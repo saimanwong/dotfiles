@@ -1,0 +1,35 @@
+---
+
+# - name: "Clone latest dev Docker version"
+#   ansible.builtin.git:
+#     repo: https://aur.archlinux.org/docker-git.git
+#     path: "{{ ansible_env.HOME }}/.aur"
+
+- name: Install Docker
+  ansible.builtin.package:
+    name: docker
+    state: present
+  become: true
+
+- name: Start Docker
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+  become: true
+
+- name: Ensure group docker exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Get current user
+  ansible.builtin.command: whoami
+  register: resp
+
+- name: Ensure my user into the docker group
+  ansible.builtin.user:
+    name:  "{{ resp.stdout }}"
+    groups: docker
+    append: true
+  become: true
