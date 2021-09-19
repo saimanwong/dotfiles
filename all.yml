@@ -1,0 +1,18 @@
+---
+
+- hosts: all
+  roles:
+    - { role: aur, when: "ansible_os_family == 'Archlinux'" }
+    - { role: mac_keyboard, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
+    - { role: mac_facetimehd, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
+    - terminal
+    - zsh
+    - authy
+    - docker
+    - go
+    - neovim
+    - keybindings
+    - tmux
+    - discord
+    - signal
+    - slack

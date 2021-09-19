@@ -1,0 +1,16 @@
+---
+
+- name: Set facts
+  ansible.builtin.set_fact:
+    repo_url: "https://aur.archlinux.org/{{ aur_install_pkg }}.git"
+    dest_path: "{{ ansible_env.HOME }}/.aur/{{ aur_install_pkg }}"
+
+- name: "Clone {{ repo_url }} to {{ dest_path }}"
+  ansible.builtin.git:
+    repo: "{{ repo_url }}"
+    dest: "{{ dest_path }}"
+    force: "{{ force | default(false) }}"
+
+- name: "Make/install {{ aur_install_pkg }}"
+  ansible.builtin.shell:
+    cmd: "sh -c 'cd {{ dest_path }} && makepkg -si --noconfirm'"

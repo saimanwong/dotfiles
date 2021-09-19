@@ -1,0 +1,22 @@
+---
+
+- name: Install mkinitcpio-modconf-hook on Archlinux
+  ansible.builtin.include_role:
+    name: aur_install
+  vars:
+    aur_install_pkg: mkinitcpio-modconf-hook-git
+
+- name: Install hid-apple-patched-git-dkms on Archlinux
+  ansible.builtin.include_role:
+    name: aur_install
+  vars:
+    aur_install_pkg: hid-apple-patched-git-dkms
+    force: true
+
+- name: Soft link hid_apple.conf
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/hid_apple.conf"
+    dest: /etc/modprobe.d/hid_apple.conf
+    force: true
+    state: link
+  become: true

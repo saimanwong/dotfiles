@@ -1,0 +1,7 @@
+---
+
+- name: Install Signal
+  ansible.builtin.package:
+    name: signal-desktop
+    state: present
+  become: true
