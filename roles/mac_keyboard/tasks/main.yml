@@ -13,10 +13,10 @@
     aur_install_pkg: hid-apple-patched-git-dkms
     force: true
 
-- name: Soft link hid_apple.conf
-  ansible.builtin.file:
-    src: "{{ playbook_dir }}/files/hid_apple.conf"
+- name: Copy hid_apple.conf to /etc/modprob.d/hid_apple.conf
+  ansible.builtin.copy:
+    src: hid_apple.conf
     dest: /etc/modprobe.d/hid_apple.conf
-    force: true
-    state: link
+    mode: '0644'
+  notify: regenerate initramfs
   become: true
