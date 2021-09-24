@@ -1,22 +1,32 @@
 ---
 
-- name: Install mkinitcpio-modconf-hook on Archlinux
-  ansible.builtin.include_role:
-    name: aur_install
-  vars:
-    aur_install_pkg: mkinitcpio-modconf-hook-git
+- name: Arch Linux Installation
+  block:
+    - name: Install mkinitcpio-modconf-hook on Archlinux
+      ansible.builtin.include_role:
+        name: aur_install
+      vars:
+        aur_install_pkg: mkinitcpio-modconf-hook-git
 
-- name: Install hid-apple-patched-git-dkms on Archlinux
-  ansible.builtin.include_role:
-    name: aur_install
-  vars:
-    aur_install_pkg: hid-apple-patched-git-dkms
-    force: true
+    - name: Install hid-apple-patched-git-dkms on Archlinux
+      ansible.builtin.include_role:
+        name: aur_install
+      vars:
+        aur_install_pkg: hid-apple-patched-git-dkms
+        force: true
 
-- name: Copy hid_apple.conf to /etc/modprob.d/hid_apple.conf
-  ansible.builtin.copy:
-    src: hid_apple.conf
-    dest: /etc/modprobe.d/hid_apple.conf
-    mode: '0644'
-  notify: regenerate initramfs
-  become: true
+    - name: Copy hid_apple.conf to /etc/modprob.d/hid_apple.conf
+      ansible.builtin.copy:
+        src: hid_apple.conf
+        dest: /etc/modprobe.d/hid_apple.conf
+        mode: '0644'
+      notify: regenerate initramfs
+      become: true
+  when: ansible_os_family == 'Archlinux'
+
+- name: TODO
+  block:
+    - name: TODO
+      ansible.builtin.debug:
+        msg: "TODO"
+  when: ansible_os_family != 'Archlinux'

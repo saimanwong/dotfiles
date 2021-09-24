@@ -1,10 +1,19 @@
 ---
 
-- name: Soft link gruvbox theme
-  ansible.builtin.file:
-    src: "{{ playbook_dir }}/files/gruvbox.theme"
-    dest: "/usr/share/xfce4/terminal/colorschemes/gruvbox.theme"
-    force: true
-    state: link
-  become: true
+- name: Arch Linux Installation
+  block:
+    - name: soft link gruvbox theme
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/gruvbox.theme"
+        dest: "/usr/share/xfce4/terminal/colorschemes/gruvbox.theme"
+        force: true
+        state: link
+      become: true
   when: ansible_os_family == 'Archlinux'
+
+- name: TODO
+  block:
+    - name: TODO
+      ansible.builtin.debug:
+        msg: "TODO"
+  when: ansible_os_family != 'Archlinux'

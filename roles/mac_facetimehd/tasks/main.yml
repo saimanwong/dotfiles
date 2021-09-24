@@ -1,13 +1,23 @@
 ---
 
-- name: Install dkms
-  ansible.builtin.package:
-    name: dkms
-    state: present
-  become: true
+- name: Arch Linux Installation
+  block:
+    - name: Install dkms
+      ansible.builtin.package:
+        name: dkms
+        state: present
+      become: true
 
-- name: Install bcwc-pcie-git on Archlinux
-  ansible.builtin.include_role:
-    name: aur_install
-  vars:
-    aur_install_pkg: bcwc-pcie-git
+    - name: Install bcwc-pcie-git on Archlinux
+      ansible.builtin.include_role:
+        name: aur_install
+      vars:
+        aur_install_pkg: bcwc-pcie-git
+  when: ansible_os_family == 'Archlinux'
+
+- name: TODO
+  block:
+    - name: TODO
+      ansible.builtin.debug:
+        msg: "TODO"
+  when: ansible_os_family != 'Archlinux'
