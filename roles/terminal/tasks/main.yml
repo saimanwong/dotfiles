@@ -2,6 +2,12 @@
 
 - name: XFCE desktop environment
   block:
+    - name: "Install xfce4-terminal"
+      ansible.builtin.package:
+        name: xfce4-terminal
+        state: present
+      become: true
+
     - name: "Ensure /usr/share/xfce4/terminal/colorschemes exists"
       ansible.builtin.file:
         path: "/usr/share/xfce4/terminal/colorschemes"
@@ -16,6 +22,12 @@
         force: true
         state: link
       become: true
+
+    - name: "Ensure {{ ansible_env.HOME }}/.config/xfce4/terminal exists"
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config/xfce4/terminal"
+        state: directory
+        recurse: true
 
     - name: soft link terminal
       ansible.builtin.file:
