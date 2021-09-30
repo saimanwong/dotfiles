@@ -5,3 +5,11 @@
     name: discord
     state: present
   become: true
+  when: ansible_os_family != 'Debian'
+
+- name: Install Discord on Debian
+  community.general.snap:
+    name: discord
+    state: present
+  become: true
+  when: ansible_os_family == 'Debian'

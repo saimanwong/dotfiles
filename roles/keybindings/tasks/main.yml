@@ -5,12 +5,13 @@
 # Tile window left, right => Ctrl+Alt+(hl)
 # Move window to upper workspace (vim-like) => Shift+Ctrl+Alt+(hjkl)
 
-- name: Arch Linux Installation
+- name: XFCE desktop environment
   block:
     - name: Install xcape
       ansible.builtin.package:
         name: xcape
         state: present
+      become: true
 
     - name: Soft link xfce4-keyboard-shortcuts.xml
       ansible.builtin.file:
@@ -26,7 +27,7 @@
         force: true
         state: link
       notify: reload xprofile conf
-  when: ansible_os_family == 'Archlinux'
+  when: desktop_environment == 'xfce'
 
 - name: TODO
   block:

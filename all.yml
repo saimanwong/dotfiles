@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: "{{ h }}"
   roles:
     - { role: aur, when: "ansible_os_family == 'Archlinux'" }
     - { role: mac_keyboard, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }

@@ -9,9 +9,10 @@
         aur_install_pkg: slack-desktop
   when: ansible_os_family == 'Archlinux'
 
-- name: TODO
-  block:
-    - name: TODO
-      ansible.builtin.debug:
-        msg: "TODO"
-  when: ansible_os_family != 'Archlinux'
+- name: Install Slack on Debian
+  community.general.snap:
+    name: slack
+    state: present
+    classic: true
+  become: true
+  when: ansible_os_family == 'Debian'

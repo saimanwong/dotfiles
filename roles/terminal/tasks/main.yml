@@ -1,7 +1,14 @@
 ---
 
-- name: Arch Linux Installation
+- name: XFCE desktop environment
   block:
+    - name: "Ensure /usr/share/xfce4/terminal/colorschemes exists"
+      ansible.builtin.file:
+        path: "/usr/share/xfce4/terminal/colorschemes"
+        state: directory
+        recurse: true
+      become: true
+
     - name: soft link gruvbox theme
       ansible.builtin.file:
         src: "{{ playbook_dir }}/files/gruvbox.theme"
@@ -9,11 +16,4 @@
         force: true
         state: link
       become: true
-  when: ansible_os_family == 'Archlinux'
-
-- name: TODO
-  block:
-    - name: TODO
-      ansible.builtin.debug:
-        msg: "TODO"
-  when: ansible_os_family != 'Archlinux'
+  when: desktop_environment == 'xfce'

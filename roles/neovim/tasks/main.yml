@@ -12,6 +12,11 @@
     state: present
   become: true
 
+- name: Special repo for nodejs on Debian
+  ansible.builtin.shell:
+    cmd: >
+      curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+
 - name: Install nodejs
   ansible.builtin.package:
     name: nodejs
@@ -60,3 +65,7 @@
   ansible.builtin.copy:
     content: "{{ resp.content }}"
     dest: "{{ ansible_env.HOME }}/.config/nvim/ftdetect/proto.vim"
+
+- name: Install plugins
+  ansible.builtin.command:
+    cmd: vim +'PlugInstall --sync' +qa

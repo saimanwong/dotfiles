@@ -7,7 +7,7 @@
 
 - name: Install Docker
   ansible.builtin.package:
-    name: docker
+    name: "{{ docker_package_name[ansible_os_family] }}"
     state: present
   become: true
 

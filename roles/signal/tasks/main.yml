@@ -5,3 +5,11 @@
     name: signal-desktop
     state: present
   become: true
+  when: ansible_os_family != "Debian"
+
+- name: Install Signal on Debian
+  community.general.snap:
+    name: signal-desktop
+    state: present
+  become: true
+  when: ansible_os_family == 'Debian'

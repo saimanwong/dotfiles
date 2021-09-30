@@ -1,0 +1,5 @@
+---
+
+go_package_name:
+  Debian: golang
+  Archlinux: go

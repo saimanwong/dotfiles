@@ -1,0 +1,5 @@
+---
+
+docker_package_name:
+  Debian: docker.io
+  Archlinux: docker
