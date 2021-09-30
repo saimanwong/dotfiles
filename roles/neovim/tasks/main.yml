@@ -16,6 +16,7 @@
   ansible.builtin.shell:
     cmd: >
       curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+  when: ansible_os_family == "Debian"
 
 - name: Install nodejs
   ansible.builtin.package:
@@ -68,4 +69,4 @@
 
 - name: Install plugins
   ansible.builtin.command:
-    cmd: vim +'PlugInstall --sync' +qa
+    cmd: nvim +'PlugInstall --sync' +qa

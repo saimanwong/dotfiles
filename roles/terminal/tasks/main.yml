@@ -16,4 +16,18 @@
         force: true
         state: link
       become: true
+
+    - name: soft link terminal
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/terminalrc"
+        dest: "{{ ansible_env.HOME }}/.config/xfce4/terminal/terminalrc"
+        force: true
+        state: link
   when: desktop_environment == 'xfce'
+
+- name: TODO
+  block:
+    - name: TODO
+      ansible.builtin.debug:
+        msg: "TODO"
+  when: ansible_os_family != 'Archlinux'
