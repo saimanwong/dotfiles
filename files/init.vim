@@ -57,6 +57,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 let g:go_def_mapping_enabled = 0
 Plug 'hashivim/vim-terraform'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
