@@ -1,0 +1,14 @@
+---
+
+- name: Add git repo
+  ansible.builtin.apt_repository:
+    repo: ppa:git-core/ppa
+    state: present
+  become: true
+  when: ansible_os_family == "Debian"
+
+- name: Install git
+  ansible.builtin.package:
+    name: git
+    state: present
+  become: true
