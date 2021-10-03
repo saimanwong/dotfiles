@@ -1,12 +1,10 @@
 ---
 
-- name: Arch Linux Installation
-  block:
-    - name: Install Slack
-      ansible.builtin.include_role:
-        name: aur_install
-      vars:
-        aur_install_pkg: slack-desktop
+- name: Install Slack on Archlinux
+  ansible.builtin.include_role:
+    name: aur_install
+  vars:
+    aur_install_pkg: slack-desktop
   when: ansible_os_family == 'Archlinux'
 
 - name: Install Slack on Debian
