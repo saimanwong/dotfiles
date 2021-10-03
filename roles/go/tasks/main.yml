@@ -5,3 +5,26 @@
     name: "{{ go_package_name[ansible_os_family] }}"
     state: present
   become: true
+  when: ansible_os_family != "Debian"
+
+
+- name: Go on Debian
+  block:
+    - name: "Check if /tmp/{{ go_amd64 }} exists"
+      ansible.builtin.stat:
+        path: "/tmp/{{ go_amd64 }}"
+      register: res
+
+    - name: Download Go on Debian
+      ansible.builtin.shell:
+        cmd: >
+          wget -O /tmp/{{ go_amd64 }} https://golang.org/dl/{{ go_amd64 }}
+      when: not res.stat.exists
+
+    - name: Install Go on Debian
+      ansible.builtin.shell:
+        cmd: >
+          sudo rm -rf /usr/local/go &&
+          sudo tar -C /usr/local -xzf /tmp/{{ go_amd64 }}
+      become: true
+  when: ansible_os_family == "Debian"

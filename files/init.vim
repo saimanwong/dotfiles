@@ -31,6 +31,9 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 
+" Do not hightlight searches
+set nohlsearch
+
 filetype plugin indent on
 
 " Specify a directory for plugins
