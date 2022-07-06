@@ -3,6 +3,7 @@ export GOPATH="${HOME}/go"
 export PATH="${PATH}:/usr/local/go/bin"
 export PATH="${PATH}:$(go env GOPATH)/bin"
 export PATH="${PATH}:${HOME}/.rd/bin"
+export CDPATH="${HOME}/git"
 case `uname` in
   Darwin)
     # commands for OS X go here
