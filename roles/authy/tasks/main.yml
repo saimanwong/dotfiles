@@ -13,3 +13,11 @@
     state: present
   become: true
   when: ansible_os_family == 'Debian'
+
+- name: Install Authy on MacOS
+  ansible.builtin.package:
+    name: authy
+    state: present
+  when: ansible_os_family == 'Darwin'
+  register: result
+  failed_when: '"already installed" not in result.msg and result.msg != ""'

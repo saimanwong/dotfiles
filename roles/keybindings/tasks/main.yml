@@ -4,6 +4,7 @@
 # Toggle fullscreen => Ctrl+Alt+k
 # Tile window left, right => Ctrl+Alt+(hl)
 # Move window to upper workspace (vim-like) => Shift+Ctrl+Alt+(hjkl)
+# Change space => Shift+Ctrl+(hl)
 
 - name: XFCE desktop environment
   block:
@@ -27,11 +28,38 @@
         force: true
         state: link
       notify: reload xprofile conf
-  when: desktop_environment == 'xfce'
+  when: desktop_environment is not undefined and desktop_environment == 'xfce'
 
-- name: TODO
+- name: Key bindings MacOS
   block:
-    - name: TODO
-      ansible.builtin.debug:
-        msg: "TODO"
-  when: ansible_os_family != 'Archlinux'
+    - name: Install Karabiner
+      ansible.builtin.package:
+        name: "karabiner-elements"
+        state: present
+      register: result
+      failed_when: '"already installed" not in result.msg and result.msg != ""'
+
+    - name: Soft link complex modification
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/custom-capslock.json"
+        dest: "{{ ansible_env.HOME }}/.config/karabiner/assets/complex_modifications/custom-capslock.json"
+        force: true
+        state: link
+
+    - name: Soft link complex modification
+      ansible.builtin.file:
+        src: "{{ playbook_dir }}/files/karabiner.json"
+        dest: "{{ ansible_env.HOME }}/.config/karabiner/karabiner.json"
+        force: true
+        state: link
+
+    - name: Install mas
+      ansible.builtin.package:
+        name: mas
+        state: present
+
+    - name: Install BetterSnapTool
+      community.general.mas:
+        id: 417375580
+        state: present
+  when: ansible_os_family == 'Darwin'

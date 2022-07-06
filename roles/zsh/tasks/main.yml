@@ -1,11 +1,19 @@
 ---
 
+- name: Set facts
+  ansible.builtin.set_fact:
+    files:
+      - .zshrc
+
+- name: Set facts
+  ansible.builtin.set_fact:
+    files: "{{ files + ['.dir_colors'] }}"
+  when: desktop_environment is not undefined and desktop_environment == 'xfce'
+
 - name: Soft link shell
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/{{ item }}"
     dest: "{{ ansible_env.HOME }}/{{ item }}"
     force: true
     state: link
-  loop:
-    - .zshrc
-    - .dir_colors
+  loop: "{{ files }}"

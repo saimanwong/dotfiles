@@ -7,8 +7,15 @@
   become: true
   when: ansible_os_family == "Debian"
 
-- name: Install git
+- name: Install git (privileged)
   ansible.builtin.package:
     name: git
     state: present
   become: true
+  when: ansible_os_family != "Darwin"
+
+- name: Install git
+  ansible.builtin.package:
+    name: git
+    state: present
+  when: ansible_os_family == "Darwin"

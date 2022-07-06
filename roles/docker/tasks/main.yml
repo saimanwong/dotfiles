@@ -5,31 +5,44 @@
 #     repo: https://aur.archlinux.org/docker-git.git
 #     path: "{{ ansible_env.HOME }}/.aur"
 
-- name: Install Docker
-  ansible.builtin.package:
-    name: "{{ docker_package_name[ansible_os_family] }}"
-    state: present
-  become: true
+- name: Docker on Linux
+  block:
+    - name: Install Docker
+      ansible.builtin.package:
+        name: "{{ docker_package_name[ansible_os_family] }}"
+        state: present
+      become: true
 
-- name: Start Docker
-  ansible.builtin.service:
-    name: docker
-    state: started
-    enabled: true
-  become: true
+    - name: Start Docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+      become: true
 
-- name: Ensure group docker exists
-  ansible.builtin.group:
-    name: docker
-    state: present
+    - name: Ensure group docker exists
+      ansible.builtin.group:
+        name: docker
+        state: present
 
-- name: Get current user
-  ansible.builtin.command: whoami
-  register: resp
+    - name: Get current user
+      ansible.builtin.command: whoami
+      register: resp
 
-- name: Ensure my user into the docker group
-  ansible.builtin.user:
-    name:  "{{ resp.stdout }}"
-    groups: docker
-    append: true
-  become: true
+    - name: Ensure my user into the docker group
+      ansible.builtin.user:
+        name:  "{{ resp.stdout }}"
+        groups: docker
+        append: true
+      become: true
+  when: ansible_os_family != "Darwin"
+
+- name: Rancher on MacOS
+  block:
+    - name: Install Rancher
+      ansible.builtin.package:
+        name: rancher
+        state: present
+      register: result
+      failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == "Darwin"

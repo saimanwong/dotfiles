@@ -5,7 +5,15 @@
     name: signal-desktop
     state: present
   become: true
-  when: ansible_os_family != "Debian"
+  when: ansible_os_family != "Debian" and ansible_os_family != "Darwin"
+
+- name: Install Signal on MacOS
+  ansible.builtin.package:
+    name: signal
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == "Darwin"
 
 - name: Install Signal on Debian
   community.general.snap:

@@ -4,13 +4,13 @@
   ansible.builtin.package:
     name: neovim
     state: present
-  become: true
+  become: "{{ true if ansible_os_family != 'Darwin' else false }}"
 
 - name: Install fzf
   ansible.builtin.package:
     name: fzf
     state: present
-  become: true
+  become: "{{ true if ansible_os_family != 'Darwin' else false }}"
 
 - name: Special repo for nodejs on Debian
   ansible.builtin.shell:
@@ -22,7 +22,7 @@
   ansible.builtin.package:
     name: nodejs
     state: present
-  become: true
+  become: "{{ true if ansible_os_family != 'Darwin' else false }}"
 
 - name: Install vim-plug
   ansible.builtin.shell:

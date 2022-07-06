@@ -2,11 +2,9 @@
 
 - name: Install Go
   ansible.builtin.package:
-    name: "{{ go_package_name[ansible_os_family] }}"
+    name: golang
     state: present
-  become: true
-  when: ansible_os_family != "Debian"
-
+  when: ansible_os_family == "Darwin"
 
 - name: Go on Debian
   block:

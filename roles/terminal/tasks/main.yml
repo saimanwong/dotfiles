@@ -35,11 +35,14 @@
         dest: "{{ ansible_env.HOME }}/.config/xfce4/terminal/terminalrc"
         force: true
         state: link
-  when: desktop_environment == 'xfce'
+  when: desktop_environment is defined and desktop_environment == 'xfce'
 
-- name: TODO
+- name: MacOS
   block:
-    - name: TODO
-      ansible.builtin.debug:
-        msg: "TODO"
-  when: ansible_os_family != 'Archlinux'
+    - name: Install Iterm2
+      ansible.builtin.package:
+        name: iterm2
+        state: present
+      register: result
+      failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == 'Darwin'

@@ -1,11 +1,19 @@
 ---
 
-- name: Install Discord
+- name: Install Discord (privileged)
   ansible.builtin.package:
     name: discord
     state: present
   become: true
-  when: ansible_os_family != 'Debian'
+  when: ansible_os_family != 'Debian' and ansible_os_family != 'Darwin'
+
+- name: Install Discord on MacOS
+  ansible.builtin.package:
+    name: discord
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == 'Darwin'
 
 - name: Install Discord on Debian
   community.general.snap:
