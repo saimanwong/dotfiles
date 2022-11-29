@@ -53,6 +53,19 @@
         force: true
         state: link
 
+    - name: Create ~/Library/Application\ Support/Rectangle dir
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/Library/Application\ Support/Rectangle"
+        state: directory
+        mode: '0755'
+
+    - name: Copy RectangleConfig.json to ~/Library/Application\ Support/Rectangle/RectangleConfig.json
+      ansible.builtin.copy:
+        src: RectangleConfig.json
+        dest: "{{ ansible_env.HOME }}/Library/Application\ Support/Rectangle/RectangleConfig.json"
+        mode: '0644'
+      become: true
+
     - name: Install Rectangle
       ansible.builtin.package:
         name: "rectangle"
