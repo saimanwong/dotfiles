@@ -53,13 +53,10 @@
         force: true
         state: link
 
-    - name: Install mas
+    - name: Install Rectangle
       ansible.builtin.package:
-        name: mas
+        name: "rectangle"
         state: present
-
-    - name: Install BetterSnapTool
-      community.general.mas:
-        id: 417375580
-        state: present
+      register: result
+      failed_when: '"already installed" not in result.msg and result.msg != ""'
   when: ansible_os_family == 'Darwin'

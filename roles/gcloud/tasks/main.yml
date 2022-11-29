@@ -1,0 +1,12 @@
+---
+
+- name: Install gcloud
+  ansible.builtin.package:
+    name: google-cloud-sdk
+    state: present
+  when: ansible_os_family == "Darwin"
+  register: result
+  failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == 'Darwin'
+
+

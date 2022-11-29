@@ -5,6 +5,7 @@
     - { role: aur, when: "ansible_os_family == 'Archlinux'" }
     - { role: mac_keyboard, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
     - { role: mac_facetimehd, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
+    - gcloud
     - terminal
     - zsh
     - authy

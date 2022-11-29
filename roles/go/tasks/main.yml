@@ -2,7 +2,13 @@
 
 - name: Install Go
   ansible.builtin.package:
-    name: golang
+    name: go
+    state: absent
+  when: ansible_os_family == "Darwin"
+
+- name: Install Go
+  ansible.builtin.package:
+    name: go@1.18
     state: present
   when: ansible_os_family == "Darwin"
 

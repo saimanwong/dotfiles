@@ -14,3 +14,11 @@
     classic: true
   become: true
   when: ansible_os_family == 'Debian'
+
+- name: Install Slack
+  ansible.builtin.package:
+    name: "slack"
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == 'Darwin'
