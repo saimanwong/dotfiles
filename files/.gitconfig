@@ -1,0 +1,9 @@
+[user]
+	name = Sai Man Wong
+	email = 7148604+saimanwong@users.noreply.github.com
+
+[includeIf "gitdir:~/github/"]
+	path = ~/github/.gitconfig
+
+[includeIf "gitdir:~/gitlab/"]
+	path = ~/gitlab/.gitconfig

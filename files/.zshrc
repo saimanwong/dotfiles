@@ -31,7 +31,7 @@ esac
 export GOPATH="${HOME}/go"
 export PATH="${PATH}:/usr/local/go/bin"
 export PATH="${PATH}:$(go env GOPATH)/bin"
-export CDPATH="${HOME}/git"
+export CDPATH="${HOME}/github:${HOME}/gitlab"
 
 ZSH_THEME="robbyrussell"
 
@@ -39,6 +39,8 @@ plugins=(
   git
   ssh-agent
 )
+
+zstyle :omz:plugins:ssh-agent identities id_github id_gitlab
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"

@@ -46,9 +46,16 @@
         force: true
         state: link
 
+    - name: Fail when wrong hw_keyboard
+      ansible.builtin.fail:
+        msg: hw_keyboard not 'ansi' or 'iso'
+      when: |
+        hw_keyboard is undefined or
+        not (hw_keyboard == 'ansi' or hw_keyboard == 'iso')
+
     - name: Soft link complex modification
       ansible.builtin.file:
-        src: "{{ playbook_dir }}/files/karabiner.json"
+        src: "{{ playbook_dir }}/files/karabiner-{{ hw_keyboard }}.json"
         dest: "{{ ansible_env.HOME }}/.config/karabiner/karabiner.json"
         force: true
         state: link

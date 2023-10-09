@@ -19,3 +19,51 @@
     name: git
     state: present
   when: ansible_os_family == "Darwin"
+
+- name: Soft link ssh config
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/sshconfig"
+    dest: "{{ ansible_env.HOME }}/.ssh/config"
+    force: true
+    state: link
+
+- name: Soft link .gitconfig
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/.gitconfig"
+    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    force: true
+    state: link
+
+- name: Soft link .gitconfig
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/.gitconfig"
+    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    force: true
+    state: link
+
+- name: Create ~/github
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/github"
+    state: directory
+    mode: '0755'
+
+- name: Soft link .gitconfig github
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/.gitconfig.github"
+    dest: "{{ ansible_env.HOME }}/github/.gitconfig"
+    force: true
+    state: link
+
+- name: Create ~/gitlab
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/gitlab"
+    state: directory
+    mode: '0755'
+
+- name: Soft link .gitconfig gitlab
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/.gitconfig.gitlab"
+    dest: "{{ ansible_env.HOME }}/gitlab/.gitconfig"
+    force: true
+    state: link
+
