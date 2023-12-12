@@ -4,7 +4,6 @@
   ansible.builtin.package:
     name: awscli
     state: present
-  when: ansible_os_family == "Darwin"
   register: result
   failed_when: '"installed" not in result.msg and result.msg != ""'
   when: ansible_os_family == 'Darwin'
