@@ -1,8 +1,0 @@
----
-
-- name: Install oc
-  ansible.builtin.package:
-    name: openshift-cli
-    state: present
-  become: "{{ true if ansible_os_family != 'Darwin' else false }}"
-
