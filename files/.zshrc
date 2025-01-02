@@ -12,8 +12,7 @@ case `uname` in
     export SHELL=/bin/zsh
     export PATH="${PATH}:${BREW_BASEPATH}/bin"
     export PATH="${BREW_BASEPATH}/opt/make/libexec/gnubin:${PATH}"
-    export PATH="${BREW_BASEPATH}/opt/go@1.21/bin:${PATH}"
-    # export PATH="${BREW_BASEPATH}/opt/go@1.20/bin:${PATH}"
+    export PATH="${BREW_BASEPATH}/opt/go@1.23/bin:${PATH}"
     export PATH="${PATH}:${HOME}/.rd/bin"
     export PATH="${BREW_BASEPATH}/opt/node@16/bin:$PATH"
     export CPPFLAGS="-I${BREW_BASEPATH}/opt/node@16/include"
@@ -47,6 +46,8 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 eval "$(pyenv init -)"
+
+export LANG=en_US.UTF-8
 
 alias vim=nvim
 alias sed=gsed
