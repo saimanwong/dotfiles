@@ -1,0 +1,9 @@
+---
+
+- name: Install Pulumi
+  ansible.builtin.package:
+    name: pulumi/tap/pulumi
+    state: present
+  register: result
+  failed_when: '"installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == 'Darwin'

@@ -20,3 +20,4 @@
     - signal
     - slack
     - k8s
+    - pulumi
