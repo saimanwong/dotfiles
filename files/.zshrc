@@ -12,7 +12,7 @@ case `uname` in
     export SHELL=/bin/zsh
     export PATH="${PATH}:${BREW_BASEPATH}/bin"
     export PATH="${BREW_BASEPATH}/opt/make/libexec/gnubin:${PATH}"
-    export PATH="${BREW_BASEPATH}/opt/go@1.23/bin:${PATH}"
+    export PATH="${BREW_BASEPATH}/opt/go@1.24/bin:${PATH}"
     export PATH="${PATH}:${HOME}/.rd/bin"
     export PATH="${BREW_BASEPATH}/opt/node@16/bin:$PATH"
     export CPPFLAGS="-I${BREW_BASEPATH}/opt/node@16/include"

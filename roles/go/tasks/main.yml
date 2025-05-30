@@ -5,8 +5,8 @@
     name: "{{ item }}"
     state: present
   with_items:
+    - go@1.24
     - go@1.23
-    - go@1.22
   when: ansible_os_family == "Darwin"
 
 - name: Go on Debian
