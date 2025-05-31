@@ -20,3 +20,5 @@
     - slack
     - k8s
     - pulumi
+    - terraform-ls
+    - opentofu
