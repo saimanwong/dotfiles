@@ -6,19 +6,19 @@
     - { role: mac_keyboard, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
     - { role: mac_facetimehd, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
     - awscli
-    - gcloud
-    - terminal
-    - zsh
+    - discord
     - docker
+    - gcloud
     - git
     - go
-    - neovim
+    - k8s
     - keybindings
-    - tmux
-    - discord
+    - neovim
+    - opentofu
+    - pulumi
     - signal
     - slack
-    - k8s
-    - pulumi
+    - terminal
     - terraform-ls
-    - opentofu
+    - tmux
+    - zsh
