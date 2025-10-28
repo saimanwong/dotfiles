@@ -9,6 +9,7 @@
     - discord
     - docker
     - gcloud
+    - gemini-cli
     - git
     - go
     - k8s
