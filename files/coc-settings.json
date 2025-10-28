@@ -16,5 +16,6 @@
       "initializationOptions": {},
       "settings": {}
     }
-  }
+  },
+  "typescript.autoClosingTags": false
 }
