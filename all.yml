@@ -2,24 +2,69 @@
 
 - hosts: "{{ h }}"
   roles:
-    - { role: aur, when: "ansible_os_family == 'Archlinux'" }
-    - { role: mac_keyboard, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
-    - { role: mac_facetimehd, when: "ansible_os_family == 'Archlinux' and hw == 'mac'" }
-    - awscli
-    - discord
-    - docker
-    - gcloud
-    - gemini-cli
-    - git
-    - go
-    - k8s
-    - keybindings
-    - neovim
-    - opentofu
-    - pulumi
-    - signal
-    - slack
-    - terminal
-    - terraform-ls
-    - tmux
-    - zsh
+    - role: aur
+      when: "ansible_os_family == 'Archlinux'"
+      tags:
+        - aur
+    - role: mac_keyboard
+      when: "ansible_os_family == 'Archlinux' and hw == 'mac'"
+      tags:
+        - mac_keyboard
+    - role: mac_facetimehd
+      when: "ansible_os_family == 'Archlinux' and hw == 'mac'"
+      tags:
+        - mac_facetimehd
+    - role: awscli
+      tags:
+        - awscli
+    - role: discord
+      tags:
+        - discord
+    - role: docker
+      tags:
+        - docker
+    - role: gcloud
+      tags:
+        - gcloud
+    - role: gemini-cli
+      tags:
+        - gemini-cli
+    - role: git
+      tags:
+        - git
+    - role: go
+      tags:
+        - go
+    - role: k8s
+      tags:
+        - k8s
+    - role: keybindings
+      tags:
+        - keybindings
+    - role: neovim
+      tags:
+        - neovim
+    - role: opentofu
+      tags:
+        - opentofu
+    - role: pulumi
+      tags:
+        - pulumi
+    - role: signal
+      tags:
+        - signal
+    - role: slack
+      tags:
+        - slack
+    - role: terminal
+      tags:
+        - terminal
+    - role: terraform-ls
+      tags:
+        - terraform-ls
+    - role: tmux
+      tags:
+        - tmux
+    - role: zsh
+      tags:
+        - zsh
