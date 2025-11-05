@@ -43,6 +43,7 @@ Each role in the playbook has a corresponding tag. This allows you to run only s
 - `terraform-ls`
 - `tmux`
 - `zsh`
+- `uv`
 
 ## Development Conventions
 

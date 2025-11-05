@@ -53,3 +53,5 @@ export LANG=en_US.UTF-8
 alias vim=nvim
 alias sed=gsed
 source $ZSH/oh-my-zsh.sh
+
+. "$HOME/.local/bin/env"

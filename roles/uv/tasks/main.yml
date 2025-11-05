@@ -1,0 +1,8 @@
+- name: Check if uv is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.cargo/bin/uv"
+  register: uv_stat
+
+- name: Install uv
+  ansible.builtin.shell: curl -LsSf https://astral.sh/uv/install.sh | sh
+  when: ansible_facts['os_family'] == "Darwin" and not uv_stat.stat.exists
