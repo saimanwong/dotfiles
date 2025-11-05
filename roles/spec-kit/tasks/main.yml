@@ -1,0 +1,4 @@
+- name: Install spec-kit
+  ansible.builtin.command: uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/specify-cli"

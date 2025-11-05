@@ -56,6 +56,9 @@
     - role: slack
       tags:
         - slack
+    - role: spec-kit
+      tags:
+        - spec-kit
     - role: terminal
       tags:
         - terminal

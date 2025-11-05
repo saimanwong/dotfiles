@@ -39,6 +39,7 @@ Each role in the playbook has a corresponding tag. This allows you to run only s
 - `pulumi`
 - `signal`
 - `slack`
+- `spec-kit`
 - `terminal`
 - `terraform-ls`
 - `tmux`
