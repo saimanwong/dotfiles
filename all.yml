@@ -35,6 +35,9 @@
     - role: go
       tags:
         - go
+    - role: huggingface
+      tags:
+        - huggingface
     - role: k8s
       tags:
         - k8s
