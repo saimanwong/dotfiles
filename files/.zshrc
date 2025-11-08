@@ -32,6 +32,7 @@ export PATH="${PATH}:/usr/local/go/bin"
 export PATH="${PATH}:$(go env GOPATH)/bin"
 export CDPATH="${HOME}/github:${HOME}/gitlab"
 export PATH="${PATH}:${HOME}/.rd/bin"
+export PATH="${PATH}:${HOME}/.local/bin"
 
 ZSH_THEME="robbyrussell"
 
