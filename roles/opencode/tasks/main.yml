@@ -1,0 +1,12 @@
+---
+
+- name: Install opencode on MacOS
+  ansible.builtin.package:
+    name: opencode
+    state: present
+  register: result
+  failed_when:
+    - '"already installed" not in result.msg'
+    - '"Package installed" not in result.msg'
+    - result.msg != ""
+  when: ansible_os_family == 'Darwin'

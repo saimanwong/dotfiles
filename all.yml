@@ -44,6 +44,9 @@
     - role: neovim
       tags:
         - neovim
+    - role: opencode
+      tags:
+        - opencode
     - role: opentofu
       tags:
         - opentofu
