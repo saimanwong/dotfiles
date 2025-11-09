@@ -44,9 +44,7 @@
     - role: keybindings
       tags:
         - keybindings
-    - role: lm-studio
-      tags:
-        - lm-studio
+
     - role: neovim
       tags:
         - neovim
