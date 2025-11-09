@@ -10,10 +10,19 @@
 
 ## Available Roles
 
-- **ollama**: Install Ollama for local LLM management on macOS
 - **huggingface**: Install Hugging Face CLI for AI model management
 - **docker**: Install Docker for containerization
 - **neovim**: Install Neovim text editor
 - **tmux**: Install terminal multiplexer
 - **zsh**: Install Zsh shell configuration
+- **ollama**: Install Ollama for local LLM management on macOS (opt-in)
 - And many more... see `all.yml` for complete list
+
+## Opt-in Roles
+
+Some roles are opt-in and must be run explicitly:
+
+- **ollama**: Install Ollama and download LLM models
+  ```bash
+  ansible-playbook -i inventory.ini -K -e h=mac all.yml --tags ollama
+  ```

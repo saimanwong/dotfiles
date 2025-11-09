@@ -6,6 +6,15 @@
 - **Test syntax**: `ansible-playbook -i inventory.ini --syntax-check all.yml`
 - **Dry run**: `ansible-playbook -i inventory.ini -K --check all.yml`
 
+## Opt-in Roles
+
+The following roles are opt-in and must be run explicitly:
+
+- **ollama**: Install Ollama for local LLM management
+  ```bash
+  ansible-playbook -i inventory.ini -K -e h=mac all.yml --tags ollama
+  ```
+
 ## Code Style Guidelines
 - Use YAML with 2-space indentation
 - Follow Ansible best practices: use FQCN (ansible.builtin.* modules)
