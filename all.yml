@@ -44,7 +44,9 @@
     - role: keybindings
       tags:
         - keybindings
-
+    - role: ollama
+      tags:
+        - ollama
     - role: neovim
       tags:
         - neovim
