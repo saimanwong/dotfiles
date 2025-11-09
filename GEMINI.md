@@ -23,8 +23,6 @@ ansible-playbook -i inventory.ini -K -e h=<host> -e hw_keyboard=<keyboard_type> 
 Each role in the playbook has a corresponding tag. This allows you to run only specific roles. The following tags are available:
 
 - `aur`
-- `mac_keyboard`
-- `mac_facetimehd`
 - `awscli`
 - `discord`
 - `docker`
@@ -32,9 +30,14 @@ Each role in the playbook has a corresponding tag. This allows you to run only s
 - `gemini-cli`
 - `git`
 - `go`
+- `huggingface`
 - `k8s`
 - `keybindings`
+- `mac_facetimehd`
+- `mac_keyboard`
 - `neovim`
+- `ollama`
+- `opencode`
 - `opentofu`
 - `pulumi`
 - `signal`
@@ -43,8 +46,17 @@ Each role in the playbook has a corresponding tag. This allows you to run only s
 - `terminal`
 - `terraform-ls`
 - `tmux`
-- `zsh`
 - `uv`
+- `zsh`
+
+## Opt-in Roles
+
+Some roles are opt-in and must be run explicitly:
+
+- **ollama**: Install Ollama and download LLM models
+  ```bash
+  ansible-playbook -i inventory.ini -K -e h=mac all.yml --tags ollama
+  ```
 
 ## Development Conventions
 
