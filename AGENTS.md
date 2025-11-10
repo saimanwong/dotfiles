@@ -15,6 +15,11 @@ The following roles are opt-in and must be run explicitly:
   ansible-playbook -i inventory.ini -K -e h=mac all.yml --tags ollama
   ```
 
+- **openai-cli**: Install OpenAI CLI for interacting with OpenAI APIs
+  ```bash
+  ansible-playbook -i inventory.ini -K -e h=mac all.yml --tags openai-cli
+  ```
+
 ## Code Style Guidelines
 - Use YAML with 2-space indentation
 - Follow Ansible best practices: use FQCN (ansible.builtin.* modules)

@@ -1,0 +1,9 @@
+---
+
+- name: Install Linear on MacOS
+  ansible.builtin.package:
+    name: linear-linear
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == 'Darwin'

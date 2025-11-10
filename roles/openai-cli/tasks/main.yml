@@ -1,0 +1,7 @@
+---
+
+- name: Install OpenAI CLI
+  ansible.builtin.pip:
+    name: openai
+    state: present
+  when: ansible_os_family == 'Darwin'

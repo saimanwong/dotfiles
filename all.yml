@@ -45,15 +45,15 @@
       tags:
         - keybindings
 
-    - role: neovim
-      tags:
-        - neovim
-    - role: opencode
-      tags:
-        - opencode
-    - role: opentofu
-      tags:
-        - opentofu
+     - role: neovim
+       tags:
+         - neovim
+      - role: linear
+        tags:
+          - linear
+      - role: opentofu
+       tags:
+         - opentofu
     - role: pulumi
       tags:
         - pulumi
