@@ -56,6 +56,7 @@
   ansible.builtin.copy:
     content: "{{ resp.content }}"
     dest: "{{ ansible_env.HOME }}/.config/nvim/ftdetect/proto.vim"
+  when: not ansible_check_mode
 
 - name: Install plugins
   ansible.builtin.command:

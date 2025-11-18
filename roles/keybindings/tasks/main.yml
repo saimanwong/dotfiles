@@ -71,7 +71,6 @@
         src: RectangleConfig.json
         dest: "{{ ansible_env.HOME }}/Library/Application\ Support/Rectangle/RectangleConfig.json"
         mode: '0644'
-      become: true
 
     - name: Install Rectangle
       ansible.builtin.package:
