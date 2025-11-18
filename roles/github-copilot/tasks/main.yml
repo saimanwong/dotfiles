@@ -1,0 +1,7 @@
+---
+
+- name: Install GitHub Copilot CLI
+  community.general.npm:
+    name: "@github/copilot"
+    global: true
+    state: present
