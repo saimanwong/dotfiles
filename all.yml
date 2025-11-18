@@ -32,6 +32,9 @@
     - role: git
       tags:
         - git
+    - role: github-copilot
+      tags:
+        - github-copilot
     - role: go
       tags:
         - go
@@ -47,6 +50,9 @@
     - role: neovim
       tags: 
         - neovim
+    - role: opencode
+      tags:
+        - opencode
     - role: linear
       tags:
         - linear
