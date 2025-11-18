@@ -12,17 +12,7 @@
     state: present
   become: "{{ true if ansible_os_family != 'Darwin' else false }}"
 
-- name: Special repo for nodejs on Debian
-  ansible.builtin.shell:
-    cmd: >
-      curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-  when: ansible_os_family == "Debian"
 
-- name: Install nodejs
-  ansible.builtin.package:
-    name: nodejs
-    state: present
-  become: "{{ true if ansible_os_family != 'Darwin' else false }}"
 
 - name: Install vim-plug
   ansible.builtin.shell:

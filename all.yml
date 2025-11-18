@@ -35,6 +35,9 @@
     - role: github-copilot
       tags:
         - github-copilot
+    - role: nodejs
+      tags:
+        - nodejs
     - role: go
       tags:
         - go
