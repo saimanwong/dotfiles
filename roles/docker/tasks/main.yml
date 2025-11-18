@@ -46,3 +46,5 @@
       register: result
       failed_when: '"already installed" not in result.msg and result.msg != ""'
   when: ansible_os_family == "Darwin"
+
+# TODO: Consider adding Podman as an alternative to Docker for better security and rootless containers
