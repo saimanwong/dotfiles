@@ -14,6 +14,10 @@
       when: "ansible_os_family == 'Archlinux' and hw == 'mac'"
       tags:
         - mac_facetimehd
+    - role: macos-terminal
+      when: "ansible_os_family == 'Darwin'"
+      tags:
+        - macos-terminal
     - role: awscli
       tags:
         - awscli

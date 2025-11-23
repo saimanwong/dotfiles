@@ -39,6 +39,9 @@
 - **mac_keyboard**: Mac keyboard mapping (Arch Linux + Mac hardware)
 - **mac_facetimehd**: Mac FaceTime HD camera support (Arch Linux + Mac hardware)
 
+### macOS-Specific Roles
+- **macos-terminal**: macOS specific terminal and system settings (macOS only)
+
 ### Opt-in Roles
 The following roles are available but not included by default:
 
