@@ -45,6 +45,9 @@
     - role: go
       tags:
         - go
+    - role: htop
+      tags:
+        - htop
     - role: huggingface
       tags:
         - huggingface
