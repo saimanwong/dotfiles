@@ -21,6 +21,9 @@
     - role: awscli
       tags:
         - awscli
+    - role: claude-code
+      tags:
+        - claude-code
     - role: discord
       tags:
         - discord

@@ -11,6 +11,7 @@
 ### Core Roles (included by default)
 - **aur**: Arch User Repository setup (Arch Linux only)
 - **awscli**: AWS Command Line Interface
+- **claude-code**: Claude Code CLI tool
 - **discord**: Discord desktop application
 - **docker**: Docker containerization platform
 - **gcloud**: Google Cloud CLI
