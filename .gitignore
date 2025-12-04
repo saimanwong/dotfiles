@@ -1,0 +1,6 @@
+# Secrets and sensitive files
+.secrets
+*.secrets
+
+# Ansible retry files
+*.retry

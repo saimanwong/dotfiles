@@ -59,3 +59,23 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$PATH:${HOME}/.lmstudio/bin"
 # End of LM Studio CLI section
 
+# Source secure environment variables
+if [ -f "${HOME}/.secrets" ]; then
+  source "${HOME}/.secrets"
+else
+  # Create template .secrets file if it doesn't exist
+  cat > "${HOME}/.secrets" << 'EOF'
+# Secure environment variables
+# This file is sourced by .zshrc and should NOT be committed to version control
+
+# Linear API Key for MCP integration
+# Get your key from: https://linear.app → Settings → Security & access → New API Key
+export LINEAR_API_KEY="linapi_YOUR_TOKEN_HERE"
+
+# Add more environment variables below as needed
+# export ANOTHER_API_KEY="your_key_here"
+EOF
+  chmod 600 "${HOME}/.secrets"
+  echo "⚠️  Created template ~/.secrets file. Please edit it to add your Linear API key."
+fi
+

@@ -18,5 +18,15 @@
         }
       }
     }
+  },
+  "mcp": {
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/sse",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:LINEAR_API_KEY}"
+      }
+    }
   }
 }

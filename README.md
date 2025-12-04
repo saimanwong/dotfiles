@@ -32,7 +32,7 @@
 - **linear**: Linear CLI
 - **neovim**: Neovim text editor configuration
 - **nodejs**: Node.js JavaScript runtime
-- **opencode**: Install OpenCode CLI tool
+- **opencode**: Install OpenCode CLI tool with Linear MCP integration configured
 - **opentofu**: OpenTofu infrastructure as code
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app
