@@ -17,6 +17,7 @@
 - **gcloud**: Google Cloud CLI
 - **gemini-cli**: Google Gemini CLI tool
 - **git**: Git version control configuration
+- **gh**: GitHub CLI tool
 - **github-copilot**: Install GitHub Copilot CLI globally via npm
 - **go**: Go programming language
 - **htop**: Htop process viewer

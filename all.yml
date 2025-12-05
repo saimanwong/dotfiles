@@ -39,6 +39,9 @@
     - role: git
       tags:
         - git
+    - role: gh
+      tags:
+        - gh
     - role: github-copilot
       tags:
         - github-copilot

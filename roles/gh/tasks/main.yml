@@ -1,0 +1,34 @@
+---
+- name: Install GitHub CLI (gh) on macOS
+  community.general.homebrew:
+    name: gh
+    state: present
+  when: ansible_os_family == "Darwin"
+
+- name: Install GitHub CLI (gh) on Arch Linux
+  community.general.pacman:
+    name: github-cli
+    state: present
+  become: true
+  when: ansible_os_family == "Archlinux"
+
+- name: Install GitHub CLI (gh) on Ubuntu/Debian
+  ansible.builtin.apt:
+    name: gh
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_os_family == "Debian"
+
+- name: Create gh config directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config/gh"
+    state: directory
+    mode: '0755'
+
+- name: Configure gh default editor
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/gh/config.yml"
+    line: "editor: vim"
+    create: true
+    mode: '0644'
