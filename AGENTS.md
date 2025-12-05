@@ -63,3 +63,20 @@ The following roles are available but not included by default:
 - File operations: prefer `ansible.builtin.file` with `state: link` for symlinks
 - Package installation: use `become: true` for privileged operations, conditional on OS family
 - Loop constructs: use `loop:` with `{{ item }}` for iteration
+
+## Secret Configuration Workflow
+
+When adding a new secret/token to the configuration:
+
+1. **Add template to `.zshrc`** in the `else` block (when `.secrets` doesn't exist)
+2. **Add check logic** in the `if` block (when `.secrets` exists) to:
+   - Use `grep -q "export SECRET_NAME="` to check if secret exists
+   - If missing, append the template with proper comments and instructions
+   - Provide user feedback about the addition
+3. **Include proper comments** with:
+   - Purpose of the secret
+   - Where to obtain it (URL)
+   - Any required scopes/permissions
+4. **Use descriptive placeholder** like `PREFIX_YOUR_TOKEN_HERE`
+
+This ensures both new and existing users get the secret template automatically when their shell loads.

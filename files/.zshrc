@@ -62,6 +62,25 @@ export PATH="$PATH:${HOME}/.lmstudio/bin"
 # Source secure environment variables
 if [ -f "${HOME}/.secrets" ]; then
   source "${HOME}/.secrets"
+
+  # Check if Linear API key exists and add template if missing
+  if ! grep -q "export LINEAR_API_KEY=" "${HOME}/.secrets"; then
+    echo "" >> "${HOME}/.secrets"
+    echo "# Linear API Key for MCP integration" >> "${HOME}/.secrets"
+    echo "# Get your key from: https://linear.app → Settings → Security & access → New API Key" >> "${HOME}/.secrets"
+    echo "export LINEAR_API_KEY=\"linapi_YOUR_TOKEN_HERE\"" >> "${HOME}/.secrets"
+    echo "ℹ️  Added Linear API key template to ~/.secrets. Please edit it to add your key."
+  fi
+
+  # Check if GitHub token exists and add template if missing
+  if ! grep -q "export GITHUB_TOKEN=" "${HOME}/.secrets"; then
+    echo "" >> "${HOME}/.secrets"
+    echo "# GitHub Personal Access Token for gh CLI" >> "${HOME}/.secrets"
+    echo "# Get your token from: https://github.com/settings/tokens" >> "${HOME}/.secrets"
+    echo "# Required scopes: repo, read:org, read:user, gist" >> "${HOME}/.secrets"
+    echo "export GITHUB_TOKEN=\"ghp_YOUR_TOKEN_HERE\"" >> "${HOME}/.secrets"
+    echo "ℹ️  Added GitHub token template to ~/.secrets. Please edit it to add your token."
+  fi
 else
   # Create template .secrets file if it doesn't exist
   cat > "${HOME}/.secrets" << 'EOF'
@@ -76,6 +95,6 @@ export LINEAR_API_KEY="linapi_YOUR_TOKEN_HERE"
 # export ANOTHER_API_KEY="your_key_here"
 EOF
   chmod 600 "${HOME}/.secrets"
-  echo "⚠️  Created template ~/.secrets file. Please edit it to add your Linear API key."
+  echo "⚠️  Created template ~/.secrets file. Please edit it to add your Linear API key and GitHub token."
 fi
 
