@@ -32,12 +32,11 @@
 
 - name: Key bindings MacOS
   block:
-    - name: Install Karabiner
-      ansible.builtin.package:
-        name: "karabiner-elements"
-        state: present
-      register: result
-      failed_when: '"already installed" not in result.msg and result.msg != ""'
+    # TODO: Automate Karabiner Elements installation using homebrew cask
+    - name: Prompt for Karabiner Elements manual installation
+      ansible.builtin.pause:
+        prompt: "Please install Karabiner Elements manually by running: brew install --cask karabiner-elements\nPress Enter after installation is complete..."
+      when: ansible_os_family == 'Darwin'
 
     - name: Soft link complex modification
       ansible.builtin.file:
