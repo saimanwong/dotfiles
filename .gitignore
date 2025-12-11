@@ -4,3 +4,6 @@
 
 # Ansible retry files
 *.retry
+
+# Claude Code user-specific state
+.claude.json
