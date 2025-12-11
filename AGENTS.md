@@ -11,6 +11,7 @@
 ### Core Roles (included by default)
 - **aur**: Arch User Repository setup (Arch Linux only)
 - **awscli**: AWS Command Line Interface
+- **chrome**: Google Chrome web browser
 - **claude-code**: Claude Code CLI tool
 - **discord**: Discord desktop application
 - **docker**: Docker containerization platform
@@ -59,7 +60,7 @@ The following roles are available but not included by default:
 - Role structure: tasks/main.yml, handlers/main.yml, defaults/main.yml, meta/main.yml
 - Use descriptive task names with proper capitalization
 - Conditional logic: use `when:` with proper quoting for string comparisons
-- Variables: use `{{ playbook_dir }}` for relative paths, `{{ ansible_env.HOME }}` for home directory
+- Variables: use `{{ playbook_dir }}` for relative paths, `{{ ansible_facts.env.HOME }}` for home directory
 - File operations: prefer `ansible.builtin.file` with `state: link` for symlinks
 - Package installation: use `become: true` for privileged operations, conditional on OS family
 - Loop constructs: use `loop:` with `{{ item }}` for iteration

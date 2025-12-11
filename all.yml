@@ -21,6 +21,9 @@
     - role: awscli
       tags:
         - awscli
+    - role: chrome
+      tags:
+        - chrome
     - role: claude-code
       tags:
         - claude-code

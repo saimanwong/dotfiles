@@ -1,0 +1,44 @@
+---
+
+- name: Install Google Chrome on Linux (package manager)
+  ansible.builtin.package:
+    name: google-chrome-stable
+    state: present
+  become: true
+  when: ansible_facts.os_family != 'Debian' and ansible_facts.os_family != 'Darwin'
+
+- name: Install Google Chrome on Debian/Ubuntu
+  block:
+    - name: Add Google Chrome repository key
+      ansible.builtin.shell:
+        cmd: >
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | 
+          sudo apt-key add -
+      become: true
+
+    - name: Add Google Chrome repository
+      ansible.builtin.shell:
+        cmd: >
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | 
+          sudo tee /etc/apt/sources.list.d/google-chrome.list
+      become: true
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+      become: true
+
+    - name: Install Google Chrome
+      ansible.builtin.apt:
+        name: google-chrome-stable
+        state: present
+      become: true
+  when: ansible_facts.os_family == 'Debian'
+
+- name: Install Google Chrome on macOS
+  ansible.builtin.package:
+    name: google-chrome
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == 'Darwin'
