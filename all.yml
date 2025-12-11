@@ -99,6 +99,9 @@
     - role: spec-kit
       tags:
         - spec-kit
+    - role: temporal
+      tags:
+        - temporal
     - role: terminal
       tags:
         - terminal

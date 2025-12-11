@@ -38,6 +38,7 @@
 - **signal**: Signal messaging app
 - **slack**: Slack desktop application
 - **spec-kit**: Specification development tools
+- **temporal**: Temporal workflow engine CLI
 - **terminal**: Terminal configuration
 - **terraform-ls**: Terraform language server
 - **tmux**: Terminal multiplexer
