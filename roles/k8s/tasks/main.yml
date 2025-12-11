@@ -4,7 +4,7 @@
   ansible.builtin.package:
     name: openshift-cli
     state: present
-  become: "{{ false if ansible_os_family == 'Darwin' else true }}"
+  become: "{{ false if ansible_facts.os_family == 'Darwin' else true }}"
 
 - block:
   - name: Tap robscott/tap
@@ -14,5 +14,5 @@
     ansible.builtin.package:
       name: robscott/tap/kube-capacity
       state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'
 

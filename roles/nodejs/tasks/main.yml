@@ -4,17 +4,17 @@
   ansible.builtin.package:
     name: node
     state: present
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts.os_family == "Darwin"
 
 - name: Special repo for nodejs on Debian
   ansible.builtin.shell:
     cmd: >
       curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-  when: ansible_os_family == "Debian"
+  when: ansible_facts.os_family == "Debian"
 
 - name: Install nodejs on Debian
   ansible.builtin.package:
     name: nodejs
     state: present
   become: true
-  when: ansible_os_family == "Debian"
+  when: ansible_facts.os_family == "Debian"

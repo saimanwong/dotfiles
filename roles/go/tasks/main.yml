@@ -7,7 +7,7 @@
   with_items:
     - go@1.24
     - go@1.23
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts.os_family == "Darwin"
 
 - name: Go on Debian
   block:
@@ -28,4 +28,4 @@
           sudo rm -rf /usr/local/go &&
           sudo tar -C /usr/local -xzf /tmp/{{ go_amd64 }}
       become: true
-  when: ansible_os_family == "Debian"
+  when: ansible_facts.os_family == "Debian"

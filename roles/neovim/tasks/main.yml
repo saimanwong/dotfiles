@@ -4,13 +4,13 @@
   ansible.builtin.package:
     name: neovim
     state: present
-  become: "{{ true if ansible_os_family != 'Darwin' else false }}"
+  become: "{{ true if ansible_facts.os_family != 'Darwin' else false }}"
 
 - name: Install fzf
   ansible.builtin.package:
     name: fzf
     state: present
-  become: "{{ true if ansible_os_family != 'Darwin' else false }}"
+  become: "{{ true if ansible_facts.os_family != 'Darwin' else false }}"
 
 
 
@@ -19,15 +19,15 @@
     cmd: >
       sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-- name: "Ensure {{ ansible_env.HOME }}/nvim exists"
+- name: "Ensure {{ ansible_facts.env.HOME }}/nvim exists"
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config/nvim"
+    path: "{{ ansible_facts.env.HOME }}/.config/nvim"
     state: directory
 
 - name: Soft link files
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.config/nvim/{{ item }}"
+    dest: "{{ ansible_facts.env.HOME }}/.config/nvim/{{ item }}"
     force: true
     state: link
   loop:
@@ -36,14 +36,14 @@
 
 - name: Soft link from old vimrc to new
   ansible.builtin.file:
-    src: "{{ ansible_env.HOME }}/.config/nvim/init.vim"
-    dest: "{{ ansible_env.HOME }}/.vimrc"
+    src: "{{ ansible_facts.env.HOME }}/.config/nvim/init.vim"
+    dest: "{{ ansible_facts.env.HOME }}/.vimrc"
     force: true
     state: link
 
 - name: Ensure ftdetect dir exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config/nvim/ftdetect"
+    path: "{{ ansible_facts.env.HOME }}/.config/nvim/ftdetect"
     state: directory
 
 - name: Get proto vim filetype
@@ -52,10 +52,10 @@
     return_content: true
   register: resp
 
-- name: "Copy content into {{ ansible_env.HOME }}/.config/nvim/ftdetect/proto.vim"
+- name: "Copy content into {{ ansible_facts.env.HOME }}/.config/nvim/ftdetect/proto.vim"
   ansible.builtin.copy:
     content: "{{ resp.content }}"
-    dest: "{{ ansible_env.HOME }}/.config/nvim/ftdetect/proto.vim"
+    dest: "{{ ansible_facts.env.HOME }}/.config/nvim/ftdetect/proto.vim"
   when: not ansible_check_mode
 
 - name: Install plugins

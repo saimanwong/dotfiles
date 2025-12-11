@@ -13,7 +13,7 @@
 - name: Soft link shell
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/{{ item }}"
-    dest: "{{ ansible_env.HOME }}/{{ item }}"
+    dest: "{{ ansible_facts.env.HOME }}/{{ item }}"
     force: true
     state: link
   loop: "{{ files }}"

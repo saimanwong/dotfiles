@@ -5,7 +5,7 @@
     name: aur_install
   vars:
     aur_install_pkg: slack-desktop
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts.os_family == 'Archlinux'
 
 - name: Install Slack on Debian
   community.general.snap:
@@ -13,7 +13,7 @@
     state: present
     classic: true
   become: true
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
 
 - name: Install Slack
   ansible.builtin.package:
@@ -21,4 +21,4 @@
     state: present
   register: result
   failed_when: '"already installed" not in result.msg and result.msg != ""'
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'

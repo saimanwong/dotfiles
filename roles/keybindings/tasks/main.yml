@@ -17,14 +17,14 @@
     - name: Soft link xfce4-keyboard-shortcuts.xml
       ansible.builtin.file:
         src: "{{ playbook_dir }}/files/xfce4-keyboard-shortcuts.xml"
-        dest: "{{ ansible_env.HOME }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+        dest: "{{ ansible_facts.env.HOME }}/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
         force: true
         state: link
 
     - name: Soft link .xprofile
       ansible.builtin.file:
         src: "{{ playbook_dir }}/files/.xprofile"
-        dest: "{{ ansible_env.HOME }}/.xprofile"
+        dest: "{{ ansible_facts.env.HOME }}/.xprofile"
         force: true
         state: link
       notify: reload xprofile conf
@@ -36,12 +36,12 @@
     - name: Prompt for Karabiner Elements manual installation
       ansible.builtin.pause:
         prompt: "Please install Karabiner Elements manually by running: brew install --cask karabiner-elements\nPress Enter after installation is complete..."
-      when: ansible_os_family == 'Darwin'
+      when: ansible_facts.os_family == 'Darwin'
 
     - name: Soft link complex modification
       ansible.builtin.file:
         src: "{{ playbook_dir }}/files/custom-capslock.json"
-        dest: "{{ ansible_env.HOME }}/.config/karabiner/assets/complex_modifications/custom-capslock.json"
+        dest: "{{ ansible_facts.env.HOME }}/.config/karabiner/assets/complex_modifications/custom-capslock.json"
         force: true
         state: link
 
@@ -55,20 +55,20 @@
     - name: Soft link complex modification
       ansible.builtin.file:
         src: "{{ playbook_dir }}/files/karabiner-{{ hw_keyboard }}.json"
-        dest: "{{ ansible_env.HOME }}/.config/karabiner/karabiner.json"
+        dest: "{{ ansible_facts.env.HOME }}/.config/karabiner/karabiner.json"
         force: true
         state: link
 
     - name: Create ~/Library/Application\ Support/Rectangle dir
       ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/Library/Application\ Support/Rectangle"
+        path: "{{ ansible_facts.env.HOME }}/Library/Application\ Support/Rectangle"
         state: directory
         mode: '0755'
 
     - name: Copy RectangleConfig.json to ~/Library/Application\ Support/Rectangle/RectangleConfig.json
       ansible.builtin.copy:
         src: RectangleConfig.json
-        dest: "{{ ansible_env.HOME }}/Library/Application\ Support/Rectangle/RectangleConfig.json"
+        dest: "{{ ansible_facts.env.HOME }}/Library/Application\ Support/Rectangle/RectangleConfig.json"
         mode: '0644'
 
     - name: Install Rectangle
@@ -77,4 +77,4 @@
         state: present
       register: result
       failed_when: '"already installed" not in result.msg and result.msg != ""'
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'

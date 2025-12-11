@@ -9,4 +9,4 @@
     - '"already installed" not in result.msg'
     - '"Package installed" not in result.msg'
     - result.msg != ""
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'

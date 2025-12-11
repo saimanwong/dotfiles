@@ -1,9 +1,15 @@
 ---
 
+- name: Tap pulumi/tap
+  community.general.homebrew_tap:
+    name: pulumi/tap
+    state: present
+  when: ansible_facts.os_family == 'Darwin'
+
 - name: Install Pulumi
   ansible.builtin.package:
-    name: pulumi/tap/pulumi
+    name: pulumi
     state: present
   register: result
   failed_when: '"installed" not in result.msg and result.msg != ""'
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'

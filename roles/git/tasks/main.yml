@@ -5,65 +5,65 @@
     repo: ppa:git-core/ppa
     state: present
   become: true
-  when: ansible_os_family == "Debian"
+  when: ansible_facts.os_family == "Debian"
 
 - name: Install git (privileged)
   ansible.builtin.package:
     name: git
     state: present
   become: true
-  when: ansible_os_family != "Darwin"
+  when: ansible_facts.os_family != "Darwin"
 
 - name: Install git
   ansible.builtin.package:
     name: git
     state: present
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts.os_family == "Darwin"
 
 - name: Soft link ssh config
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/sshconfig"
-    dest: "{{ ansible_env.HOME }}/.ssh/config"
+    dest: "{{ ansible_facts.env.HOME }}/.ssh/config"
     force: true
     state: link
 
 - name: Soft link .gitconfig
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/.gitconfig"
-    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    dest: "{{ ansible_facts.env.HOME }}/.gitconfig"
     force: true
     state: link
 
 - name: Soft link .gitconfig
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/.gitconfig"
-    dest: "{{ ansible_env.HOME }}/.gitconfig"
+    dest: "{{ ansible_facts.env.HOME }}/.gitconfig"
     force: true
     state: link
 
 - name: Create ~/github
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/github"
+    path: "{{ ansible_facts.env.HOME }}/github"
     state: directory
     mode: '0755'
 
 - name: Soft link .gitconfig github
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/.gitconfig.github"
-    dest: "{{ ansible_env.HOME }}/github/.gitconfig"
+    dest: "{{ ansible_facts.env.HOME }}/github/.gitconfig"
     force: true
     state: link
 
 - name: Create ~/gitlab
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/gitlab"
+    path: "{{ ansible_facts.env.HOME }}/gitlab"
     state: directory
     mode: '0755'
 
 - name: Soft link .gitconfig gitlab
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/.gitconfig.gitlab"
-    dest: "{{ ansible_env.HOME }}/gitlab/.gitconfig"
+    dest: "{{ ansible_facts.env.HOME }}/gitlab/.gitconfig"
     force: true
     state: link
 

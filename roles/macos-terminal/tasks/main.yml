@@ -1,11 +1,11 @@
 ---
 - name: Hide desktop icons in Finder
   ansible.builtin.command: defaults write com.apple.finder CreateDesktop -bool false
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts.os_family == "Darwin"
   changed_when: false
 
 - name: Restart Finder to apply desktop icon changes
   ansible.builtin.command: killall Finder
-  when: ansible_os_family == "Darwin"
+  when: ansible_facts.os_family == "Darwin"
   changed_when: false
   ignore_errors: true

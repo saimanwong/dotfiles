@@ -1,6 +1,6 @@
 - name: Check if uv is installed
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.cargo/bin/uv"
+    path: "{{ ansible_facts.env.HOME }}/.cargo/bin/uv"
   register: uv_stat
 
 - name: Install uv

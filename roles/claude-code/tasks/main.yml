@@ -9,11 +9,11 @@
     - '"already installed" not in result.msg'
     - '"Package installed" not in result.msg'
     - result.msg != ""
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'
 
 - name: Soft link Claude Code MCP configuration
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/.claude.json"
-    dest: "{{ ansible_env.HOME }}/.claude.json"
+    dest: "{{ ansible_facts.env.HOME }}/.claude.json"
     force: true
     state: link

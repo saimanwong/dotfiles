@@ -1,6 +1,6 @@
 ---
 
-- name: "Ensure {{ ansible_env.HOME }}/.aur exists"
+- name: "Ensure {{ ansible_facts.env.HOME }}/.aur exists"
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.aur"
+    path: "{{ ansible_facts.env.HOME }}/.aur"
     state: directory

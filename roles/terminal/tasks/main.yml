@@ -23,16 +23,16 @@
         state: link
       become: true
 
-    - name: "Ensure {{ ansible_env.HOME }}/.config/xfce4/terminal exists"
+    - name: "Ensure {{ ansible_facts.env.HOME }}/.config/xfce4/terminal exists"
       ansible.builtin.file:
-        path: "{{ ansible_env.HOME }}/.config/xfce4/terminal"
+        path: "{{ ansible_facts.env.HOME }}/.config/xfce4/terminal"
         state: directory
         recurse: true
 
     - name: soft link terminal
       ansible.builtin.file:
         src: "{{ playbook_dir }}/files/terminalrc"
-        dest: "{{ ansible_env.HOME }}/.config/xfce4/terminal/terminalrc"
+        dest: "{{ ansible_facts.env.HOME }}/.config/xfce4/terminal/terminalrc"
         force: true
         state: link
   when: desktop_environment is defined and desktop_environment == 'xfce'
@@ -45,4 +45,4 @@
         state: present
       register: result
       failed_when: '"already installed" not in result.msg and result.msg != ""'
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'

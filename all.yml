@@ -3,19 +3,19 @@
 - hosts: "{{ h }}"
   roles:
     - role: aur
-      when: "ansible_os_family == 'Archlinux'"
+      when: "ansible_facts.os_family == 'Archlinux'"
       tags:
         - aur
     - role: mac_keyboard
-      when: "ansible_os_family == 'Archlinux' and hw == 'mac'"
+      when: "ansible_facts.os_family == 'Archlinux' and hw == 'mac'"
       tags:
         - mac_keyboard
     - role: mac_facetimehd
-      when: "ansible_os_family == 'Archlinux' and hw == 'mac'"
+      when: "ansible_facts.os_family == 'Archlinux' and hw == 'mac'"
       tags:
         - mac_facetimehd
     - role: macos-terminal
-      when: "ansible_os_family == 'Darwin'"
+      when: "ansible_facts.os_family == 'Darwin'"
       tags:
         - macos-terminal
     - role: awscli
