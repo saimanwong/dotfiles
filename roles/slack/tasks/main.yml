@@ -20,5 +20,5 @@
     name: "slack"
     state: present
   register: result
-  failed_when: '"already installed" not in result.msg and result.msg != ""'
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
   when: ansible_facts.os_family == 'Darwin'

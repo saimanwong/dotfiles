@@ -8,6 +8,7 @@
   failed_when: |
     "The latest available version is" not in result.msg and
     "already installed" not in result.msg and
+    "Package installed" not in result.msg and
     result.msg != ""
   when: ansible_facts.os_family == 'Darwin'
 
