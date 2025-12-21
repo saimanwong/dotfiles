@@ -69,6 +69,9 @@
     - role: neovim
       tags: 
         - neovim
+    - role: ocrmypdf
+      tags:
+        - ocrmypdf
     - role: opencode
       tags:
         - opencode
