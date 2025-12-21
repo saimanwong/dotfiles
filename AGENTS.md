@@ -66,6 +66,26 @@ The following roles are available but not included by default:
 - Package installation: use `become: true` for privileged operations, conditional on OS family
 - Loop constructs: use `loop:` with `{{ item }}` for iteration
 
+### macOS Package Installation Pattern
+When installing packages on macOS using `ansible.builtin.package` (Homebrew), always include comprehensive error handling to account for different Homebrew output messages:
+
+```yaml
+- name: Install package_name on macOS
+  ansible.builtin.package:
+    name: package_name
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == "Darwin"
+```
+
+**Required `failed_when` conditions:**
+- `"already installed" not in result.msg` - Handles packages already present
+- `"Package installed" not in result.msg` - Handles successful new installations
+- `result.msg != ""` - Allows empty messages to pass
+
+This pattern ensures idempotent playbook execution and prevents false failures from Homebrew's various success messages.
+
 ## Secret Configuration Workflow
 
 When adding a new secret/token to the configuration:
