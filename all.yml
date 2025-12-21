@@ -96,6 +96,9 @@
     - role: slack
       tags:
         - slack
+    - role: spotify
+      tags:
+        - spotify
     - role: spec-kit
       tags:
         - spec-kit

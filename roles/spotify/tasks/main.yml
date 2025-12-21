@@ -1,0 +1,23 @@
+---
+
+- name: Install Spotify on Archlinux
+  ansible.builtin.include_role:
+    name: aur_install
+  vars:
+    aur_install_pkg: spotify
+  when: ansible_facts.os_family == 'Archlinux'
+
+- name: Install Spotify on Debian
+  community.general.snap:
+    name: spotify
+    state: present
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+
+- name: Install Spotify on macOS
+  ansible.builtin.package:
+    name: spotify
+    state: present
+  register: result
+  failed_when: '"installed" not in result.msg and "already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == 'Darwin'
