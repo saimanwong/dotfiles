@@ -114,6 +114,9 @@
     - role: tmux
       tags:
         - tmux
+    - role: tree
+      tags:
+        - tree
     - role: zsh
       tags:
         - zsh

@@ -36,6 +36,7 @@
 - **terminal**: Terminal configuration
 - **terraform-ls**: Terraform language server
 - **tmux**: Terminal multiplexer
+- **tree**: Tree directory listing utility
 - **uv**: Python package manager
 - **zsh**: Zsh shell configuration
 

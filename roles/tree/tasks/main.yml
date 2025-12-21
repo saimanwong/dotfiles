@@ -1,0 +1,16 @@
+---
+
+- name: Install tree
+  ansible.builtin.package:
+    name: tree
+    state: present
+  become: true
+  when: ansible_facts.os_family != "Darwin"
+
+- name: Install tree on macOS
+  ansible.builtin.package:
+    name: tree
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == "Darwin"
