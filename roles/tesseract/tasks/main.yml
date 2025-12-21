@@ -1,0 +1,9 @@
+---
+
+- name: Install tesseract on macOS
+  ansible.builtin.package:
+    name: tesseract
+    state: present
+  register: result
+  failed_when: '"installed" not in result.msg and "already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_os_family == "Darwin"

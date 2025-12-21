@@ -72,6 +72,12 @@
     - role: ocrmypdf
       tags:
         - ocrmypdf
+    - role: tesseract
+      tags:
+        - tesseract
+    - role: pdftotext
+      tags:
+        - pdftotext
     - role: opencode
       tags:
         - opencode
