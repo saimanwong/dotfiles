@@ -1,0 +1,25 @@
+---
+
+- name: Include Darwin-specific tasks
+  ansible.builtin.include_tasks: darwin.yml
+  when: ansible_facts.os_family == "Darwin"
+
+- name: Install Alacritty on Arch Linux
+  community.general.pacman:
+    name: alacritty
+    state: present
+  become: true
+  when: ansible_facts.os_family == "Archlinux"
+
+- name: Ensure alacritty config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/alacritty"
+    state: directory
+    mode: '0755'
+
+- name: Soft link alacritty configuration
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/alacritty.toml"
+    dest: "{{ ansible_facts.env.HOME }}/.config/alacritty/alacritty.toml"
+    force: true
+    state: link

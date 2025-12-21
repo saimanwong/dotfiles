@@ -18,6 +18,9 @@
       when: "ansible_facts.os_family == 'Darwin'"
       tags:
         - macos-terminal
+    - role: alacritty
+      tags:
+        - alacritty
     - role: awscli
       tags:
         - awscli

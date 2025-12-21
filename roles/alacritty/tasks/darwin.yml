@@ -1,0 +1,49 @@
+---
+
+- name: Get latest Alacritty release info
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/alacritty/alacritty/releases/latest
+    return_content: true
+  register: alacritty_release
+
+- name: Download Alacritty DMG
+  ansible.builtin.get_url:
+    url: "https://github.com/alacritty/alacritty/releases/download/{{ alacritty_release.json.tag_name }}/Alacritty-{{ alacritty_release.json.tag_name }}.dmg"
+    dest: "/tmp/Alacritty-{{ alacritty_release.json.tag_name }}.dmg"
+    mode: '0644'
+  register: alacritty_dmg
+
+- name: Mount Alacritty DMG
+  ansible.builtin.command:
+    cmd: "hdiutil attach /tmp/Alacritty-{{ alacritty_release.json.tag_name }}.dmg -nobrowse -quiet"
+  when: alacritty_dmg.changed
+  register: mount_result
+  changed_when: false
+
+- name: Check if Alacritty.app exists
+  ansible.builtin.stat:
+    path: /Applications/Alacritty.app
+  register: alacritty_app
+
+- name: Remove old Alacritty.app if exists
+  ansible.builtin.file:
+    path: /Applications/Alacritty.app
+    state: absent
+  when: alacritty_app.stat.exists and alacritty_dmg.changed
+
+- name: Copy Alacritty.app to Applications
+  ansible.builtin.command:
+    cmd: "cp -R /Volumes/Alacritty/Alacritty.app /Applications/"
+  when: alacritty_dmg.changed
+
+- name: Unmount Alacritty DMG
+  ansible.builtin.command:
+    cmd: "hdiutil detach /Volumes/Alacritty -quiet"
+  when: alacritty_dmg.changed
+  changed_when: false
+
+- name: Clean up downloaded DMG
+  ansible.builtin.file:
+    path: "/tmp/Alacritty-{{ alacritty_release.json.tag_name }}.dmg"
+    state: absent
+  when: alacritty_dmg.changed

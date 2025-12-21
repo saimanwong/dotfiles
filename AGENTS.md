@@ -9,6 +9,7 @@
 ## Available Roles
 
 ### Core Roles (included by default)
+- **alacritty**: Alacritty terminal emulator
 - **aur**: Arch User Repository setup (Arch Linux only)
 - **awscli**: AWS Command Line Interface
 - **chrome**: Google Chrome web browser

@@ -1,0 +1,54 @@
+# Alacritty Configuration
+# See: https://alacritty.org/config-alacritty.html
+
+[window]
+# Window padding
+padding = { x = 3, y = 3 }
+dynamic_padding = true
+
+# Window opacity (0.0 - 1.0)
+opacity = 1.0
+
+# Startup mode: "Windowed" | "Maximized" | "Fullscreen"
+startup_mode = "Windowed"
+
+[scrolling]
+# Maximum number of lines in scrollback buffer
+history = 10000
+
+# Number of lines scrolled per input scroll increment
+multiplier = 3
+
+[font]
+# Font size in points
+size = 12.0
+
+# Font offset (extra space around each character)
+offset = { x = 0, y = 0 }
+
+[cursor]
+# Cursor style
+style = { shape = "Block", blinking = "Off" }
+
+# Cursor thickness (0.0 - 1.0)
+thickness = 0.15
+
+[selection]
+# Copy to clipboard on selection
+save_to_clipboard = false
+
+[terminal]
+# OSC52 clipboard control
+osc52 = "OnlyCopy"
+
+[mouse]
+# Hide cursor when typing
+hide_when_typing = false
+
+[keyboard]
+bindings = [
+  # Create new window
+  { key = "N", mods = "Command", action = "CreateNewWindow" },
+  # Toggle fullscreen
+  { key = "Return", mods = "Command", action = "ToggleFullscreen" },
+]
