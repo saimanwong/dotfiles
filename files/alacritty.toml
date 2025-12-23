@@ -1,6 +1,11 @@
 # Alacritty Configuration
 # See: https://alacritty.org/config-alacritty.html
 
+[general]
+import = [
+  "~/.config/alacritty/themes/themes/ayu_dark.toml"
+]
+
 [window]
 # Window padding
 padding = { x = 3, y = 3 }
