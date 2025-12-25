@@ -4,4 +4,4 @@ go_package_name:
   Debian: golang
   Archlinux: go
 
-go_amd64: go1.17.1.linux-amd64.tar.gz
+go_amd64: go1.24.11.linux-amd64.tar.gz
