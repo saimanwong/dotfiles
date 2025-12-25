@@ -17,31 +17,44 @@
 ## Available Roles
 
 ### Core Roles (included by default)
+- **alacritty**: Alacritty terminal emulator
 - **aur**: Arch User Repository setup (Arch Linux only)
 - **awscli**: AWS Command Line Interface
+- **chrome**: Google Chrome browser
+- **claude-code**: Claude Code CLI tool
 - **discord**: Discord desktop application
 - **docker**: Docker containerization platform
 - **gcloud**: Google Cloud CLI
 - **gemini-cli**: Google Gemini CLI tool
+- **gh**: GitHub CLI
 - **git**: Git version control configuration
 - **github-copilot**: Install GitHub Copilot CLI globally via npm
 - **go**: Go programming language
+- **htop**: Interactive process viewer
 - **huggingface**: Hugging Face CLI
 - **k8s**: Kubernetes tools (kubectl, etc.)
 - **keybindings**: System keybinding configuration
 - **linear**: Linear CLI
+- **macos-terminal**: macOS Terminal configuration
 - **neovim**: Neovim text editor configuration
 - **nodejs**: Node.js JavaScript runtime
+- **ocrmypdf**: OCR tool for PDFs
+- **openai-cli**: OpenAI CLI tool
 - **opencode**: Install OpenCode CLI tool with Linear MCP integration configured
 - **opentofu**: OpenTofu infrastructure as code
+- **pdftotext**: PDF to text converter
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app
 - **slack**: Slack desktop application
+- **sops**: Mozilla SOPS for secrets management
 - **spec-kit**: Specification development tools
+- **spotify**: Spotify desktop application
 - **temporal**: Temporal workflow engine CLI
 - **terminal**: Terminal configuration
 - **terraform-ls**: Terraform language server
+- **tesseract**: Tesseract OCR engine
 - **tmux**: Terminal multiplexer
+- **tree**: Directory tree listing utility
 - **uv**: Python package manager
 - **zsh**: Zsh shell configuration
 
