@@ -99,6 +99,9 @@
     - role: slack
       tags:
         - slack
+    - role: sops
+      tags:
+        - sops
     - role: spotify
       tags:
         - spotify
