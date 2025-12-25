@@ -11,9 +11,14 @@
     - result.msg != ""
   when: ansible_facts.os_family == 'Darwin'
 
-- name: Soft link Claude Code MCP configuration
+- name: "Ensure {{ ansible_facts.env.HOME }}/.claude exists"
   ansible.builtin.file:
-    src: "{{ playbook_dir }}/files/.claude.json"
-    dest: "{{ ansible_facts.env.HOME }}/.claude.json"
+    path: "{{ ansible_facts.env.HOME }}/.claude"
+    state: directory
+
+- name: Soft link Claude Code settings
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/claude-settings.json"
+    dest: "{{ ansible_facts.env.HOME }}/.claude/settings.json"
     force: true
     state: link
