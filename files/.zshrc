@@ -97,4 +97,3 @@ EOF
   chmod 600 "${HOME}/.secrets"
   echo "⚠️  Created template ~/.secrets file. Please edit it to add your Linear API key and GitHub token."
 fi
-
