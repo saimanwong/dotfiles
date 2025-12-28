@@ -22,3 +22,16 @@
     dest: "{{ ansible_facts.env.HOME }}/.claude/settings.json"
     force: true
     state: link
+
+- name: Add Linear MCP server to Claude Code (user scope)
+  ansible.builtin.command:
+    cmd: >
+      claude mcp add
+      --transport sse
+      --scope user
+      --header "Authorization: Bearer ${LINEAR_API_KEY}"
+      linear
+      https://mcp.linear.app/sse
+  register: mcp_result
+  changed_when: "'already exists' not in mcp_result.stderr"
+  failed_when: false
