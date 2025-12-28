@@ -43,6 +43,7 @@
 - **opencode**: Install OpenCode CLI tool with Linear MCP integration configured
 - **opentofu**: OpenTofu infrastructure as code
 - **pdftotext**: PDF to text converter
+- **psql**: PostgreSQL client (libpq)
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app
 - **slack**: Slack desktop application
@@ -56,6 +57,7 @@
 - **tmux**: Terminal multiplexer
 - **tree**: Directory tree listing utility
 - **uv**: Python package manager
+- **watch**: Watch command for running commands periodically
 - **zsh**: Zsh shell configuration
 
 ### Hardware-Specific Roles

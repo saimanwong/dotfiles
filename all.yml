@@ -90,6 +90,9 @@
     - role: opentofu
       tags:
         - opentofu
+    - role: psql
+      tags:
+        - psql
     - role: pulumi
       tags:
         - pulumi
@@ -129,3 +132,6 @@
     - role: uv
       tags:
         - uv
+    - role: watch
+      tags:
+        - watch
