@@ -36,6 +36,9 @@
     - role: docker
       tags:
         - docker
+    - role: firefox
+      tags:
+        - firefox
     - role: gcloud
       tags:
         - gcloud

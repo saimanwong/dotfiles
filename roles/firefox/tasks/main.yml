@@ -1,0 +1,23 @@
+---
+
+- name: Install Firefox on Linux (package manager)
+  ansible.builtin.package:
+    name: firefox
+    state: present
+  become: true
+  when: ansible_facts.os_family != 'Debian' and ansible_facts.os_family != 'Darwin'
+
+- name: Install Firefox on Debian/Ubuntu
+  ansible.builtin.apt:
+    name: firefox
+    state: present
+  become: true
+  when: ansible_facts.os_family == 'Debian'
+
+- name: Install Firefox on macOS
+  ansible.builtin.package:
+    name: firefox
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == 'Darwin'

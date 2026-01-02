@@ -15,6 +15,7 @@
 - **chrome**: Google Chrome web browser
 - **claude-code**: Claude Code CLI tool
 - **discord**: Discord desktop application
+- **firefox**: Mozilla Firefox web browser
 - **docker**: Docker containerization platform
 - **gcloud**: Google Cloud CLI
 - **gemini-cli**: Google Gemini CLI tool
@@ -55,6 +56,14 @@ The following roles are available but not included by default:
   ```bash
   ansible-playbook -i inventory.ini roles/ollama/tasks/main.yml
   ```
+
+## Adding a New Role
+
+When creating a new role:
+
+1. **Create the role directory and tasks file**: `roles/<role_name>/tasks/main.yml`
+2. **Add the role to `all.yml`** with appropriate tags (maintain alphabetical ordering where possible)
+3. **Update `AGENTS.md`** to document the role in the appropriate section (Core Roles, Hardware-Specific, macOS-Specific, or Opt-in)
 
 ## Code Style Guidelines
 - Use YAML with 2-space indentation
