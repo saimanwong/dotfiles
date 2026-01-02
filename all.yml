@@ -24,6 +24,9 @@
     - role: awscli
       tags:
         - awscli
+    - role: azure-cli
+      tags:
+        - azure-cli
     - role: chrome
       tags:
         - chrome

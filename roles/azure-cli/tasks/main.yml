@@ -1,0 +1,10 @@
+---
+
+- name: Install azure-cli
+  ansible.builtin.package:
+    name: azure-cli
+    state: present
+  register: result
+  failed_when: '"installed" not in result.msg and "already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == 'Darwin'
+

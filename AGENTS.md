@@ -12,6 +12,7 @@
 - **alacritty**: Alacritty terminal emulator
 - **aur**: Arch User Repository setup (Arch Linux only)
 - **awscli**: AWS Command Line Interface
+- **azure-cli**: Azure Command Line Interface
 - **chrome**: Google Chrome web browser
 - **claude-code**: Claude Code CLI tool
 - **discord**: Discord desktop application
