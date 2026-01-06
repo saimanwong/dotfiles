@@ -72,6 +72,9 @@
     - role: k8s
       tags:
         - k8s
+    - role: kap
+      tags:
+        - kap
     - role: keybindings
       tags:
         - keybindings
