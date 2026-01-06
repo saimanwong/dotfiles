@@ -2,9 +2,8 @@
   "env": {
     "ENABLE_LSP_TOOLS": "1"
   },
-  "model": "opus",
-  "alwaysThinkingEnabled": false,
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
-  }
+  },
+  "alwaysThinkingEnabled": false
 }
