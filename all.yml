@@ -18,6 +18,10 @@
       when: "ansible_facts.os_family == 'Darwin'"
       tags:
         - macos-terminal
+    - role: rosetta
+      when: "ansible_facts.os_family == 'Darwin'"
+      tags:
+        - rosetta
     - role: alacritty
       tags:
         - alacritty

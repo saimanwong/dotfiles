@@ -1,0 +1,9 @@
+---
+
+- name: Install Rosetta 2 on macOS
+  ansible.builtin.command:
+    cmd: softwareupdate --install-rosetta --agree-to-license
+  register: rosetta_result
+  changed_when: '"Install of Rosetta 2 finished successfully" in rosetta_result.stdout'
+  failed_when: rosetta_result.rc != 0 and "Rosetta 2 is already installed" not in rosetta_result.stderr
+  when: ansible_facts.os_family == 'Darwin'
