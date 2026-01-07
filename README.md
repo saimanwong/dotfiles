@@ -31,6 +31,7 @@
 - **git**: Git version control configuration
 - **github-copilot**: Install GitHub Copilot CLI globally via npm
 - **go**: Go programming language
+- **gsed**: GNU sed (macOS)
 - **htop**: Interactive process viewer
 - **huggingface**: Hugging Face CLI
 - **k8s**: Kubernetes tools (kubectl, etc.)

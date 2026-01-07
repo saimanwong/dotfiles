@@ -67,6 +67,9 @@
     - role: go
       tags:
         - go
+    - role: gsed
+      tags:
+        - gsed
     - role: htop
       tags:
         - htop
