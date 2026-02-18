@@ -5,5 +5,7 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": false
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "medium",
+  "model": "opus"
 }
