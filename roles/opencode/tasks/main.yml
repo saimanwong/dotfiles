@@ -11,6 +11,12 @@
     - result.msg != ""
   when: ansible_facts.os_family == 'Darwin'
 
+- name: Install terminal-notifier on MacOS
+  ansible.builtin.package:
+    name: terminal-notifier
+    state: present
+  when: ansible_facts.os_family == 'Darwin'
+
 - name: Ensure opencode config directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.config/opencode"
@@ -21,5 +27,18 @@
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/opencode.json"
     dest: "{{ ansible_facts.env.HOME }}/.config/opencode/opencode.json"
+    force: true
+    state: link
+
+- name: Ensure opencode plugins directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/opencode/plugins"
+    state: directory
+    mode: '0755'
+
+- name: Soft link opencode notify plugin
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/opencode-notify.js"
+    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/plugins/notify.js"
     force: true
     state: link
