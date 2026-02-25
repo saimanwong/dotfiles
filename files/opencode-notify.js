@@ -46,8 +46,11 @@ export const NotifyPlugin = async ({ $ }) => {
     await $`terminal-notifier ${args}`.nothrow()
 
     if (process.env.TMUX && windowIndex) {
-      const popupCmd = `printf "\n  \033[1;33m${message}\033[0m\n  \033[2m${paneLabel}\033[0m\n\n  \033[2m[Enter] go to window  [Ctrl-C] dismiss\033[0m\n\n" && read -r -t 30 && tmux select-window -t :${windowIndex}`
-      await $`tmux display-popup -E -b rounded -S ${'fg=colour214,bold'} -s ${'fg=colour255,bg=colour235'} -T ${'  OpenCode  '} -w 50 -h 9 ${popupCmd}`.nothrow()
+      const isActive = (await $`tmux display-message -p -t :${windowIndex} ${'#{window_active}'}`.nothrow().text()).trim() === "1"
+      if (!isActive) {
+        const popupCmd = `printf "\n  \033[1;33m${message}\033[0m\n  \033[2m${paneLabel}\033[0m\n\n  \033[2m[Enter] go to window  [Ctrl-C] dismiss\033[0m\n\n" && read -r -t 30 && tmux select-window -t :${windowIndex}`
+        await $`tmux display-popup -E -b rounded -S ${'fg=colour214,bold'} -s ${'fg=colour255,bg=colour235'} -T ${'  OpenCode  '} -w 50 -h 9 ${popupCmd}`.nothrow()
+      }
     }
   }
 
@@ -57,6 +60,8 @@ export const NotifyPlugin = async ({ $ }) => {
         await notify("OpenCode", "Done - waiting for input")
       } else if (event.type === "session.status" && event.properties?.status?.type === "busy") {
         setThinking()
+      } else if (event.type === "question.asked") {
+        await notify("OpenCode", "Waiting for your input")
       } else if (event.type === "permission.asked") {
         await notify("OpenCode", "Needs your approval")
       }
