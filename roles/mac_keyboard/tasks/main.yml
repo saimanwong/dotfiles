@@ -22,11 +22,11 @@
         mode: '0644'
       notify: regenerate initramfs
       become: true
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts.os_family == 'Archlinux'
 
 - name: TODO
   block:
     - name: TODO
       ansible.builtin.debug:
         msg: "TODO"
-  when: ansible_os_family != 'Archlinux'
+  when: ansible_facts.os_family != 'Archlinux'

@@ -13,11 +13,11 @@
         name: aur_install
       vars:
         aur_install_pkg: bcwc-pcie-git
-  when: ansible_os_family == 'Archlinux'
+  when: ansible_facts.os_family == 'Archlinux'
 
 - name: TODO
   block:
     - name: TODO
       ansible.builtin.debug:
         msg: "TODO"
-  when: ansible_os_family != 'Archlinux'
+  when: ansible_facts.os_family != 'Archlinux'

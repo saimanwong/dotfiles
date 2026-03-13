@@ -4,4 +4,4 @@
   ansible.builtin.pip:
     name: openai
     state: present
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'
