@@ -57,3 +57,9 @@
     force: true
     state: link
   loop: "{{ agent_config_commands.files }}"
+
+- name: Install agent-browser skill
+  ansible.builtin.command:
+    cmd: npx skills add vercel-labs/agent-browser
+  args:
+    creates: "{{ ansible_facts.env.HOME }}/.claude/skills/agent-browser/SKILL.md"
