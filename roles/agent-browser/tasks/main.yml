@@ -1,0 +1,19 @@
+---
+
+- name: Install agent-browser on MacOS
+  ansible.builtin.package:
+    name: agent-browser
+    state: present
+  register: result
+  failed_when:
+    - '"already installed" not in result.msg'
+    - '"Package installed" not in result.msg'
+    - result.msg != ""
+  when: ansible_facts.os_family == 'Darwin'
+
+- name: Download Chromium for agent-browser
+  ansible.builtin.command:
+    cmd: agent-browser install
+  register: install_result
+  changed_when: "'Already installed' not in install_result.stdout"
+  failed_when: false

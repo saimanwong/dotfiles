@@ -25,6 +25,9 @@
     - role: alacritty
       tags:
         - alacritty
+    - role: agent-browser
+      tags:
+        - agent-browser
     - role: awscli
       tags:
         - awscli

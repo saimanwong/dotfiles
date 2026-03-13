@@ -9,6 +9,7 @@
 ## Available Roles
 
 ### Core Roles (included by default)
+- **agent-browser**: Browser automation CLI for AI agents (agent-browser)
 - **alacritty**: Alacritty terminal emulator
 - **aur**: Arch User Repository setup (Arch Linux only)
 - **awscli**: AWS Command Line Interface
