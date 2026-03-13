@@ -1,15 +1,10 @@
 ---
 
-- name: Install opencode on MacOS
-  ansible.builtin.package:
-    name: opencode
-    state: present
+- name: Install opencode globally via npm
+  ansible.builtin.command:
+    cmd: npm install -g opencode-ai@latest
   register: result
-  failed_when:
-    - '"already installed" not in result.msg'
-    - '"Package installed" not in result.msg'
-    - result.msg != ""
-  when: ansible_facts.os_family == 'Darwin'
+  changed_when: "'added' in result.stdout or 'updated' in result.stdout"
 
 - name: Install terminal-notifier on MacOS
   ansible.builtin.package:
@@ -42,3 +37,23 @@
     dest: "{{ ansible_facts.env.HOME }}/.config/opencode/plugins/notify.js"
     force: true
     state: link
+
+- name: Ensure opencode commands directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/opencode/commands"
+    state: directory
+    mode: '0755'
+
+- name: Find agent-config commands
+  ansible.builtin.find:
+    paths: "{{ playbook_dir }}/files/agent-config/commands"
+    patterns: "*.md"
+  register: agent_config_commands
+
+- name: Soft link agent-config commands to OpenCode
+  ansible.builtin.file:
+    src: "{{ item.path }}"
+    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/commands/{{ item.path | basename }}"
+    force: true
+    state: link
+  loop: "{{ agent_config_commands.files }}"

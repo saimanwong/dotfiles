@@ -67,6 +67,10 @@ When creating a new role:
 2. **Add the role to `all.yml`** with appropriate tags (maintain alphabetical ordering where possible)
 3. **Update `AGENTS.md`** to document the role in the appropriate section (Core Roles, Hardware-Specific, macOS-Specific, or Opt-in)
 
+## Submodules
+
+- **`files/agent-config/`** — Private repo (`git@github.com:saimanwong/agent-config.git`). After cloning dotfiles, run `git submodule update --init` to populate it.
+
 ## Code Style Guidelines
 - Use YAML with 2-space indentation
 - Follow Ansible best practices: use FQCN (ansible.builtin.* modules)
