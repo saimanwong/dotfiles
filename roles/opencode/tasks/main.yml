@@ -25,6 +25,25 @@
     force: true
     state: link
 
+- name: "Ensure {{ ansible_facts.env.HOME }}/.claude exists (shared config with Claude Code)"
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.claude"
+    state: directory
+
+- name: Soft link AGENTS.md for OpenCode (shared with Claude Code)
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/AGENTS.md"
+    dest: "{{ ansible_facts.env.HOME }}/.claude/AGENTS.md"
+    force: true
+    state: link
+
+- name: Soft link CLAUDE.md for OpenCode (shared with Claude Code)
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/CLAUDE.md"
+    dest: "{{ ansible_facts.env.HOME }}/.claude/CLAUDE.md"
+    force: true
+    state: link
+
 - name: Ensure opencode plugins directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.config/opencode/plugins"

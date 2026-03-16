@@ -28,6 +28,20 @@
     force: true
     state: link
 
+- name: Soft link AGENTS.md (single source of truth)
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/AGENTS.md"
+    dest: "{{ ansible_facts.env.HOME }}/.claude/AGENTS.md"
+    force: true
+    state: link
+
+- name: Soft link CLAUDE.md (imports AGENTS.md)
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/CLAUDE.md"
+    dest: "{{ ansible_facts.env.HOME }}/.claude/CLAUDE.md"
+    force: true
+    state: link
+
 - name: Find agent-config commands
   ansible.builtin.find:
     paths: "{{ playbook_dir }}/files/agent-config/commands"
