@@ -93,7 +93,7 @@ export const NotifyPlugin = async ({ $ }) => {
     if (termAppName && windowIndex) {
       args.push('-execute', `open -a ${JSON.stringify(termAppName)}`)
     }
-    await $`terminal-notifier ${args}`.nothrow()
+    await $`terminal-notifier ${args}`.quiet().nothrow()
 
     if (process.env.TMUX && windowIndex) {
       const isActive = (await $`tmux display-message -p -t :${windowIndex} ${'#{window_active}'}`.nothrow().text()).trim() === "1"
