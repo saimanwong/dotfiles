@@ -11,6 +11,10 @@ export const NotifyPlugin = async ({ $ }) => {
       ).trim()
       windowIndex = paneLabel.split(':')[0]
       originalWindowName = paneLabel.split(':').slice(1).join(':')
+        // Strip any leftover spinner braille prefixes from the window name
+        // in case a previous instance died without cleanup and left e.g.
+        // "⢿ ⡿ ORCHESTRATOR" as the window title.
+        .replace(/^[\u2800-\u28FF\s]+/, '')
     } catch {}
   }
 
@@ -18,23 +22,53 @@ export const NotifyPlugin = async ({ $ }) => {
 
   let latestMessage = ""
   let spinnerProc = null
+  let isBusy = false
 
-  const setThinking = () => {
-    if (!process.env.TMUX || !windowIndex || spinnerProc !== null) return
+  // Check if a PID is still alive
+  const isAlive = (pid) => {
+    try { process.kill(pid, 0); return true } catch { return false }
+  }
+
+  // Get the stored spinner PID from tmux (shared across instances)
+  const getStoredSpinnerPid = async () => {
+    const str = (await $`tmux show-window-option -t :${windowIndex} -v @opencode_spinner_pid`.nothrow().text()).trim()
+    return parseInt(str) || 0
+  }
+
+  const setThinking = async () => {
+    if (!process.env.TMUX || !windowIndex) return
+    if (isBusy) return
+    isBusy = true
     latestMessage = ""
+
+    // Check if another instance already has a live spinner running
+    const existingPid = await getStoredSpinnerPid()
+    if (existingPid && isAlive(existingPid)) return
+
+    // No live spinner -- kill the dead one's PID entry if stale, then spawn
+    if (existingPid) {
+      await $`tmux set-window-option -t :${windowIndex} -u @opencode_spinner_pid`.nothrow()
+    }
+
     spinnerProc = Bun.spawn(
       ['sh', '-c', `while true; do for f in ⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷; do tmux rename-window -t :${windowIndex} "$f ${originalWindowName}"; sleep 0.15; done; done`],
       { stdout: 'ignore', stderr: 'ignore' }
     )
+    await $`tmux set-window-option -t :${windowIndex} @opencode_spinner_pid ${spinnerProc.pid}`.nothrow()
   }
 
   const clearThinking = async () => {
+    if (!process.env.TMUX || !windowIndex) return
+    if (!isBusy) return
+    isBusy = false
+
+    // Kill our spinner if we own it
     if (spinnerProc !== null) {
       spinnerProc.kill()
       spinnerProc = null
+      await $`tmux set-window-option -t :${windowIndex} -u @opencode_spinner_pid`.nothrow()
+      await $`tmux rename-window -t :${windowIndex} ${originalWindowName}`.nothrow()
     }
-    if (!process.env.TMUX || !windowIndex) return
-    await $`tmux rename-window -t :${windowIndex} ${originalWindowName}`.nothrow()
   }
 
   const notify = async (title, message, detail = "") => {
@@ -65,6 +99,21 @@ export const NotifyPlugin = async ({ $ }) => {
     }
   }
 
+  // Synchronous cleanup when the opencode process exits (Ctrl+C, crash,
+  // quit while busy, etc.) so the spinner shell loop doesn't become an
+  // orphan that keeps renaming the tmux window forever.
+  process.on('exit', () => {
+    if (!process.env.TMUX || !windowIndex) return
+    try {
+      if (spinnerProc) {
+        spinnerProc.kill()
+        spinnerProc = null
+        Bun.spawnSync(['tmux', 'set-window-option', '-t', `:${windowIndex}`, '-u', '@opencode_spinner_pid'])
+        Bun.spawnSync(['tmux', 'rename-window', '-t', `:${windowIndex}`, originalWindowName])
+      }
+    } catch {}
+  })
+
   return {
     event: async ({ event }) => {
       if (event.type === "message.part.updated") {
@@ -75,7 +124,7 @@ export const NotifyPlugin = async ({ $ }) => {
       } else if (event.type === "session.idle") {
         await notify("OpenCode", "Done - waiting for input", latestMessage)
       } else if (event.type === "session.status" && event.properties?.status?.type === "busy") {
-        setThinking()
+        await setThinking()
       } else if (event.type === "question.asked") {
         const questionText = event.properties?.questions?.map(q => q.question).join(" / ") || ""
         await notify("OpenCode", "Waiting for your input", questionText)
