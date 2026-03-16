@@ -43,7 +43,15 @@ export const NotifyPlugin = async ({ $ }) => {
 
     // Check if another instance already has a live spinner running
     const existingPid = await getStoredSpinnerPid()
-    if (existingPid && isAlive(existingPid)) return
+    if (existingPid && isAlive(existingPid)) {
+      // Adopt the existing spinner so clearThinking can kill it later.
+      // Without this, spinnerProc stays null and the spinner becomes an
+      // orphan that loops forever.
+      if (!spinnerProc) {
+        spinnerProc = { pid: existingPid, kill: () => { try { process.kill(existingPid) } catch {} } }
+      }
+      return
+    }
 
     // No live spinner -- kill the dead one's PID entry if stale, then spawn
     if (existingPid) {
