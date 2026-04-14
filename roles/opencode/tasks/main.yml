@@ -57,28 +57,54 @@
     force: true
     state: link
 
-- name: Ensure opencode commands directory exists
-  ansible.builtin.file:
+- name: Gather OpenCode commands path info
+  ansible.builtin.stat:
     path: "{{ ansible_facts.env.HOME }}/.config/opencode/commands"
-    state: directory
-    mode: '0755'
+    follow: false
+  register: opencode_commands_path
 
-- name: Find agent-config commands
-  ansible.builtin.find:
-    paths: "{{ playbook_dir }}/files/agent-config/commands"
-    patterns: "*.md"
-  register: agent_config_commands
+- name: Backup existing OpenCode commands path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.config/opencode/commands"
+      "{{ ansible_facts.env.HOME }}/.config/opencode/commands.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - opencode_commands_path.stat.exists
+    - not (opencode_commands_path.stat.islnk | default(false))
 
-- name: Soft link agent-config commands to OpenCode
+- name: Gather OpenCode skills path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.config/opencode/skills"
+    follow: false
+  register: opencode_skills_path
+
+- name: Backup existing OpenCode skills path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.config/opencode/skills"
+      "{{ ansible_facts.env.HOME }}/.config/opencode/skills.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - opencode_skills_path.stat.exists
+    - not (opencode_skills_path.stat.islnk | default(false))
+
+- name: Soft link shared OpenCode commands directory
   ansible.builtin.file:
-    src: "{{ item.path }}"
-    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/commands/{{ item.path | basename }}"
+    src: "{{ playbook_dir }}/files/agent-config/commands"
+    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/commands"
     force: true
     state: link
-  loop: "{{ agent_config_commands.files }}"
 
-- name: Install agent-browser skill
+- name: Soft link shared OpenCode skills directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/skills"
+    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/skills"
+    force: true
+    state: link
+
+- name: Install agent-browser skill globally
   ansible.builtin.command:
-    cmd: npx skills add vercel-labs/agent-browser
+    cmd: npx skills add vercel-labs/agent-browser --yes --global
   args:
-    creates: "{{ ansible_facts.env.HOME }}/.claude/skills/agent-browser/SKILL.md"
+    creates: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-browser/SKILL.md"
