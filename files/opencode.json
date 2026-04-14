@@ -1,41 +1,31 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "amazon-bedrock": {
-      "options": {
-        "region": "eu-north-1"
-      }
-    },
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ollama (local)",
-      "options": {
-        "baseURL": "http://localhost:11434/v1"
-      },
-      "models": {
-        "llama3.1:8b": {
-          "name": "Llama 3.1 8B (Research)",
-          "tools": true
-        },
-        "qwen2.5-coder:7b": {
-          "name": "Qwen2.5-Coder 7B (Optimized)",
-          "tools": true
-        }
-      }
-    }
-  },
   "permission": {
     "external_directory": {
-      "~/.claude/**": "allow",
+      "~/.config/opencode/commands": "allow",
+      "~/.config/opencode/commands/**": "allow",
+      "~/.config/opencode/skills": "allow",
+      "~/.config/opencode/skills/**": "allow",
+      "~/.claude/commands": "allow",
+      "~/.claude/commands/**": "allow",
+      "~/.claude/skills": "allow",
+      "~/.claude/skills/**": "allow",
       "~/Documents/docs/**": "allow",
-      "/tmp": "allow"
+      "/tmp": "allow",
+      "/private/tmp": "allow"
     }
   },
   "mcp": {
     "Linear": {
       "type": "remote",
       "url": "https://mcp.linear.app/sse",
-      "oauth": {}
+      "enabled": true
+    },
+    "miro": {
+      "type": "remote",
+      "url": "https://mcp.miro.com/",
+      "enabled": true,
+      "timeout": 15000
     }
   }
 }
