@@ -55,6 +55,9 @@ alias vim=nvim
 alias sed=gsed
 source $ZSH/oh-my-zsh.sh
 
+# Disable interactive shell bells for completion and editor errors
+unsetopt BEEP HIST_BEEP LIST_BEEP
+
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:${HOME}/.lmstudio/bin"
 # End of LM Studio CLI section
