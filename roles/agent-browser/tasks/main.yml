@@ -17,3 +17,16 @@
   register: install_result
   changed_when: "'Already installed' not in install_result.stdout"
   failed_when: false
+
+- name: Ensure agent-browser config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.agent-browser"
+    state: directory
+    mode: '0755'
+
+- name: Soft link agent-browser configuration
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/.agent-browser/config.json"
+    dest: "{{ ansible_facts.env.HOME }}/.agent-browser/config.json"
+    force: true
+    state: link
