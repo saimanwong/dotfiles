@@ -47,3 +47,49 @@
     dest: "{{ ansible_facts.env.HOME }}/.pi/agent/extensions"
     force: true
     state: link
+
+- name: Gather Pi agents path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/agents"
+    follow: false
+  register: pi_agents_path
+
+- name: Backup existing Pi agents path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/agents"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/agents.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_agents_path.stat.exists
+    - not (pi_agents_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi agents directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-agents"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/agents"
+    force: true
+    state: link
+
+- name: Gather Pi prompts path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/prompts"
+    follow: false
+  register: pi_prompts_path
+
+- name: Backup existing Pi prompts path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/prompts"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/prompts.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_prompts_path.stat.exists
+    - not (pi_prompts_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi prompts directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-prompts"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/prompts"
+    force: true
+    state: link
