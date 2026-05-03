@@ -16,16 +16,10 @@
     }
   },
   "mcp": {
-    "Linear": {
+    "linear": {
       "type": "remote",
-      "url": "https://mcp.linear.app/sse",
-      "enabled": true
-    },
-    "miro": {
-      "type": "remote",
-      "url": "https://mcp.miro.com/",
-      "enabled": true,
-      "timeout": 15000
+      "url": "https://mcp.linear.app/mcp",
+      "oauth": {}
     }
   }
 }
