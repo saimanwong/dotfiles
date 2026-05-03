@@ -45,6 +45,7 @@
 - **opencode**: Install OpenCode CLI tool with Linear MCP integration configured
 - **opentofu**: OpenTofu infrastructure as code
 - **pdftotext**: PDF to text converter
+- **pi**: Pi Coding Agent terminal harness
 - **psql**: PostgreSQL client (libpq)
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app

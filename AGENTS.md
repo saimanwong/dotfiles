@@ -33,6 +33,7 @@
 - **neovim**: Neovim text editor configuration
 - **opencode**: Install OpenCode CLI tool
 - **opentofu**: OpenTofu infrastructure as code
+- **pi**: Pi Coding Agent terminal harness
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app
 - **slack**: Slack desktop application

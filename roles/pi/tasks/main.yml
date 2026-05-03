@@ -1,0 +1,7 @@
+---
+
+- name: Install Pi Coding Agent globally via npm
+  community.general.npm:
+    name: "@mariozechner/pi-coding-agent"
+    global: true
+    state: present
