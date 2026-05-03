@@ -76,9 +76,22 @@
     force: true
     state: link
 
-- name: Soft link shared Claude Code skills directory
+- name: Ensure global Agent Skills directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.agents/skills"
+    state: directory
+    mode: '0755'
+
+- name: Soft link shared skills directory into global Agent Skills directory
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/agent-config/skills"
+    dest: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-config"
+    force: true
+    state: link
+
+- name: Soft link Claude Code skills directory to global Agent Skills directory
+  ansible.builtin.file:
+    src: "{{ ansible_facts.env.HOME }}/.agents/skills"
     dest: "{{ ansible_facts.env.HOME }}/.claude/skills"
     force: true
     state: link
@@ -93,9 +106,3 @@
   register: mcp_result
   changed_when: "'already exists' not in mcp_result.stderr"
   failed_when: false
-
-- name: Install agent-browser skill globally
-  ansible.builtin.command:
-    cmd: npx skills add vercel-labs/agent-browser --yes --global
-  args:
-    creates: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-browser/SKILL.md"

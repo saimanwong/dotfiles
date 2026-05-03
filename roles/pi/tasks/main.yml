@@ -5,3 +5,45 @@
     name: "@mariozechner/pi-coding-agent"
     global: true
     state: present
+
+- name: Ensure global Agent Skills directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.agents/skills"
+    state: directory
+    mode: '0755'
+
+- name: Soft link shared skills directory into global Agent Skills directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/skills"
+    dest: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-config"
+    force: true
+    state: link
+
+- name: Ensure Pi agent config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent"
+    state: directory
+    mode: '0755'
+
+- name: Gather Pi extensions path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/extensions"
+    follow: false
+  register: pi_extensions_path
+
+- name: Backup existing Pi extensions path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/extensions"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/extensions.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_extensions_path.stat.exists
+    - not (pi_extensions_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi extensions directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-extensions"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/extensions"
+    force: true
+    state: link

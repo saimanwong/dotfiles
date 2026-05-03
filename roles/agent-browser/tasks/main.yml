@@ -18,6 +18,18 @@
   changed_when: "'Already installed' not in install_result.stdout"
   failed_when: false
 
+- name: Ensure global Agent Skills directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.agents/skills"
+    state: directory
+    mode: '0755'
+
+- name: Install agent-browser skill globally
+  ansible.builtin.command:
+    cmd: npx skills add vercel-labs/agent-browser --yes --global
+  args:
+    creates: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-browser/SKILL.md"
+
 - name: Ensure agent-browser config directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agent-browser"
