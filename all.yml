@@ -79,6 +79,9 @@
     - role: huggingface
       tags:
         - huggingface
+    - role: k6
+      tags:
+        - k6
     - role: k8s
       tags:
         - k8s

@@ -34,6 +34,7 @@
 - **gsed**: GNU sed (macOS)
 - **htop**: Interactive process viewer
 - **huggingface**: Hugging Face CLI
+- **k6**: Load testing tool
 - **k8s**: Kubernetes tools (kubectl, etc.)
 - **keybindings**: System keybinding configuration
 - **linear**: Linear CLI
