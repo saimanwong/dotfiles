@@ -56,4 +56,7 @@ bindings = [
   { key = "N", mods = "Command", action = "CreateNewWindow" },
   # Toggle fullscreen
   { key = "Return", mods = "Command", action = "ToggleFullscreen" },
+  # Switch tabs
+  { key = "Tab", mods = "Control", action = "SelectNextTab" },
+  { key = "Tab", mods = "Control|Shift", action = "SelectPreviousTab" },
 ]
