@@ -93,3 +93,26 @@
     dest: "{{ ansible_facts.env.HOME }}/.pi/agent/prompts"
     force: true
     state: link
+
+- name: Gather Pi keybindings path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/keybindings.json"
+    follow: false
+  register: pi_keybindings_path
+
+- name: Backup existing Pi keybindings file before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/keybindings.json"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/keybindings.json.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_keybindings_path.stat.exists
+    - not (pi_keybindings_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi keybindings file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-keybindings.json"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/keybindings.json"
+    force: true
+    state: link
