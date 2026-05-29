@@ -1,0 +1,14 @@
+---
+- name: Tap ZITADEL Homebrew repository on macOS
+  community.general.homebrew_tap:
+    name: zitadel/tap
+    state: present
+  when: ansible_facts.os_family == "Darwin"
+
+- name: Install ZITADEL on macOS
+  ansible.builtin.package:
+    name: zitadel/tap/zitadel
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == "Darwin"

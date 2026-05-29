@@ -50,6 +50,7 @@
 - **psql**: PostgreSQL client (libpq)
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app
+- **sentry-cli**: Sentry command-line interface
 - **slack**: Slack desktop application
 - **sops**: Mozilla SOPS for secrets management
 - **spec-kit**: Specification development tools
@@ -62,6 +63,7 @@
 - **tree**: Directory tree listing utility
 - **uv**: Python package manager
 - **watch**: Watch command for running commands periodically
+- **zitadel**: ZITADEL self-hosting binary (macOS via Homebrew)
 - **zsh**: Zsh shell configuration
 
 ### Hardware-Specific Roles

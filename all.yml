@@ -124,6 +124,9 @@
     - role: signal
       tags:
         - signal
+    - role: sentry-cli
+      tags:
+        - sentry-cli
     - role: slack
       tags:
         - slack
@@ -160,3 +163,6 @@
     - role: watch
       tags:
         - watch
+    - role: zitadel
+      tags:
+        - zitadel

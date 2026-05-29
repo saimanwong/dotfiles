@@ -37,6 +37,7 @@
 - **pi**: Pi Coding Agent terminal harness
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app
+- **sentry-cli**: Sentry command-line interface
 - **slack**: Slack desktop application
 - **spec-kit**: Specification development tools
 - **terminal**: Terminal configuration
@@ -44,6 +45,7 @@
 - **tmux**: Terminal multiplexer
 - **tree**: Tree directory listing utility
 - **uv**: Python package manager
+- **zitadel**: ZITADEL self-hosting binary (macOS via Homebrew)
 - **zsh**: Zsh shell configuration
 
 ### Hardware-Specific Roles

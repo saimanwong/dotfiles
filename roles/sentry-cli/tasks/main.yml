@@ -1,0 +1,16 @@
+---
+
+- name: Install Sentry CLI on macOS
+  ansible.builtin.package:
+    name: sentry-cli
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == "Darwin"
+
+- name: Install Sentry CLI on Arch Linux
+  ansible.builtin.package:
+    name: sentry-cli
+    state: present
+  become: true
+  when: ansible_facts.os_family == "Archlinux"
