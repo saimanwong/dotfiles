@@ -20,6 +20,21 @@
     state: present
   when: ansible_facts.os_family == "Darwin"
 
+- name: Install git-delta (privileged)
+  ansible.builtin.package:
+    name: git-delta
+    state: present
+  become: true
+  when: ansible_facts.os_family != "Darwin"
+
+- name: Install git-delta on macOS
+  ansible.builtin.package:
+    name: git-delta
+    state: present
+  register: git_delta_result
+  failed_when: '"already installed" not in git_delta_result.msg and "Package installed" not in git_delta_result.msg and git_delta_result.msg != ""'
+  when: ansible_facts.os_family == "Darwin"
+
 - name: Soft link ssh config
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/sshconfig"
