@@ -6,6 +6,16 @@
     global: true
     state: present
 
+- name: Check installed Pi packages
+  ansible.builtin.command: pi list
+  register: pi_packages_list
+  changed_when: false
+  failed_when: false
+
+- name: Install pi-subagents Pi package
+  ansible.builtin.command: pi install npm:pi-subagents
+  when: "'pi-subagents' not in pi_packages_list.stdout"
+
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agents/skills"
@@ -114,5 +124,28 @@
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/agent-config/pi-keybindings.json"
     dest: "{{ ansible_facts.env.HOME }}/.pi/agent/keybindings.json"
+    force: true
+    state: link
+
+- name: Gather Pi models.json path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/models.json"
+    follow: false
+  register: pi_models_path
+
+- name: Backup existing Pi models.json before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/models.json"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/models.json.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_models_path.stat.exists
+    - not (pi_models_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi models.json file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-models.json"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/models.json"
     force: true
     state: link
