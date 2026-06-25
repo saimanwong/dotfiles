@@ -1,8 +1,14 @@
 ---
 
-- name: Install Pi Coding Agent globally via npm
+- name: Remove deprecated Pi Coding Agent npm package
   community.general.npm:
     name: "@mariozechner/pi-coding-agent"
+    global: true
+    state: absent
+
+- name: Install Pi Coding Agent globally via npm
+  community.general.npm:
+    name: "@earendil-works/pi-coding-agent"
     global: true
     state: present
 
@@ -34,6 +40,29 @@
     path: "{{ ansible_facts.env.HOME }}/.pi/agent"
     state: directory
     mode: '0755'
+
+- name: Gather Pi skills path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/skills"
+    follow: false
+  register: pi_skills_path
+
+- name: Backup existing Pi skills path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/skills"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/skills.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_skills_path.stat.exists
+    - not (pi_skills_path.stat.islnk | default(false))
+
+- name: Soft link Pi-specific skills directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-skills"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/skills"
+    force: true
+    state: link
 
 - name: Gather Pi extensions path info
   ansible.builtin.stat:
