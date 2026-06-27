@@ -41,6 +41,92 @@
     state: directory
     mode: '0755'
 
+- name: Gather Pi themes path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/themes"
+    follow: false
+  register: pi_themes_path
+
+- name: Backup existing non-directory Pi themes path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/themes"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/themes.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_themes_path.stat.exists
+    - not (pi_themes_path.stat.isdir | default(false))
+    - not (pi_themes_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi themes directory when no themes directory exists
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-themes"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/themes"
+    force: true
+    state: link
+  when: >
+    not pi_themes_path.stat.exists or
+    (not (pi_themes_path.stat.isdir | default(false)) and
+    not (pi_themes_path.stat.islnk | default(false)))
+
+- name: Gather Pi Ayu Calm theme path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/themes/ayu-calm.json"
+    follow: false
+  register: pi_ayu_calm_theme_path
+  when:
+    - pi_themes_path.stat.exists
+    - pi_themes_path.stat.isdir | default(false)
+    - not (pi_themes_path.stat.islnk | default(false))
+
+- name: Backup existing Pi Ayu Calm theme before symlinking into existing themes directory
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/themes/ayu-calm.json"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/themes/ayu-calm.json.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_themes_path.stat.exists
+    - pi_themes_path.stat.isdir | default(false)
+    - not (pi_themes_path.stat.islnk | default(false))
+    - pi_ayu_calm_theme_path.stat.exists
+    - not (pi_ayu_calm_theme_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi Ayu Calm theme into existing themes directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-themes/ayu-calm.json"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/themes/ayu-calm.json"
+    force: true
+    state: link
+  when:
+    - pi_themes_path.stat.exists
+    - pi_themes_path.stat.isdir | default(false)
+    - not (pi_themes_path.stat.islnk | default(false))
+
+- name: Ensure Pi settings select Ayu Calm theme
+  ansible.builtin.command:
+    argv:
+      - python3
+      - -c
+      - |
+        import json
+        import os
+        from pathlib import Path
+
+        path = Path(os.environ["HOME"]) / ".pi" / "agent" / "settings.json"
+        data = {}
+        if path.exists() and path.read_text().strip():
+            data = json.loads(path.read_text())
+
+        if data.get("theme") != "ayu-calm":
+            data["theme"] = "ayu-calm"
+            path.write_text(json.dumps(data, indent=2) + "\n")
+            print("changed")
+  register: pi_theme_setting
+  changed_when: '"changed" in pi_theme_setting.stdout'
+  environment:
+    HOME: "{{ ansible_facts.env.HOME }}"
+
 - name: Gather Pi skills path info
   ansible.builtin.stat:
     path: "{{ ansible_facts.env.HOME }}/.pi/agent/skills"
