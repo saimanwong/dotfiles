@@ -3,7 +3,7 @@
 
 [general]
 import = [
-  "~/.config/alacritty/themes/themes/ayu_dark.toml"
+  "~/.config/alacritty/pi-agentic.toml"
 ]
 
 [window]

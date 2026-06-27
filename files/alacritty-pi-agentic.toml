@@ -1,0 +1,69 @@
+# Pi Agentic Calm theme for Alacritty
+# Tuned to match ~/.pi/agent/themes/ayu-calm.json: dark, cyan/blue-first,
+# with warm colors reserved for actual warnings.
+
+[colors.primary]
+background = '#0A0E14'
+foreground = '#C7C7C7'
+
+[colors.cursor]
+text = '#0A0E14'
+cursor = '#95E6CB'
+
+[colors.vi_mode_cursor]
+text = '#0A0E14'
+cursor = '#59C2FF'
+
+[colors.selection]
+text = '#C7C7C7'
+background = '#17202B'
+
+[colors.search.matches]
+foreground = '#0A0E14'
+background = '#95E6CB'
+
+[colors.search.focused_match]
+foreground = '#0A0E14'
+background = '#D7BA7D'
+
+[colors.footer_bar]
+foreground = '#C7C7C7'
+background = '#111821'
+
+[colors.hints.start]
+foreground = '#0A0E14'
+background = '#D7BA7D'
+
+[colors.hints.end]
+foreground = '#D7BA7D'
+background = '#111821'
+
+[colors.normal]
+black   = '#0D1117'
+red     = '#EA6C73'
+green   = '#91B362'
+yellow  = '#D7BA7D'
+blue    = '#59C2FF'
+magenta = '#AEB7D8'
+cyan    = '#95E6CB'
+white   = '#B3B1AD'
+
+[colors.bright]
+black   = '#4A5663'
+red     = '#F07178'
+green   = '#C2D94C'
+yellow  = '#EAD98D'
+blue    = '#7ACBFF'
+magenta = '#B8A4D8'
+cyan    = '#A6EAD4'
+white   = '#FFFFFF'
+
+[colors.dim]
+black   = '#0A0E14'
+red     = '#B95D63'
+green   = '#728C59'
+yellow  = '#A89564'
+blue    = '#4A9BC9'
+magenta = '#8B91AD'
+cyan    = '#78B8A6'
+white   = '#7A828A'

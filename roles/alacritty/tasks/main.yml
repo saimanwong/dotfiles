@@ -23,3 +23,10 @@
     dest: "{{ ansible_facts.env.HOME }}/.config/alacritty/alacritty.toml"
     force: true
     state: link
+
+- name: Soft link Pi Agentic Alacritty theme
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/alacritty-pi-agentic.toml"
+    dest: "{{ ansible_facts.env.HOME }}/.config/alacritty/pi-agentic.toml"
+    force: true
+    state: link
