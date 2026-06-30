@@ -22,6 +22,10 @@
   ansible.builtin.command: pi install npm:pi-subagents
   when: "'pi-subagents' not in pi_packages_list.stdout"
 
+- name: Install pi-codex-fast Pi package
+  ansible.builtin.command: pi install npm:pi-codex-fast
+  when: "'pi-codex-fast' not in pi_packages_list.stdout"
+
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agents/skills"
@@ -103,7 +107,7 @@
     - pi_themes_path.stat.isdir | default(false)
     - not (pi_themes_path.stat.islnk | default(false))
 
-- name: Ensure Pi settings select Ayu Calm theme
+- name: Ensure Pi settings include shared defaults
   ansible.builtin.command:
     argv:
       - python3
@@ -118,14 +122,42 @@
         if path.exists() and path.read_text().strip():
             data = json.loads(path.read_text())
 
-        if data.get("theme") != "ayu-calm":
-            data["theme"] = "ayu-calm"
+        defaults_path = Path(os.environ["PI_SETTINGS_DEFAULTS"])
+        desired = json.loads(defaults_path.read_text())
+
+        def merge(current, desired):
+            changed = False
+            for key, desired_value in desired.items():
+                current_value = current.get(key)
+                if isinstance(desired_value, dict):
+                    if not isinstance(current_value, dict):
+                        current_value = {}
+                        current[key] = current_value
+                        changed = True
+                    if merge(current_value, desired_value):
+                        changed = True
+                elif isinstance(desired_value, list):
+                    if not isinstance(current_value, list):
+                        current[key] = list(desired_value)
+                        changed = True
+                    else:
+                        for item in desired_value:
+                            if item not in current_value:
+                                current_value.append(item)
+                                changed = True
+                elif current_value != desired_value:
+                    current[key] = desired_value
+                    changed = True
+            return changed
+
+        if merge(data, desired):
             path.write_text(json.dumps(data, indent=2) + "\n")
             print("changed")
-  register: pi_theme_setting
-  changed_when: '"changed" in pi_theme_setting.stdout'
+  register: pi_settings_defaults
+  changed_when: '"changed" in pi_settings_defaults.stdout'
   environment:
     HOME: "{{ ansible_facts.env.HOME }}"
+    PI_SETTINGS_DEFAULTS: "{{ playbook_dir }}/files/agent-config/pi-settings-defaults.json"
 
 - name: Gather Pi skills path info
   ansible.builtin.stat:
