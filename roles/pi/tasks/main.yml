@@ -296,3 +296,26 @@
     dest: "{{ ansible_facts.env.HOME }}/.pi/agent/models.json"
     force: true
     state: link
+
+- name: Gather Pi global AGENTS.md path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md"
+    follow: false
+  register: pi_agents_md_path
+
+- name: Backup existing Pi global AGENTS.md before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_agents_md_path.stat.exists
+    - not (pi_agents_md_path.stat.islnk | default(false))
+
+- name: Soft link shared Pi global AGENTS.md context file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/pi-AGENTS.md"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md"
+    force: true
+    state: link
