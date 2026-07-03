@@ -26,6 +26,10 @@
   ansible.builtin.command: pi install npm:pi-codex-fast
   when: "'pi-codex-fast' not in pi_packages_list.stdout"
 
+- name: Install pi-intercom Pi package
+  ansible.builtin.command: pi install npm:pi-intercom
+  when: "'pi-intercom' not in pi_packages_list.stdout"
+
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agents/skills"

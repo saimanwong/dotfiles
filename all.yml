@@ -40,6 +40,9 @@
     - role: claude-code
       tags:
         - claude-code
+    - role: codex
+      tags:
+        - codex
     - role: discord
       tags:
         - discord

@@ -16,6 +16,7 @@
 - **azure-cli**: Azure Command Line Interface
 - **chrome**: Google Chrome web browser
 - **claude-code**: Claude Code CLI tool
+- **codex**: OpenAI Codex CLI tool (npm global) + managed profile symlinked from `files/agent-config/codex-pi.config.toml` → `~/.codex/pi.config.toml` (invoke via `codex exec -p pi`). Also manages base `~/.codex/config.toml` defaults via a marked block sourced from the private `files/agent-config` submodule (only our keys are managed; Codex co-owns the file).
 - **discord**: Discord desktop application
 - **firefox**: Mozilla Firefox web browser
 - **docker**: Docker containerization platform

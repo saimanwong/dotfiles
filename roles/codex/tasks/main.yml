@@ -1,0 +1,34 @@
+---
+
+- name: Install Codex CLI globally via npm
+  community.general.npm:
+    name: "@openai/codex"
+    global: true
+    state: present
+
+- name: Ensure Codex config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.codex"
+    state: directory
+    mode: '0755'
+
+- name: Symlink the managed Codex profile from files/agent-config
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/codex-pi.config.toml"
+    dest: "{{ ansible_facts.env.HOME }}/.codex/pi.config.toml"
+    force: true
+    state: link
+
+# ~/.codex/config.toml is co-owned by Codex (it writes machine-specific trust
+# levels + TUI state), so it is NOT symlinked. We manage only our base defaults
+# as a marked block at the top of the file (top-level keys must precede Codex's
+# own tables). The actual values live in the private files/agent-config submodule
+# (codex-config-base.toml).
+- name: Manage base Codex config defaults (from files/agent-config)
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_facts.env.HOME }}/.codex/config.toml"
+    create: true
+    mode: '0644'
+    insertbefore: BOF
+    marker: "# {mark} ANSIBLE MANAGED - codex base defaults (files/agent-config)"
+    block: "{{ lookup('ansible.builtin.file', playbook_dir + '/files/agent-config/codex-config-base.toml') }}"
