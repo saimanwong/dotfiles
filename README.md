@@ -3,8 +3,8 @@
 ## Commands
 - **Run full playbook**: `ansible-playbook -i inventory.ini -e h=mac -e hw_keyboard=ansi all.yml`
 - **Run specific role**: `ansible-playbook -i inventory.ini -e h=mac all.yml --tags <role_name>`
-- **Test syntax**: `ansible-playbook -i inventory.ini --syntax-check all.yml`
-- **Dry run**: `ansible-playbook -i inventory.ini --check all.yml`
+- **Test syntax**: `ansible-playbook -i inventory.ini -e h=mac --syntax-check all.yml`
+- **Dry run**: `ansible-playbook -i inventory.ini -e h=mac -e hw_keyboard=ansi --check all.yml`
 
 ## Getting started
 
@@ -23,6 +23,7 @@
 - **azure-cli**: Azure Command Line Interface
 - **chrome**: Google Chrome browser
 - **claude-code**: Claude Code CLI tool
+- **codex**: OpenAI Codex CLI tool (npm global)
 - **discord**: Discord desktop application
 - **docker**: Docker containerization platform
 - **gcloud**: Google Cloud CLI
@@ -63,6 +64,7 @@
 - **tree**: Directory tree listing utility
 - **uv**: Python package manager
 - **watch**: Watch command for running commands periodically
+- **wispr-flow**: Wispr Flow voice-to-text dictation app (macOS via Homebrew cask)
 - **zitadel**: ZITADEL self-hosting binary (macOS via Homebrew)
 - **zsh**: Zsh shell configuration
 

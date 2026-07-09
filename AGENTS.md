@@ -3,8 +3,8 @@
 ## Commands
 - **Run full playbook**: `ansible-playbook -i inventory.ini -e h=mac -e hw_keyboard=ansi all.yml`
 - **Run specific role**: `ansible-playbook -i inventory.ini -e h=mac all.yml --tags <role_name>`
-- **Test syntax**: `ansible-playbook -i inventory.ini --syntax-check all.yml`
-- **Dry run**: `ansible-playbook -i inventory.ini --check all.yml`
+- **Test syntax**: `ansible-playbook -i inventory.ini -e h=mac --syntax-check all.yml`
+- **Dry run**: `ansible-playbook -i inventory.ini -e h=mac -e hw_keyboard=ansi --check all.yml`
 
 ## Available Roles
 
@@ -16,7 +16,7 @@
 - **azure-cli**: Azure Command Line Interface
 - **chrome**: Google Chrome web browser
 - **claude-code**: Claude Code CLI tool
-- **codex**: OpenAI Codex CLI tool (npm global) + managed profile symlinked from `files/agent-config/codex-pi.config.toml` → `~/.codex/pi.config.toml` (invoke via `codex exec -p pi`). Also manages base `~/.codex/config.toml` defaults via a marked block sourced from the private `files/agent-config` submodule (only our keys are managed; Codex co-owns the file).
+- **codex**: OpenAI Codex CLI tool (npm global)
 - **discord**: Discord desktop application
 - **firefox**: Mozilla Firefox web browser
 - **docker**: Docker containerization platform
@@ -46,6 +46,7 @@
 - **tmux**: Terminal multiplexer
 - **tree**: Tree directory listing utility
 - **uv**: Python package manager
+- **wispr-flow**: Wispr Flow voice-to-text dictation app (macOS via Homebrew cask)
 - **zitadel**: ZITADEL self-hosting binary (macOS via Homebrew)
 - **zsh**: Zsh shell configuration
 
@@ -75,6 +76,24 @@ When creating a new role:
 ## Submodules
 
 - **`files/agent-config/`** — Private repo (`git@github.com:saimanwong/agent-config.git`). After cloning dotfiles, run `git submodule update --init` to populate it.
+
+### Commit ordering (private submodule → public repo)
+
+`files/agent-config/` is a **private** submodule; the rest of this repo is **public**. When a change spans both, commit and push in this order so the public repo never points at a submodule commit that has not been pushed:
+
+1. **Submodule first** — commit inside `files/agent-config/` and push it to the private remote.
+2. **Public repo second** — stage the bumped submodule pointer (`git add files/agent-config`) alongside the related public changes, then commit and push the outer repo.
+
+Keep private content in the submodule and public content in the outer repo; never move secrets or private agent config into public files. Group commits by concern (e.g. a new role separate from docs/homogenization changes) rather than one mixed commit.
+
+## Agent context files
+
+`AGENTS.md` is the single source of truth for agent instructions in each repo. Harness-specific context files must **not** duplicate it — they should be a one-line import pointing at `AGENTS.md`:
+
+- `GEMINI.md` → `@AGENTS.md` (Gemini CLI Memory Import Processor)
+- `CLAUDE.md` → `@AGENTS.md` (Claude Code import)
+
+This applies in both the outer repo and the `files/agent-config/` submodule (each `@AGENTS.md` resolves to the `AGENTS.md` beside it). When updating instructions, edit `AGENTS.md` only.
 
 ## Code Style Guidelines
 - Use YAML with 2-space indentation
