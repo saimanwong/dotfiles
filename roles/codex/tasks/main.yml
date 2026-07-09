@@ -12,6 +12,12 @@
     state: directory
     mode: '0755'
 
+- name: Ensure Codex skills directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.codex/skills"
+    state: directory
+    mode: '0755'
+
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agents/skills"
@@ -22,6 +28,13 @@
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/agent-config/skills"
     dest: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-config"
+    force: true
+    state: link
+
+- name: Soft link global Agent Skills directory into Codex skills directory
+  ansible.builtin.file:
+    src: "{{ ansible_facts.env.HOME }}/.agents/skills"
+    dest: "{{ ansible_facts.env.HOME }}/.codex/skills/agents"
     force: true
     state: link
 
