@@ -1,0 +1,13 @@
+---
+
+- name: Install Wispr Flow on macOS
+  ansible.builtin.package:
+    name: wispr-flow
+    state: present
+  register: result
+  failed_when: >
+    "already installed" not in result.msg and
+    "Package installed" not in result.msg and
+    "It seems there is already an App" not in result.msg and
+    result.msg != ""
+  when: ansible_facts.os_family == 'Darwin'

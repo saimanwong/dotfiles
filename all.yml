@@ -166,6 +166,9 @@
     - role: watch
       tags:
         - watch
+    - role: wispr-flow
+      tags:
+        - wispr-flow
     - role: zitadel
       tags:
         - zitadel
