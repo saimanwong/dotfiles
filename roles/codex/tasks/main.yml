@@ -12,6 +12,19 @@
     state: directory
     mode: '0755'
 
+- name: Ensure global Agent Skills directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.agents/skills"
+    state: directory
+    mode: '0755'
+
+- name: Soft link shared skills directory into global Agent Skills directory
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/skills"
+    dest: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-config"
+    force: true
+    state: link
+
 - name: Symlink the managed Codex profile from files/agent-config
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/agent-config/codex-pi.config.toml"
@@ -28,7 +41,7 @@
   ansible.builtin.blockinfile:
     path: "{{ ansible_facts.env.HOME }}/.codex/config.toml"
     create: true
-    mode: '0644'
+    mode: '0600'
     insertbefore: BOF
     marker: "# {mark} ANSIBLE MANAGED - codex base defaults (files/agent-config)"
     block: "{{ lookup('ansible.builtin.file', playbook_dir + '/files/agent-config/codex-config-base.toml') }}"
