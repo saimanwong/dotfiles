@@ -3,10 +3,11 @@
 - name: Install agent-browser on MacOS
   ansible.builtin.package:
     name: agent-browser
-    state: present
+    state: latest
   register: result
   failed_when:
     - '"already installed" not in result.msg'
+    - '"Package already upgraded" not in result.msg'
     - '"Package installed" not in result.msg'
     - result.msg != ""
   when: ansible_facts.os_family == 'Darwin'
@@ -15,7 +16,7 @@
   ansible.builtin.command:
     cmd: agent-browser install
   register: install_result
-  changed_when: "'Already installed' not in install_result.stdout"
+  changed_when: "'already installed' not in install_result.stdout"
   failed_when: false
 
 - name: Ensure global Agent Skills directory exists
@@ -29,6 +30,12 @@
     cmd: npx skills add vercel-labs/agent-browser --yes --global
   args:
     creates: "{{ ansible_facts.env.HOME }}/.agents/skills/agent-browser/SKILL.md"
+
+- name: Update agent-browser skill globally
+  ansible.builtin.command:
+    cmd: npx skills update agent-browser --global --yes
+  register: agent_browser_skill_update
+  changed_when: "'Updated agent-browser' in agent_browser_skill_update.stdout"
 
 - name: Ensure agent-browser config directory exists
   ansible.builtin.file:
