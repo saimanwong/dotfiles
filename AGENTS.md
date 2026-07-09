@@ -75,7 +75,7 @@ When creating a new role:
 
 ## Submodules
 
-- **`files/agent-config/`** — Private repo (`git@github.com:saimanwong/agent-config.git`). After cloning dotfiles, run `git submodule update --init` to populate it.
+- **`files/agent-config/`** — Private repo (`git@github.com:saimanwong/agent-config.git`). After cloning dotfiles, run `git submodule update --init --recursive` to populate it (the `--recursive` also pulls its nested `upstream/` skill submodules).
 
 ### Commit ordering (private submodule → public repo)
 
