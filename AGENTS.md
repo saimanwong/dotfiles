@@ -84,8 +84,6 @@ When creating a new role:
 1. **Submodule first** — commit inside `files/agent-config/` and push it to the private remote.
 2. **Public repo second** — stage the bumped submodule pointer (`git add files/agent-config`) alongside the related public changes, then commit and push the outer repo.
 
-Keep the public **submodule-bump** commit message **generic** (e.g. `chore(agent-config): bump submodule`) — do not restate the private change details; they live in the submodule's own history, and the public repo shouldn't describe private agent-config specifics.
-
 Keep private content in the submodule and public content in the outer repo; never move secrets or private agent config into public files. Group commits by concern (e.g. a new role separate from docs/homogenization changes) rather than one mixed commit.
 
 ## Agent context files
