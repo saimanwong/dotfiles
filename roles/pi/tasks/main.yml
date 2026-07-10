@@ -209,6 +209,29 @@
     force: true
     state: link
 
+- name: Gather Pi shared tools path info
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.pi/agent/shared-tools"
+    follow: false
+  register: pi_shared_tools_path
+
+- name: Backup existing Pi shared tools path before symlinking
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ ansible_facts.env.HOME }}/.pi/agent/shared-tools"
+      "{{ ansible_facts.env.HOME }}/.pi/agent/shared-tools.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - pi_shared_tools_path.stat.exists
+    - not (pi_shared_tools_path.stat.islnk | default(false))
+
+- name: Soft link shared tools directory for Pi extension imports
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/shared-tools"
+    dest: "{{ ansible_facts.env.HOME }}/.pi/agent/shared-tools"
+    force: true
+    state: link
+
 - name: Gather Pi agents path info
   ansible.builtin.stat:
     path: "{{ ansible_facts.env.HOME }}/.pi/agent/agents"
