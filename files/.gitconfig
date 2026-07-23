@@ -8,6 +8,9 @@
 [includeIf "gitdir:~/gitlab/"]
 	path = ~/gitlab/.gitconfig
 
+[color]
+	ui = always
+
 [diff]
 	tool = nvimdiff
 
