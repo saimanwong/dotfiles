@@ -12,6 +12,7 @@
 - **agent-browser**: Browser automation CLI for AI agents (agent-browser)
 - **alacritty**: Alacritty terminal emulator
 - **aur**: Arch User Repository setup (Arch Linux only)
+- **auth0-cli**: Auth0 command-line interface (macOS via Homebrew)
 - **awscli**: AWS Command Line Interface
 - **azure-cli**: Azure Command Line Interface
 - **chrome**: Google Chrome web browser

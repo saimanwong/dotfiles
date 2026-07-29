@@ -1,0 +1,15 @@
+---
+
+- name: Tap Auth0 Homebrew repository on macOS
+  community.general.homebrew_tap:
+    name: auth0/auth0-cli
+    state: present
+  when: ansible_facts.os_family == "Darwin"
+
+- name: Install Auth0 CLI on macOS
+  ansible.builtin.package:
+    name: auth0
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == "Darwin"

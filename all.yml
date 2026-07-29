@@ -28,6 +28,9 @@
     - role: agent-browser
       tags:
         - agent-browser
+    - role: auth0-cli
+      tags:
+        - auth0-cli
     - role: awscli
       tags:
         - awscli
