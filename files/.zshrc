@@ -61,3 +61,5 @@ unsetopt BEEP HIST_BEEP LIST_BEEP
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:${HOME}/.lmstudio/bin"
 # End of LM Studio CLI section
+
+[ -f "${HOME}/.zshrc.local" ] && source "${HOME}/.zshrc.local"
