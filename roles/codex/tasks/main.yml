@@ -61,12 +61,14 @@
     force: true
     state: link
 
-- name: Symlink the managed Codex profile from files/agent-config
+- name: Symlink managed Codex profiles from files/agent-config
   ansible.builtin.file:
-    src: "{{ playbook_dir }}/files/agent-config/codex-pi.config.toml"
-    dest: "{{ ansible_facts.env.HOME }}/.codex/pi.config.toml"
+    src: "{{ item }}"
+    dest: "{{ ansible_facts.env.HOME }}/.codex/{{ item | basename | regex_replace('^codex-', '') }}"
     force: true
     state: link
+  with_fileglob:
+    - "{{ playbook_dir }}/files/agent-config/codex-*.config.toml"
 
 # ~/.codex/config.toml is co-owned by Codex (it writes machine-specific trust
 # levels + TUI state), so it is NOT symlinked. We manage only our base defaults
