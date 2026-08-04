@@ -66,13 +66,19 @@ The following roles are available but not included by default:
   ansible-playbook -i inventory.ini roles/ollama/tasks/main.yml
   ```
 
+### Helper Roles
+Helper roles are not listed in `all.yml`; they are pulled in by other roles via
+`include_role` and do nothing on their own.
+
+- **agent_symlinks**: Given an `agent_symlinks` list of `{ src, dest }` pairs, back up any existing real (non-symlink) path, then create the symlink. Used by the `pi`, `codex`, `claude-code`, and `opencode` roles to share `files/agent-config` into each harness without repeating the gather/backup/symlink pattern.
+
 ## Adding a New Role
 
 When creating a new role:
 
 1. **Create the role directory and tasks file**: `roles/<role_name>/tasks/main.yml`
-2. **Add the role to `all.yml`** with appropriate tags (maintain alphabetical ordering where possible)
-3. **Update `AGENTS.md`** to document the role in the appropriate section (Core Roles, Hardware-Specific, macOS-Specific, or Opt-in)
+2. **Add the role to `all.yml`** with appropriate tags (maintain alphabetical ordering where possible). Helper roles consumed only via `include_role` are the exception — do not add them to `all.yml`.
+3. **Update `AGENTS.md`** to document the role in the appropriate section (Core Roles, Hardware-Specific, macOS-Specific, Opt-in, or Helper)
 
 ## Submodules
 

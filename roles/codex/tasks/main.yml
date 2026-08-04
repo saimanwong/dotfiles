@@ -12,28 +12,12 @@
     state: directory
     mode: '0755'
 
-- name: Gather Codex global AGENTS.md path info
-  ansible.builtin.stat:
-    path: "{{ ansible_facts.env.HOME }}/.codex/AGENTS.md"
-    follow: false
-  register: codex_agents_md_path
-
-- name: Backup existing Codex global AGENTS.md before symlinking
-  ansible.builtin.command:
-    cmd: >
-      mv
-      "{{ ansible_facts.env.HOME }}/.codex/AGENTS.md"
-      "{{ ansible_facts.env.HOME }}/.codex/AGENTS.md.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
-  when:
-    - codex_agents_md_path.stat.exists
-    - not (codex_agents_md_path.stat.islnk | default(false))
-
-- name: Soft link shared global AGENTS.md context into Codex
-  ansible.builtin.file:
-    src: "{{ playbook_dir }}/files/agent-config/pi-AGENTS.md"
-    dest: "{{ ansible_facts.env.HOME }}/.codex/AGENTS.md"
-    force: true
-    state: link
+- name: Link shared Codex agent-config paths
+  ansible.builtin.include_role:
+    name: agent_symlinks
+  vars:
+    agent_symlinks:
+      - { src: "{{ playbook_dir }}/files/agent-config/pi-AGENTS.md", dest: "{{ ansible_facts.env.HOME }}/.codex/AGENTS.md" }
 
 - name: Ensure Codex skills directory exists
   ansible.builtin.file:

@@ -1,0 +1,25 @@
+---
+# Single {src, dest} pair (loop_var `link_item`): back up an existing real path,
+# then symlink. Included in a loop by this role's main.yml.
+- name: "Gather path info: {{ link_item.dest }}"
+  ansible.builtin.stat:
+    path: "{{ link_item.dest }}"
+    follow: false
+  register: agent_symlink_stat
+
+- name: "Back up existing non-symlink path: {{ link_item.dest }}"
+  ansible.builtin.command:
+    cmd: >
+      mv
+      "{{ link_item.dest }}"
+      "{{ link_item.dest }}.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
+  when:
+    - agent_symlink_stat.stat.exists
+    - not (agent_symlink_stat.stat.islnk | default(false))
+
+- name: "Soft link: {{ link_item.dest }}"
+  ansible.builtin.file:
+    src: "{{ link_item.src }}"
+    dest: "{{ link_item.dest }}"
+    force: true
+    state: link

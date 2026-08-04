@@ -57,45 +57,6 @@
     force: true
     state: link
 
-- name: Gather OpenCode commands path info
-  ansible.builtin.stat:
-    path: "{{ ansible_facts.env.HOME }}/.config/opencode/commands"
-    follow: false
-  register: opencode_commands_path
-
-- name: Backup existing OpenCode commands path before symlinking
-  ansible.builtin.command:
-    cmd: >
-      mv
-      "{{ ansible_facts.env.HOME }}/.config/opencode/commands"
-      "{{ ansible_facts.env.HOME }}/.config/opencode/commands.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
-  when:
-    - opencode_commands_path.stat.exists
-    - not (opencode_commands_path.stat.islnk | default(false))
-
-- name: Gather OpenCode skills path info
-  ansible.builtin.stat:
-    path: "{{ ansible_facts.env.HOME }}/.config/opencode/skills"
-    follow: false
-  register: opencode_skills_path
-
-- name: Backup existing OpenCode skills path before symlinking
-  ansible.builtin.command:
-    cmd: >
-      mv
-      "{{ ansible_facts.env.HOME }}/.config/opencode/skills"
-      "{{ ansible_facts.env.HOME }}/.config/opencode/skills.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
-  when:
-    - opencode_skills_path.stat.exists
-    - not (opencode_skills_path.stat.islnk | default(false))
-
-- name: Soft link shared OpenCode commands directory
-  ansible.builtin.file:
-    src: "{{ playbook_dir }}/files/agent-config/commands"
-    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/commands"
-    force: true
-    state: link
-
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agents/skills"
@@ -109,9 +70,10 @@
     force: true
     state: link
 
-- name: Soft link OpenCode skills directory to global Agent Skills directory
-  ansible.builtin.file:
-    src: "{{ ansible_facts.env.HOME }}/.agents/skills"
-    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/skills"
-    force: true
-    state: link
+- name: Link shared OpenCode agent-config paths
+  ansible.builtin.include_role:
+    name: agent_symlinks
+  vars:
+    agent_symlinks:
+      - { src: "{{ playbook_dir }}/files/agent-config/commands", dest: "{{ ansible_facts.env.HOME }}/.config/opencode/commands" }
+      - { src: "{{ ansible_facts.env.HOME }}/.agents/skills", dest: "{{ ansible_facts.env.HOME }}/.config/opencode/skills" }

@@ -16,38 +16,6 @@
     path: "{{ ansible_facts.env.HOME }}/.claude"
     state: directory
 
-- name: Gather Claude Code commands path info
-  ansible.builtin.stat:
-    path: "{{ ansible_facts.env.HOME }}/.claude/commands"
-    follow: false
-  register: claude_commands_path
-
-- name: Backup existing Claude Code commands path before symlinking
-  ansible.builtin.command:
-    cmd: >
-      mv
-      "{{ ansible_facts.env.HOME }}/.claude/commands"
-      "{{ ansible_facts.env.HOME }}/.claude/commands.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
-  when:
-    - claude_commands_path.stat.exists
-    - not (claude_commands_path.stat.islnk | default(false))
-
-- name: Gather Claude Code skills path info
-  ansible.builtin.stat:
-    path: "{{ ansible_facts.env.HOME }}/.claude/skills"
-    follow: false
-  register: claude_skills_path
-
-- name: Backup existing Claude Code skills path before symlinking
-  ansible.builtin.command:
-    cmd: >
-      mv
-      "{{ ansible_facts.env.HOME }}/.claude/skills"
-      "{{ ansible_facts.env.HOME }}/.claude/skills.pre-shared-link.{{ ansible_facts['date_time']['epoch'] }}"
-  when:
-    - claude_skills_path.stat.exists
-    - not (claude_skills_path.stat.islnk | default(false))
-
 - name: Soft link Claude Code settings
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/claude-settings.json"
@@ -69,13 +37,6 @@
     force: true
     state: link
 
-- name: Soft link shared Claude Code commands directory
-  ansible.builtin.file:
-    src: "{{ playbook_dir }}/files/agent-config/commands"
-    dest: "{{ ansible_facts.env.HOME }}/.claude/commands"
-    force: true
-    state: link
-
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agents/skills"
@@ -89,12 +50,13 @@
     force: true
     state: link
 
-- name: Soft link Claude Code skills directory to global Agent Skills directory
-  ansible.builtin.file:
-    src: "{{ ansible_facts.env.HOME }}/.agents/skills"
-    dest: "{{ ansible_facts.env.HOME }}/.claude/skills"
-    force: true
-    state: link
+- name: Link shared Claude Code agent-config paths
+  ansible.builtin.include_role:
+    name: agent_symlinks
+  vars:
+    agent_symlinks:
+      - { src: "{{ playbook_dir }}/files/agent-config/commands", dest: "{{ ansible_facts.env.HOME }}/.claude/commands" }
+      - { src: "{{ ansible_facts.env.HOME }}/.agents/skills", dest: "{{ ansible_facts.env.HOME }}/.claude/skills" }
 
 - name: Add Linear MCP server to Claude Code (user scope)
   ansible.builtin.command:

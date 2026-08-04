@@ -1,0 +1,11 @@
+---
+# Generic helper role. For each entry in `agent_symlinks` (a list of
+# { src, dest } absolute paths), back up an existing real (non-symlink) path,
+# then (re)create the symlink. Consumed by the agent harness roles via
+# include_role; it is not run standalone from all.yml.
+- name: Back up and symlink shared agent-config paths
+  ansible.builtin.include_tasks: link.yml
+  loop: "{{ agent_symlinks | default([]) }}"
+  loop_control:
+    loop_var: link_item
+    label: "{{ link_item.dest }}"
