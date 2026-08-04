@@ -1,0 +1,1 @@
+agent-config/tmux-window-activity.mjs

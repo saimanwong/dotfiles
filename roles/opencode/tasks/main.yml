@@ -50,6 +50,13 @@
     state: directory
     mode: '0755'
 
+- name: Soft link shared tmux activity helper for OpenCode
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/tmux-window-activity.mjs"
+    dest: "{{ ansible_facts.env.HOME }}/.config/opencode/plugins/tmux-window-activity.mjs"
+    force: true
+    state: link
+
 - name: Soft link opencode notify plugin
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/opencode-notify.js"
