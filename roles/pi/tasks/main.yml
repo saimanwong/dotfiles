@@ -169,6 +169,7 @@
   vars:
     agent_symlinks:
       - { src: "{{ playbook_dir }}/files/agent-config/pi-skills", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/skills" }
+      - { src: "{{ ansible_facts.env.HOME }}/.pi/agent/npm/node_modules", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/node_modules" }
       - { src: "{{ playbook_dir }}/files/agent-config/pi-extensions", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/extensions" }
       - { src: "{{ playbook_dir }}/files/agent-config/tmux-window-activity.mjs", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/tmux-window-activity.mjs" }
       - { src: "{{ playbook_dir }}/files/agent-config/tmux-window-activity.d.mts", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/tmux-window-activity.d.mts" }
