@@ -37,6 +37,7 @@
 - **opencode**: Install OpenCode CLI tool
 - **opentofu**: OpenTofu infrastructure as code
 - **pi**: Pi Coding Agent terminal harness
+- **posthog-cli**: PostHog command-line interface (npm global)
 - **pulumi**: Pulumi infrastructure as code
 - **signal**: Signal messaging app
 - **sentry-cli**: Sentry command-line interface

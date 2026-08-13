@@ -1,0 +1,7 @@
+---
+
+- name: Install PostHog CLI globally via npm
+  community.general.npm:
+    name: "@posthog/cli"
+    global: true
+    state: present

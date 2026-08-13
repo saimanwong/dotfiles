@@ -124,6 +124,9 @@
     - role: psql
       tags:
         - psql
+    - role: posthog-cli
+      tags:
+        - posthog-cli
     - role: pulumi
       tags:
         - pulumi
