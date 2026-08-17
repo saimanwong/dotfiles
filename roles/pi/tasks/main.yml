@@ -148,6 +148,40 @@
 
         defaults_path = Path(os.environ["PI_SETTINGS_DEFAULTS"])
         desired = json.loads(defaults_path.read_text())
+        changed = False
+
+        filtered_packages = {
+            item["source"]: item
+            for item in desired["packages"]
+            if isinstance(item, dict)
+        }
+        packages = []
+        filtered_packages_added = set()
+        for item in data.get("packages", []):
+            source = item if isinstance(item, str) else item.get("source")
+            if source in filtered_packages:
+                if source not in filtered_packages_added:
+                    packages.append(filtered_packages[source])
+                    filtered_packages_added.add(source)
+            else:
+                packages.append(item)
+        if packages != data.get("packages", []):
+            data["packages"] = packages
+            changed = True
+
+        if data.get("subagents") != desired["subagents"]:
+            data["subagents"] = desired["subagents"]
+            changed = True
+
+        for key, retired in (
+            ("extensions", "-extensions/linear.ts"),
+            ("skills", "-skills/linear-issue-pane-worker/SKILL.md"),
+        ):
+            if retired in data.get(key, []):
+                data[key].remove(retired)
+                if not data[key]:
+                    del data[key]
+                changed = True
 
         def merge(current, desired):
             changed = False
@@ -175,6 +209,9 @@
             return changed
 
         if merge(data, desired):
+            changed = True
+
+        if changed:
             path.write_text(json.dumps(data, indent=2) + "\n")
             print("changed")
   register: pi_settings_defaults
