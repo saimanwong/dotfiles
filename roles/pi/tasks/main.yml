@@ -34,6 +34,22 @@
   ansible.builtin.command: pi install npm:pi-mcp-adapter@2.24.0
   when: "'npm:pi-mcp-adapter@2.24.0' not in pi_packages_list.stdout"
 
+- name: Install ByteTrue web search Pi package
+  ansible.builtin.command: pi install npm:@bytetrue/pi-web-search@0.2.1
+  when: "'npm:@bytetrue/pi-web-search@0.2.1' not in pi_packages_list.stdout"
+
+- name: Install Ponytail Pi package
+  ansible.builtin.command: pi install npm:@dietrichgebert/ponytail@4.9.0
+  when: "'npm:@dietrichgebert/ponytail@4.9.0' not in pi_packages_list.stdout"
+
+- name: Install FFF Pi package
+  ansible.builtin.command: pi install npm:@ff-labs/pi-fff@0.10.5
+  when: "'npm:@ff-labs/pi-fff@0.10.5' not in pi_packages_list.stdout"
+
+- name: Install rpiv-todo Pi package
+  ansible.builtin.command: pi install npm:@juicesharp/rpiv-todo@2.6.0
+  when: "'npm:@juicesharp/rpiv-todo@2.6.0' not in pi_packages_list.stdout"
+
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.agents/skills"
