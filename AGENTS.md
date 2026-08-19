@@ -26,6 +26,7 @@
 - **git**: Git version control configuration
 - **gh**: GitHub CLI tool
 - **github-copilot**: Install GitHub Copilot CLI globally via npm
+- **glow**: Terminal Markdown renderer used by Pi's plan viewer
 - **go**: Go programming language
 - **htop**: Htop process viewer
 - **huggingface**: Hugging Face CLI
