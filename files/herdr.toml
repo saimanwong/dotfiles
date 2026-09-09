@@ -1,0 +1,35 @@
+[theme]
+name = "terminal"
+
+[theme.custom]
+sidebar_bg = "#0D1117"
+active_row_bg = "#17202B"
+selection_bg = "#2A3542"
+panel_bg = "#0D1117"
+accent = "#95E6CB"
+red = "#EA6C73"
+green = "#91B362"
+blue = "#59C2FF"
+yellow = "#D7BA7D"
+
+[keys]
+split_vertical = "prefix+percent"
+split_horizontal = "prefix+double_quote"
+focus_pane_left = ["prefix+h", "ctrl+h"]
+focus_pane_down = ["prefix+j", "ctrl+j"]
+focus_pane_up = ["prefix+k", "ctrl+k"]
+focus_pane_right = ["prefix+l", "ctrl+l"]
+
+[ui]
+pane_outer_borders = false
+pane_scrollbars = false
+pane_gaps = false
+show_agent_labels_on_pane_borders = true
+tab_bar_position = "bottom"
+tab_bar_right = [
+  { type = "zoom" },
+  { type = "hostname" },
+  { type = "datetime", format = "%a %H:%M" },
+]
+tab_bar_right_separator = " "
+status_indicators = "symbols"

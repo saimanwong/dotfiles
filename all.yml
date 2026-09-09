@@ -79,6 +79,9 @@
     - role: go
       tags:
         - go
+    - role: herdr
+      tags:
+        - herdr
     - role: gsed
       tags:
         - gsed

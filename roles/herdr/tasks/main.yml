@@ -1,0 +1,29 @@
+---
+
+- name: Install Herdr on macOS
+  ansible.builtin.package:
+    name: herdr
+    state: present
+  register: result
+  failed_when: '"already installed" not in result.msg and "Package installed" not in result.msg and result.msg != ""'
+  when: ansible_facts.os_family == "Darwin"
+
+- name: Install Herdr on Arch Linux
+  ansible.builtin.include_role:
+    name: aur_install
+  vars:
+    aur_install_pkg: herdr-bin
+  when: ansible_facts.os_family == "Archlinux"
+
+- name: Ensure Herdr config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/herdr"
+    state: directory
+    mode: '0755'
+
+- name: Soft link files/herdr.toml
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/herdr.toml"
+    dest: "{{ ansible_facts.env.HOME }}/.config/herdr/config.toml"
+    force: true
+    state: link
