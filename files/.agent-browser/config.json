@@ -1,4 +1,3 @@
 {
-  "headed": true,
-  "args": "--start-maximized"
+  "headed": false
 }
