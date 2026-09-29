@@ -70,9 +70,6 @@
     - role: github-copilot
       tags:
         - github-copilot
-    - role: glow
-      tags:
-        - glow
     - role: nodejs
       tags:
         - nodejs
