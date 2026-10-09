@@ -151,6 +151,9 @@
     - role: spec-kit
       tags:
         - spec-kit
+    - role: spectest
+      tags:
+        - spectest
     - role: temporal
       tags:
         - temporal

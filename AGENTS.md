@@ -44,6 +44,7 @@
 - **sentry-cli**: Sentry command-line interface
 - **slack**: Slack desktop application
 - **spec-kit**: Specification development tools
+- **spectest**: Spectest CLI (macOS Apple Silicon or Linux x86_64)
 - **terminal**: Terminal configuration
 - **terraform-ls**: Terraform language server
 - **tmux**: Terminal multiplexer

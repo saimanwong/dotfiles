@@ -1,0 +1,17 @@
+---
+
+- name: Install Spectest
+  ansible.builtin.shell: |
+    set -e
+    installer=$(mktemp)
+    trap 'rm -f "$installer"' EXIT
+    curl -fsSL https://raw.githubusercontent.com/specific-dev/spectest/main/install.sh -o "$installer"
+    sh "$installer"
+  args:
+    executable: /bin/bash
+    creates: "{{ ansible_facts.env.HOME }}/.local/bin/spectest"
+  environment:
+    SPECTEST_INSTALL_DIR: "{{ ansible_facts.env.HOME }}/.local/bin"
+  when: >-
+    (ansible_facts.system == 'Darwin' and ansible_facts.architecture in ['arm64', 'aarch64']) or
+    (ansible_facts.system == 'Linux' and ansible_facts.architecture in ['x86_64', 'amd64'])
