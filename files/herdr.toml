@@ -33,3 +33,4 @@ tab_bar_right = [
 ]
 tab_bar_right_separator = " "
 status_indicators = "symbols"
+agent_panel_sort = "priority"
