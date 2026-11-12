@@ -113,6 +113,8 @@
       tags:
         - pdftotext
     - role: pi
+      environment:
+        PI_CODING_AGENT_DIR: "{{ ansible_facts.env.HOME }}/.pi/agent"
       tags:
         - pi
     - role: opencode

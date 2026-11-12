@@ -10,6 +10,28 @@
     files: "{{ files + ['.dir_colors'] }}"
   when: desktop_environment is not undefined and desktop_environment == 'xfce'
 
+- name: Inspect login configuration without following links
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.zprofile"
+    follow: false
+  register: zsh_login_config
+
+- name: Refuse to replace conflicting login configuration
+  ansible.builtin.assert:
+    that:
+      - >-
+        not zsh_login_config.stat.exists or
+        (zsh_login_config.stat.islnk | default(false) and
+         zsh_login_config.stat.lnk_source | default('') == playbook_dir + '/files/agent-config/shell/zprofile')
+    fail_msg: "Preserve and reconcile ~/.zprofile explicitly; this role will not replace an existing path or retarget another login configuration."
+
+- name: Soft link login configuration without overwriting an existing file
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/agent-config/shell/zprofile"
+    dest: "{{ ansible_facts.env.HOME }}/.zprofile"
+    force: false
+    state: link
+
 - name: Soft link shell
   ansible.builtin.file:
     src: "{{ playbook_dir }}/files/{{ item }}"

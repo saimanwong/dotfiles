@@ -89,6 +89,14 @@ When creating a new role:
 
 - **`files/agent-config/`** — Private repo (`git@github.com:saimanwong/agent-config.git`). After cloning dotfiles, run `git submodule update --init --recursive` to populate it (the `--recursive` also pulls its nested `upstream/` skill submodules).
 
+### Public/private boundary
+
+Keep public dotfiles as generic as possible: package installation, platform settings, and thin links or includes into private configuration. Keep agent profiles, provider/integration choices, employer-specific behavior, credential-loading policy, and regression checks in `files/agent-config/`. Reuse existing private entrypoints rather than building a generic framework in the public repository.
+
+### Regression checks
+
+Keep necessary regression checks in the private `files/agent-config/` submodule, using its existing test layout. Do not add test files under public `roles/` directories. Prefer focused checks with existing tools; do not introduce a test framework or duplicate coverage for configuration-only changes.
+
 ### Commit ordering (private submodule → public repo)
 
 `files/agent-config/` is a **private** submodule; the rest of this repo is **public**. When a change spans both, commit and push in this order so the public repo never points at a submodule commit that has not been pushed:

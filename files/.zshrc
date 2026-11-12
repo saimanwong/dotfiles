@@ -63,3 +63,6 @@ export PATH="$PATH:${HOME}/.lmstudio/bin"
 # End of LM Studio CLI section
 
 [ -f "${HOME}/.zshrc.local" ] && source "${HOME}/.zshrc.local"
+
+# Keep the default Pi profile launcher ahead of the managed installation.
+export PATH="${HOME}/.local/bin:${PATH}"

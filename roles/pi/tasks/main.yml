@@ -47,8 +47,12 @@
   when: "'npm:@ff-labs/pi-fff@0.10.5' not in pi_packages_list.stdout"
 
 - name: Install rpiv-todo Pi package
-  ansible.builtin.command: pi install npm:@juicesharp/rpiv-todo@2.6.0
-  when: "'npm:@juicesharp/rpiv-todo@2.6.0' not in pi_packages_list.stdout"
+  ansible.builtin.command: pi install npm:@juicesharp/rpiv-todo@2.12.0
+  when: "'npm:@juicesharp/rpiv-todo@2.12.0' not in pi_packages_list.stdout"
+
+- name: Install Plannotator Pi package
+  ansible.builtin.command: pi install npm:@plannotator/pi-extension@0.28.50
+  when: "'npm:@plannotator/pi-extension@0.28.50' not in pi_packages_list.stdout"
 
 - name: Ensure global Agent Skills directory exists
   ansible.builtin.file:
@@ -66,6 +70,12 @@
 - name: Ensure Pi agent config directory exists
   ansible.builtin.file:
     path: "{{ ansible_facts.env.HOME }}/.pi/agent"
+    state: directory
+    mode: '0755'
+
+- name: Ensure local launcher directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.local/bin"
     state: directory
     mode: '0755'
 
@@ -195,6 +205,8 @@
                     if merge(current_value, desired_value):
                         changed = True
                 elif isinstance(desired_value, list):
+                    if key == "defaultTools" and isinstance(current_value, list) and any(not item.startswith(("+", "-")) for item in current_value):
+                        desired_value = [item.removeprefix("+") for item in desired_value]
                     if not isinstance(current_value, list):
                         current[key] = list(desired_value)
                         changed = True
@@ -233,7 +245,29 @@
       - { src: "{{ playbook_dir }}/files/agent-config/shared-tools", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/shared-tools" }
       - { src: "{{ playbook_dir }}/files/agent-config/pi-agents", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/agents" }
       - { src: "{{ playbook_dir }}/files/agent-config/pi-prompts", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/prompts" }
-      - { src: "{{ playbook_dir }}/files/agent-config/pi-keybindings.json", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/keybindings.json" }
+      - { src: "{{ playbook_dir }}/files/agent-config/pi-keybindings-stock.json", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/keybindings.json" }
       - { src: "{{ playbook_dir }}/files/agent-config/pi-mcp.json", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/mcp.json" }
       - { src: "{{ playbook_dir }}/files/agent-config/pi-models.json", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/models.json" }
       - { src: "{{ playbook_dir }}/files/agent-config/pi-AGENTS.md", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md" }
+      - { src: "{{ playbook_dir }}/files/agent-config/skills/caveman/SKILL.md", dest: "{{ ansible_facts.env.HOME }}/.pi/agent/APPEND_SYSTEM.md" }
+      - { src: "{{ playbook_dir }}/files/agent-config/pi-profiles/outcome/launch.mjs", dest: "{{ ansible_facts.env.HOME }}/.local/bin/pi-outcome" }
+      - { src: "{{ playbook_dir }}/files/agent-config/pi-profiles/pstack/launch.mjs", dest: "{{ ansible_facts.env.HOME }}/.local/bin/pi-pstack" }
+
+- name: Configure the opt-in default Rex profile and legacy fallback
+  ansible.builtin.import_tasks: "{{ playbook_dir }}/files/agent-config/pi-profiles/rex/tasks.yml"
+  when: "'pi-rex' in ansible_run_tags"
+  tags:
+    - never
+    - pi-rex
+
+- name: Configure the opt-in personal Pi profile from existing shared packages
+  ansible.builtin.command:
+    argv:
+      - node
+      - "{{ playbook_dir }}/files/agent-config/pi-profiles/personal/setup.mjs"
+  register: pi_personal_setup
+  changed_when: "'0 paths created' not in pi_personal_setup.stdout"
+  when: "'pi-personal' in ansible_run_tags"
+  tags:
+    - never
+    - pi-personal
