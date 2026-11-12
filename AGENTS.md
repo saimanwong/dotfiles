@@ -54,7 +54,7 @@
 - **uv**: Python package manager
 - **wispr-flow**: Wispr Flow voice-to-text dictation app (macOS via Homebrew cask)
 - **zitadel**: ZITADEL self-hosting binary (macOS via Homebrew)
-- **zsh**: Zsh shell configuration
+- **zsh**: Zsh shell configuration and the manual macOS `charger-watch` command (stop with Ctrl+C; no login service). Provision only the watcher with `--tags charger-watch`.
 
 ### Hardware-Specific Roles
 - **mac_keyboard**: Mac keyboard mapping (Arch Linux + Mac hardware)

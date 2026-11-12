@@ -1,0 +1,178 @@
+#!/bin/bash
+# Run in a terminal pane; Ctrl+C stops the watcher and its power-event stream.
+# Speech uses the current audio output at 50%, then mutes it again.
+set -uo pipefail
+
+if [[ $(uname -s) != Darwin ]]; then
+  printf '%s\n' 'charger-watch requires macOS.' >&2
+  exit 1
+fi
+
+unplugged_messages=(
+  "Watt's going on? Please plug my charger back in."
+  "Ohm no, my cable left me. Please plug me back in."
+  "I'm feeling powerless. Please reconnect my charger."
+  "This relationship needs a spark. Please plug me back in."
+  "My current situation is shocking. Please reconnect the charger."
+  "Battery life is short, but our friendship needn't be. Plug me in."
+  "I didn't sign up for an unplugged concert. Please reconnect me."
+  "You've pulled the plug on my plans. Please put it back."
+  "I'm running on borrowed electrons. Please plug me in."
+  "Let's keep this connection going. Please reconnect my charger."
+  "My battery is doing all the heavy lifting. Give it a cable break."
+  "Houston, we have a power problem. Please plug me back in."
+  "I'm not lazy, I'm in energy-saving denial. Please reconnect me."
+  "My charger has left the chat. Please invite it back."
+  "I need a little emotional and electrical support. Plug me in."
+  "This is not the wireless charging I ordered. Please reconnect me."
+  "Keep calm and cable on. Please plug my charger back in."
+  "My power couple just broke up. Reunite me with my charger."
+  "I'm a Mac, not a magic battery. Please reconnect the charger."
+  "Please don't ghost my charging port. Plug me back in."
+  "I've got ninety-nine tabs and a battery problem. Please plug me in."
+  "A cable a day keeps the shutdown away. Please reconnect mine."
+  "I'm trying to stay positive, but I need a terminal connection. Plug me in."
+  "My electrons are on a tight budget. Please reconnect the charger."
+  "This battery-powered solo career isn't for me. Plug me back in."
+  "I can't live on good vibes alone. Please add electricity."
+  "The cable has one job. Please give it that job back."
+  "Don't leave me hanging without charging. Please reconnect me."
+  "I'm low on commitment to battery life. Please plug me in."
+  "An outlet for my feelings would help. Preferably a wall outlet. Plug me in."
+  "I'm having a disconnect with reality, and my charger. Please fix the charger."
+  "My power supply is taking an unscheduled vacation. Please bring it back."
+  "This is a shocking lack of electricity. Please plug me in."
+  "I prefer my juice from the wall, not an apple. Please reconnect me."
+  "Even an Apple needs feeding. Please plug my charger back in."
+  "My charging cable is playing hide and seek. Please find it."
+  "Please reconnect me before I start writing sad battery poetry."
+  "I'm not ready for off-grid living. Please plug me back in."
+  "Let's not test my survival skills. Please reconnect my charger."
+  "I came here to compute, not conserve. Please plug me back in."
+  "No cord, no glory. Please reconnect the charger."
+  "My battery has stage fright. Please bring back the supporting cable."
+  "I'm seeking a long-term connection with a wall outlet. Please plug me in."
+  "This power nap wasn't on my calendar. Please reconnect the charger."
+  "Please plug me in. I promise not to charge you for asking."
+  "I'd like to file a missing cable report. Please reconnect my charger."
+  "My power cord has wandered off the plot. Please bring it back."
+  "Without my charger, I'm just a very expensive countdown. Plug me in."
+  "The wattage has left the building. Please reconnect my charger."
+  "I'm trying to be productive, not battery-operated drama. Please plug me in."
+)
+
+plugged_messages=(
+  "Ohm sweet ohm. Thanks for plugging me back in!"
+  "Watt a relief. Thanks for the power!"
+  "You're positively electrifying. Thanks for reconnecting me!"
+  "Current mood: grateful. Thanks for plugging me in!"
+  "We've got chemistry, and now electricity. Thank you!"
+  "My charger has rejoined the chat. Thanks for the invite!"
+  "Power couple reunited. Thanks for bringing us back together!"
+  "I'm back on the grid and off the drama. Thank you!"
+  "You've restored my faith in outlets. Thanks for plugging me in!"
+  "That connection really sparked joy. Thank you!"
+  "Thanks for the juice. Much better than a smoothie!"
+  "Cable connected, existential crisis cancelled. Thank you!"
+  "My battery can finally take a coffee break. Thanks!"
+  "You had me at hello, and at external power. Thank you!"
+  "I'm feeling recharged about our relationship. Thanks!"
+  "You're my main source of support, after the power supply. Thank you!"
+  "Thanks for giving my electrons a place to call ohm!"
+  "This is the kind of connection I can get behind. Thank you!"
+  "Power restored. The unplugged tour is officially over. Thanks!"
+  "You've really plugged a hole in my schedule. Thank you!"
+  "Thanks for keeping my current affairs in order!"
+  "My battery sends its warmest, but hopefully not hottest, thanks!"
+  "I'm charged with gratitude. Thanks for reconnecting me!"
+  "Thanks for the lifeline. I'll stop being so dramatic now!"
+  "We've gone from powerless to powerful. Thank you!"
+  "You're a real live wire, in the helpful sense. Thanks!"
+  "Thanks for saving me from a career as a paperweight!"
+  "A solid connection and no small talk. My favourite. Thank you!"
+  "The electrons are back in town. Thanks for the reunion!"
+  "My charging port feels seen. Thanks for reconnecting me!"
+  "You really know how to energize a room, and a laptop. Thank you!"
+  "Thanks for turning this power struggle into a power snuggle!"
+  "I'm back to work, fully supported by the wall. Thank you!"
+  "That was a bright idea. Thanks for plugging me back in!"
+  "Thanks for making our connection official again!"
+  "Power restored. Sad battery poetry has been deleted. Thank you!"
+  "You're the plug to my port. Thanks for being there!"
+  "Thanks for rescuing me from my off-grid adventure!"
+  "I'm no longer running on hope and battery percentages. Thank you!"
+  "Watt would I do without you? Thanks for reconnecting me!"
+  "The power cord has returned from its vacation. Thanks!"
+  "Thanks for keeping this Apple fresh with electricity!"
+  "I'm feeling grounded, metaphorically speaking. Thanks for the charger!"
+  "You've supplied the power. I'll supply the questionable jokes. Thanks!"
+  "Thanks for the connection. No networking event required!"
+  "My battery just breathed a tiny electronic sigh of relief. Thank you!"
+  "We're plugged in and ready to pretend we're organized. Thanks!"
+  "Thanks for keeping the shutdown plot twist out of our story!"
+  "A round of volts for my favourite human. Thanks for reconnecting me!"
+  "You've completed the circuit of kindness. Thank you!"
+)
+
+log() {
+  printf '[%s] %s\n' "$(date '+%Y-%m-%dT%H:%M:%S%z')" "$1"
+}
+
+announce() (
+  # Keep cleanup local to speech; starting or stopping an idle watcher changes no audio.
+  trap 'osascript -e "set volume output muted true"' EXIT
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
+  osascript -e 'set volume output volume 50 output muted false' && say "$1"
+)
+
+previous=
+reminders_left=0
+next_reminder=0
+log 'Watching the charger. Three unplug reminders, five seconds apart. Ctrl+C stops.'
+pmset -g pslog | while :; do
+  if (( reminders_left > 0 )); then
+    wait_seconds=$((next_reminder - SECONDS))
+    (( wait_seconds > 0 )) || wait_seconds=1
+    if IFS= read -r -t "$wait_seconds" line; then
+      :
+    else
+      # ponytail: Bash 3.2 conflates timeout and EOF; EOF at a deadline can allow one last reminder.
+      # Use a native event API if that distinction matters.
+      (( SECONDS >= next_reminder )) || break
+      line=
+    fi
+  else
+    IFS= read -r line || break
+  fi
+
+  case "$line" in
+    "Now drawing from 'AC Power'") source=AC ;;
+    "Now drawing from 'Battery Power'") source=battery ;;
+    *) source=$previous ;;
+  esac
+
+  if [[ $source != "$previous" ]]; then
+    log "Power source: $source"
+    case "$previous:$source" in
+      AC:battery)
+        reminders_left=3
+        next_reminder=$SECONDS
+        ;;
+      battery:AC)
+        reminders_left=0
+        message=${plugged_messages[RANDOM % ${#plugged_messages[@]}]}
+        log "Announcing reconnect thanks: $message"
+        announce "$message"
+        ;;
+    esac
+    previous=$source
+  fi
+  if (( reminders_left > 0 && SECONDS >= next_reminder )); then
+    message=${unplugged_messages[RANDOM % ${#unplugged_messages[@]}]}
+    log "Announcing unplug reminder $((4 - reminders_left))/3: $message"
+    announce "$message"
+    reminders_left=$((reminders_left - 1))
+    next_reminder=$((SECONDS + 5))
+  fi
+done
