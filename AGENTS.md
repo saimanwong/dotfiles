@@ -87,26 +87,7 @@ When creating a new role:
 
 ## Submodules
 
-- **`files/agent-config/`** — Private repo (`git@github.com:saimanwong/agent-config.git`). After cloning dotfiles, run `git submodule update --init --recursive` to populate it (the `--recursive` also pulls its nested `upstream/` skill submodules).
-
-### Public/private boundary
-
-Keep public dotfiles as generic as possible: package installation, platform settings, and thin links or includes into private configuration. Keep agent profiles, provider/integration choices, employer-specific behavior, credential-loading policy, and regression checks in `files/agent-config/`. Reuse existing private entrypoints rather than building a generic framework in the public repository.
-
-### Regression checks
-
-Keep necessary regression checks in the private `files/agent-config/` submodule, using its existing test layout. Do not add test files under public `roles/` directories. Prefer focused checks with existing tools; do not introduce a test framework or duplicate coverage for configuration-only changes.
-
-### Commit ordering (private submodule → public repo)
-
-`files/agent-config/` is a **private** submodule; the rest of this repo is **public**. When a change spans both, commit and push in this order so the public repo never points at a submodule commit that has not been pushed:
-
-1. **Submodule first** — commit inside `files/agent-config/` and push it to the private remote.
-2. **Public repo second** — stage the bumped submodule pointer (`git add files/agent-config`) alongside the related public changes, then commit the outer repo with the history-standard message `chore: bump agent-config`.
-
-When the user asks to commit this cross-repo structure, default to pushing the private submodule commit but leaving the public parent commit unpushed. Push the parent only when the user explicitly asks; if the user says not to push, push neither repository. If the request is ambiguous about pushing, ask before any push.
-
-Keep private content in the submodule and public content in the outer repo; never move secrets or private agent config into public files. Group commits by concern (e.g. a new role separate from docs/homogenization changes) rather than one mixed commit.
+After cloning, run `git submodule update --init --recursive` to populate submodules. Before publishing a parent commit that bumps a submodule pointer, ensure the referenced commit is available to intended readers.
 
 ## Agent context files
 
