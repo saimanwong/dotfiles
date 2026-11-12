@@ -45,6 +45,7 @@
 - **slack**: Slack desktop application
 - **spec-kit**: Specification development tools
 - **spectest**: Spectest CLI (macOS Apple Silicon or Linux x86_64)
+- **t3-code**: T3 Code desktop app (macOS via Homebrew cask)
 - **terminal**: Terminal configuration
 - **terraform-ls**: Terraform language server
 - **tmux**: Terminal multiplexer
