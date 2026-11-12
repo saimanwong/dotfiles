@@ -40,6 +40,7 @@
 - **pi**: Pi Coding Agent terminal harness
 - **posthog-cli**: PostHog command-line interface (npm global)
 - **pulumi**: Pulumi infrastructure as code
+- **rex**: Rex terminal multiplexer configuration (macOS; app installed separately)
 - **signal**: Signal messaging app
 - **sentry-cli**: Sentry command-line interface
 - **slack**: Slack desktop application

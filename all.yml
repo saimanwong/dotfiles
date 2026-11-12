@@ -133,6 +133,10 @@
     - role: pulumi
       tags:
         - pulumi
+    - role: rex
+      when: "ansible_facts.os_family == 'Darwin'"
+      tags:
+        - rex
     - role: signal
       tags:
         - signal

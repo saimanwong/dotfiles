@@ -1,0 +1,37 @@
+---
+
+- name: Inspect Rex configuration without following links
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.config/rex/init.lua"
+    follow: false
+  register: rex_config
+
+- name: Refuse to replace conflicting Rex configuration
+  ansible.builtin.assert:
+    that:
+      - >-
+        not rex_config.stat.exists or
+        (rex_config.stat.islnk | default(false) and
+         rex_config.stat.lnk_source | default('') == playbook_dir + '/files/rex.lua')
+    fail_msg: "Preserve and reconcile ~/.config/rex/init.lua explicitly; this role will not replace an existing path or retarget another configuration."
+
+- name: Ensure Rex config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.config/rex"
+    state: directory
+    mode: '0755'
+
+- name: Soft link files/rex.lua
+  ansible.builtin.file:
+    src: "{{ playbook_dir }}/files/rex.lua"
+    dest: "{{ ansible_facts.env.HOME }}/.config/rex/init.lua"
+    force: false
+    state: link
+
+- name: Enable Rex quick switcher
+  community.general.osx_defaults:
+    domain: com.superlogical.rex
+    key: Workspace.experiments.usesNewQuickSwitcher
+    type: bool
+    value: true
+  become: false
