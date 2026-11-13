@@ -27,7 +27,6 @@
 - **gh**: GitHub CLI tool
 - **github-copilot**: Install GitHub Copilot CLI globally via npm
 - **go**: Go programming language
-- **herdr**: Herdr persistent runtime for coding-agent terminal sessions
 - **htop**: Htop process viewer
 - **huggingface**: Hugging Face CLI
 - **k6**: Load testing tool
