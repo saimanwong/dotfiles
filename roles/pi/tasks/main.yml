@@ -266,7 +266,7 @@
       - node
       - "{{ playbook_dir }}/files/agent-config/pi-profiles/personal/setup.mjs"
   register: pi_personal_setup
-  changed_when: "'0 paths created' not in pi_personal_setup.stdout"
+  changed_when: "'0 paths created; 0 settings updated' not in pi_personal_setup.stdout"
   when: "'pi-personal' in ansible_run_tags"
   tags:
     - never
